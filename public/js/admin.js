@@ -1,6 +1,7 @@
 /* ============================================================
-   Admin panel — password gated. Edits teams, match results,
-   goal scorers, awards and announcements.
+   Admin panel — password gated. Teams & squads, match results
+   (scorers via player dropdowns), schedule times, homepage
+   media slots, ticker updates, visitor analytics, draw reset.
    ============================================================ */
 
 const AdminView = (() => {
@@ -32,71 +33,91 @@ const AdminView = (() => {
 
   const TABS = [
     ["teams", "Teams", "fa-people-group"],
-    ["matches", "Matches", "fa-futbol"],
-    ["awards", "Awards", "fa-trophy"],
+    ["results", "Results", "fa-futbol"],
+    ["schedule", "Schedule", "fa-clock"],
+    ["media", "Media", "fa-photo-film"],
     ["news", "Updates", "fa-bullhorn"],
+    ["analytics", "Analytics", "fa-chart-simple"],
     ["danger", "Reset", "fa-triangle-exclamation"],
   ];
 
+  /* ----- Teams ----- */
+
   function teamsTabHTML(state) {
-    const rows = state.teams.map((t) => `
-      <details class="admin-match" data-team="${t.id}">
-        <summary>${flagImg(t, "slot-flag")} <strong>${esc(t.country)}</strong>
-          <span style="color:var(--text-faint)">${esc(t.teamName)}</span>
-          <span class="match-status-chip">${(t.players || []).length} players</span>
-        </summary>
-        <div class="match-body">
-          <div class="form-field"><label>Registered team name</label>
-            <input data-field="teamName" value="${esc(t.teamName)}"></div>
-          <div class="form-field"><label>Captain</label>
-            <input data-field="captain" value="${esc(t.captain)}"></div>
-          <div class="form-field"><label>Players (one per line)</label>
-            <textarea data-field="players" rows="6">${esc((t.players || []).join("\n"))}</textarea></div>
-          <button class="btn-outline" data-action="save-team" data-team="${t.id}">
-            <i class="fa-solid fa-floppy-disk"></i> Save team</button>
-        </div>
-      </details>`).join("");
-    return `<div class="panel admin-section"><h3 class="howto" style="padding:0;margin-bottom:14px;font-family:var(--font-display);color:var(--gold);letter-spacing:2px">TEAM INFORMATION</h3>${rows}</div>`;
+    const rows = state.teams.map((t) => {
+      const playerInputs = Array.from({ length: 10 }, (_, i) => `
+        <div class="player-input-row">
+          <span class="squad-num">${i + 1}</span>
+          <input data-player="${i}" value="${esc(t.players[i] || "")}" placeholder="Player ${i + 1}">
+        </div>`).join("");
+      const gkOptions = ['<option value="">— select goalkeeper —</option>']
+        .concat(t.players.map((p) => `<option value="${esc(p)}" ${t.goalkeeper === p ? "selected" : ""}>${esc(p)}</option>`))
+        .join("");
+      return `
+        <details class="admin-match" data-team="${t.id}">
+          <summary>${flagImg(t, "slot-flag")} <strong>${esc(t.country)}</strong>
+            <span style="color:var(--text-faint)">${esc(t.teamName)}</span>
+            <span class="match-status-chip">${t.goalkeeper ? "GK set" : "no GK"}</span>
+          </summary>
+          <div class="match-body">
+            <div class="form-field"><label>Registered team name</label>
+              <input data-field="teamName" value="${esc(t.teamName)}"></div>
+            <div class="form-field"><label>Captain</label>
+              <input data-field="captain" value="${esc(t.captain)}"></div>
+            <div class="form-field"><label>Squad — 10 players</label>
+              <div class="player-inputs">${playerInputs}</div></div>
+            <div class="form-field"><label>Goalkeeper (used for the Golden Glove ranking)</label>
+              <select data-field="goalkeeper">${gkOptions}</select></div>
+            <button class="btn-outline" data-action="save-team">
+              <i class="fa-solid fa-floppy-disk"></i> Save team</button>
+          </div>
+        </details>`;
+    }).join("");
+    return `<div class="panel admin-section">
+      <p class="section-sub" style="text-align:left;margin-bottom:12px">Fill each squad once the participant list is confirmed — team pages, the draw, scorer dropdowns and the Golden Glove all update from here.</p>
+      ${rows}</div>`;
   }
 
-  function scorerRowHTML(state, m, s, idx) {
-    const options = [m.teamA, m.teamB].filter(Boolean).map((id) => {
+  /* ----- Results ----- */
+
+  function scorerRowHTML(state, m, s) {
+    const teamOpts = [m.teamA, m.teamB].filter(Boolean).map((id) => {
       const t = team(state, id);
       return `<option value="${id}" ${s && s.teamId === id ? "selected" : ""}>${esc(t?.country || id)}</option>`;
     }).join("");
+    const roster = (teamId) => (team(state, teamId)?.players || []).filter(Boolean);
+    const selTeam = s?.teamId || m.teamA;
+    const playerOpts = roster(selTeam)
+      .map((p) => `<option value="${esc(p)}" ${s && s.name === p ? "selected" : ""}>${esc(p)}</option>`)
+      .join("");
     return `
-      <div class="scorer-edit-row" data-scorer="${idx}">
-        <select data-sfield="teamId">${options}</select>
-        <input data-sfield="name" placeholder="Player name" value="${esc(s?.name || "")}" style="flex:1;min-width:140px">
+      <div class="scorer-edit-row">
+        <select data-sfield="teamId">${teamOpts}</select>
+        <select data-sfield="name" style="flex:1;min-width:140px">${playerOpts || '<option value="">(no squad yet)</option>'}</select>
         <input data-sfield="count" type="number" min="1" max="20" value="${s?.count || 1}" style="width:64px">
         <button class="icon-btn" data-action="del-scorer" title="Remove scorer"><i class="fa-solid fa-xmark"></i></button>
       </div>`;
   }
 
-  function matchEditorHTML(state, m, resolvedMap) {
+  function matchEditorHTML(state, m, labels) {
     const a = team(state, m.teamA);
     const b = team(state, m.teamB);
-    const resolved = resolvedMap?.[m.id];
-    const nameA = a ? a.country : (resolved?.a?.label || "TBD");
-    const nameB = b ? b.country : (resolved?.b?.label || "TBD");
+    const nameA = a ? a.country : (labels[m.id]?.a || "TBD");
+    const nameB = b ? b.country : (labels[m.id]?.b || "TBD");
     const ready = !!(a && b);
-    const isKO = m.stage === "knockout";
-    const showPens = isKO && m.scoreA != null && m.scoreA === m.scoreB;
-    const title = m.stage === "group"
-      ? `Group ${m.group} · MD${m.md}`
-      : ({ r16: "Round of 16", qf: "Quarter Final", sf: "Semi Final", tp: "Third Place", final: "Final" })[m.round] + (m.slot > 1 || ["r16", "qf", "sf"].includes(m.round) ? ` ${m.slot}` : "");
+    const title = `${Tournament.ROUNDS.find((r) => r.round === m.round).label} · M${m.slot}`;
 
     return `
       <details class="admin-match" data-match="${m.id}">
         <summary>
-          <span style="color:var(--text-faint);font-size:.72rem;letter-spacing:1px;min-width:110px">${title}</span>
+          <span style="color:var(--text-faint);font-size:.72rem;letter-spacing:1px;min-width:130px">${title}</span>
           ${a ? flagImg(a, "slot-flag") : ""} ${esc(nameA)}
           <strong style="color:var(--gold)">${m.status === "played" ? `${m.scoreA}-${m.scoreB}` : "vs"}</strong>
           ${esc(nameB)} ${b ? flagImg(b, "slot-flag") : ""}
           <span class="match-status-chip ${m.status}">${m.status}</span>
         </summary>
         <div class="match-body">
-          ${!ready ? `<p class="draw-hint"><i class="fa-solid fa-circle-info"></i> Teams not decided yet — finish the earlier matches first.</p>` : `
+          ${!ready ? `<p class="draw-hint"><i class="fa-solid fa-circle-info"></i> Teams not decided yet — complete the earlier round (or the draw) first.</p>` : `
           <div class="admin-row" style="border:none">
             <div class="score-inputs">
               <span>${esc(nameA)}</span>
@@ -106,18 +127,17 @@ const AdminView = (() => {
               <span>${esc(nameB)}</span>
             </div>
           </div>
-          ${isKO ? `
           <div class="admin-row" style="border:none">
-            <div class="score-inputs" id="pens-${m.id}" style="${showPens ? "" : "opacity:.55"}">
+            <div class="score-inputs">
               <span style="font-size:.75rem;letter-spacing:1px;color:var(--text-faint)">PENALTIES (if drawn)</span>
               <input type="number" min="0" max="30" data-field="pensA" value="${m.pensA ?? ""}">
               <span>—</span>
               <input type="number" min="0" max="30" data-field="pensB" value="${m.pensB ?? ""}">
             </div>
-          </div>` : ""}
+          </div>
           <div style="margin:10px 0 4px;font-size:.72rem;letter-spacing:2px;color:var(--text-faint);text-transform:uppercase">Goal scorers</div>
           <div data-scorers>
-            ${(m.scorers || []).map((s, i) => scorerRowHTML(state, m, s, i)).join("")}
+            ${(m.scorers || []).map((s) => scorerRowHTML(state, m, s)).join("")}
           </div>
           <button class="btn-outline" data-action="add-scorer" style="margin-top:6px"><i class="fa-solid fa-plus"></i> Add scorer</button>
           <div class="admin-row" style="border:none;margin-top:10px">
@@ -130,44 +150,78 @@ const AdminView = (() => {
       </details>`;
   }
 
-  function matchesTabHTML(state) {
+  function resultsTabHTML(state) {
     if (!state.draw.completed) {
       return `<div class="panel empty-note"><i class="fa-solid fa-shuffle"></i>
-        Run the official draw first — fixtures are generated automatically from the draw.</div>`;
+        Run the official draw first — results open up once the bracket is set.</div>`;
     }
-    const resolvedMap = Tournament.resolveKnockout(state);
-    const groupSections = GROUP_LETTERS.map((l) => `
-      <h4 style="margin:18px 0 8px;color:var(--gold);letter-spacing:2px;font-size:.85rem">GROUP ${l}</h4>
-      ${Tournament.groupMatches(state, l).map((m) => matchEditorHTML(state, m, resolvedMap)).join("")}`).join("");
-    const koSections = Tournament.KO_ROUNDS.map(({ round, label }) => `
+    const labels = Tournament.resolveBracket(state);
+    const sections = Tournament.ROUNDS.map(({ round, label }) => `
       <h4 style="margin:18px 0 8px;color:var(--gold);letter-spacing:2px;font-size:.85rem">${label.toUpperCase()}</h4>
-      ${state.matches.filter((m) => m.round === round).map((m) => matchEditorHTML(state, m, resolvedMap)).join("")}`).join("");
+      ${Tournament.roundMatches(state, round).map((m) => matchEditorHTML(state, m, labels)).join("")}`).join("");
     return `<div class="panel admin-section">
-      <p class="section-sub" style="text-align:left;margin-bottom:10px">Enter final scores and goal scorers. Standings, brackets and the Golden Boot update automatically.</p>
-      ${groupSections}
-      <hr style="border:none;border-top:1px solid var(--panel-border-soft);margin:24px 0">
-      ${koSections}
+      <p class="section-sub" style="text-align:left;margin-bottom:10px">Enter final scores and pick the scorers from each squad. The bracket, schedule and awards update everywhere automatically. Knockout draws need a penalty shootout result.</p>
+      ${sections}</div>`;
+  }
+
+  /* ----- Schedule ----- */
+
+  function scheduleTabHTML(state) {
+    const labels = Tournament.resolveBracket(state);
+    const toLocal = (iso) => {
+      if (!iso) return "";
+      const d = new Date(iso);
+      const pad = (n) => String(n).padStart(2, "0");
+      return `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())}T${pad(d.getHours())}:${pad(d.getMinutes())}`;
+    };
+    const sections = Tournament.ROUNDS.map(({ round, label }) => {
+      const rows = Tournament.roundMatches(state, round).map((m) => {
+        const a = team(state, m.teamA);
+        const b = team(state, m.teamB);
+        const vs = a && b ? `${a.country} v ${b.country}` : (labels[m.id] ? `${labels[m.id].a} v ${labels[m.id].b}` : "TBD");
+        return `
+          <div class="admin-row" data-sched="${m.id}">
+            <span style="min-width:46px;color:var(--text-faint);font-size:.75rem">M${m.slot}</span>
+            <span style="flex:1;font-size:.85rem">${esc(vs)}</span>
+            <input type="datetime-local" data-kick value="${toLocal(m.kickoff)}">
+          </div>`;
+      }).join("");
+      return `<h4 style="margin:18px 0 8px;color:var(--gold);letter-spacing:2px;font-size:.85rem">${label.toUpperCase()}</h4>${rows}`;
+    }).join("");
+    return `<div class="panel admin-section">
+      <p class="section-sub" style="text-align:left;margin-bottom:10px">Set kickoff times — the Schedule tab shows them to visitors and highlights the current round automatically.</p>
+      ${sections}
+      <p style="margin-top:16px"><button class="btn-gold" data-action="save-schedule"><i class="fa-solid fa-floppy-disk"></i> SAVE ALL TIMES</button></p>
     </div>`;
   }
 
-  function awardsTabHTML(state) {
-    const teamOptions = (selected) => `<option value="">Auto (from bracket)</option>` +
-      state.teams.map((t) => `<option value="${t.id}" ${selected === t.id ? "selected" : ""}>${esc(t.country)} — ${esc(t.teamName)}</option>`).join("");
-    return `
-      <div class="panel admin-section">
-        <div class="form-field"><label>Champion (override)</label>
-          <select data-award="champion">${teamOptions(state.awards.champion)}</select></div>
-        <div class="form-field"><label>Runner-up (override)</label>
-          <select data-award="runnerUp">${teamOptions(state.awards.runnerUp)}</select></div>
-        <div class="form-field"><label>Third place (override)</label>
-          <select data-award="thirdPlace">${teamOptions(state.awards.thirdPlace)}</select></div>
-        <div class="form-field"><label>Player of the Tournament</label>
-          <input data-award="playerOfTournament" value="${esc(state.awards.playerOfTournament || "")}" placeholder="Player name"></div>
-        <div class="form-field"><label>Best Goalkeeper</label>
-          <input data-award="bestGoalkeeper" value="${esc(state.awards.bestGoalkeeper || "")}" placeholder="Player name"></div>
-        <button class="btn-gold" data-action="save-awards"><i class="fa-solid fa-floppy-disk"></i> SAVE AWARDS</button>
-      </div>`;
+  /* ----- Media ----- */
+
+  function mediaTabHTML(state) {
+    const media = state.media || [];
+    const slots = Array.from({ length: 4 }, (_, i) => {
+      const s = media[i] || {};
+      return `
+        <div class="admin-row" data-media="${i}" style="align-items:flex-start;flex-direction:column">
+          <strong style="color:var(--gold);font-size:.8rem;letter-spacing:1.5px">HOMEPAGE SLOT ${i + 1}</strong>
+          <div style="display:flex;gap:8px;flex-wrap:wrap;width:100%">
+            <select data-mfield="type" style="padding:9px;border-radius:9px;border:1px solid var(--panel-border-soft);background:rgba(5,7,15,.6);color:var(--text)">
+              <option value="image" ${s.type !== "video" ? "selected" : ""}>Image</option>
+              <option value="video" ${s.type === "video" ? "selected" : ""}>Video</option>
+            </select>
+            <input data-mfield="src" placeholder="Image/video URL (or assets/sponsors/file.jpg once uploaded)" value="${esc(s.src || "")}" style="flex:2;min-width:200px;padding:9px;border-radius:9px;border:1px solid var(--panel-border-soft);background:rgba(5,7,15,.6);color:var(--text)">
+            <input data-mfield="caption" placeholder="Caption (optional)" value="${esc(s.caption || "")}" style="flex:1;min-width:140px;padding:9px;border-radius:9px;border:1px solid var(--panel-border-soft);background:rgba(5,7,15,.6);color:var(--text)">
+          </div>
+        </div>`;
+    }).join("");
+    return `<div class="panel admin-section">
+      <p class="section-sub" style="text-align:left;margin-bottom:10px">These fill the sponsor showcase slots on the homepage. Leave a URL empty to show the styled placeholder. Send picture/video files to your developer to add under <code>assets/sponsors/</code>, then reference them here.</p>
+      ${slots}
+      <p style="margin-top:16px"><button class="btn-gold" data-action="save-media"><i class="fa-solid fa-floppy-disk"></i> SAVE MEDIA</button></p>
+    </div>`;
   }
+
+  /* ----- Updates ----- */
 
   function newsTabHTML(state) {
     const items = state.announcements.map((n, i) => `
@@ -178,12 +232,58 @@ const AdminView = (() => {
       </div>`).join("");
     return `
       <div class="panel admin-section">
-        <div class="form-field"><label>New update (shows in the LIVE ticker)</label>
+        <div class="form-field"><label>New update (shows in the LIVE ticker on every tab)</label>
           <textarea id="news-text" rows="2" placeholder="e.g. Kick-off Monday 5pm at Taher Bagh main ground!"></textarea></div>
         <button class="btn-gold" data-action="add-news" style="margin-bottom:18px"><i class="fa-solid fa-bullhorn"></i> POST UPDATE</button>
         ${items || '<p class="empty-note">No updates yet.</p>'}
       </div>`;
   }
+
+  /* ----- Analytics ----- */
+
+  function analyticsTabHTML() {
+    return `<div class="panel admin-section" id="analytics-box">
+      <p class="section-sub" style="text-align:left">Visits are counted once per visitor session. Loading…</p>
+    </div>`;
+  }
+
+  async function fillAnalytics() {
+    const box = document.getElementById("analytics-box");
+    if (!box) return;
+    if (API.mode !== "live") {
+      box.innerHTML = `<p class="empty-note"><i class="fa-solid fa-chart-simple"></i>Analytics are collected on the live site only (demo mode has no backend).</p>`;
+      return;
+    }
+    try {
+      const visits = await API.getVisits();
+      const days = [];
+      for (let i = 13; i >= 0; i--) {
+        const d = new Date(Date.now() - i * 86400000).toISOString().slice(0, 10);
+        days.push({ day: d, n: visits[d] || 0 });
+      }
+      const total = Object.values(visits).reduce((s, n) => s + n, 0);
+      const last7 = days.slice(7).reduce((s, d) => s + d.n, 0);
+      const today = days[13].n;
+      const max = Math.max(1, ...days.map((d) => d.n));
+      const bars = days.map((d) => `
+        <div class="viz-bar-wrap" title="${d.day}: ${d.n} visits">
+          <div class="viz-bar" style="height:${Math.round((d.n / max) * 100)}%"></div>
+          <span class="viz-day">${d.day.slice(8)}</span>
+        </div>`).join("");
+      box.innerHTML = `
+        <div class="stat-side" style="flex-direction:row;justify-content:space-around;padding:10px 0 22px">
+          <div class="stat-block"><div class="stat-number">${today}</div><div class="stat-label">TODAY</div></div>
+          <div class="stat-block"><div class="stat-number">${last7}</div><div class="stat-label">LAST 7 DAYS</div></div>
+          <div class="stat-block"><div class="stat-number">${total}</div><div class="stat-label">ALL TIME</div></div>
+        </div>
+        <div class="viz-chart">${bars}</div>
+        <p class="draw-hint" style="margin-top:14px"><i class="fa-solid fa-circle-info"></i> Fuller analytics (requests, countries, errors) live in Cloudflare → your Worker → Metrics.</p>`;
+    } catch (e) {
+      box.innerHTML = `<p class="empty-note">Could not load analytics: ${esc(e.message)}</p>`;
+    }
+  }
+
+  /* ----- Reset ----- */
 
   function dangerTabHTML() {
     return `
@@ -191,7 +291,7 @@ const AdminView = (() => {
         <p class="section-sub" style="text-align:left">These actions cannot be undone.</p>
         <div class="admin-row">
           <div style="flex:1"><strong>Reset the draw</strong><br>
-            <span style="color:var(--text-faint);font-size:.8rem">Clears groups and ALL fixtures &amp; results. Team info is kept.</span></div>
+            <span style="color:var(--text-faint);font-size:.8rem">Clears the bracket and ALL results. Teams, squads and kickoff times are kept.</span></div>
           <button class="btn-outline btn-danger" data-action="reset-draw"><i class="fa-solid fa-rotate-left"></i> Reset draw</button>
         </div>
       </div>`;
@@ -221,9 +321,11 @@ const AdminView = (() => {
 
     const body = {
       teams: teamsTabHTML,
-      matches: matchesTabHTML,
-      awards: awardsTabHTML,
+      results: resultsTabHTML,
+      schedule: scheduleTabHTML,
+      media: mediaTabHTML,
       news: newsTabHTML,
+      analytics: analyticsTabHTML,
       danger: dangerTabHTML,
     }[tab](state);
 
@@ -239,6 +341,7 @@ const AdminView = (() => {
       ${body}`;
 
     bindEvents(state, el);
+    if (tab === "analytics") fillAnalytics();
   }
 
   /* ---------- events ---------- */
@@ -262,7 +365,19 @@ const AdminView = (() => {
     el.querySelectorAll(".admin-tab").forEach((b) =>
       b.addEventListener("click", () => { tab = b.dataset.tab; render(state); }));
 
-    // Assigned (not addEventListener) so re-renders never stack handlers.
+    // When the scorer's team changes, swap the player dropdown to that roster.
+    el.onchange = (e) => {
+      const sel = e.target.closest('[data-sfield="teamId"]');
+      if (!sel) return;
+      const row = sel.closest(".scorer-edit-row");
+      const roster = (Tournament.team(state, sel.value)?.players || []).filter(Boolean);
+      row.querySelector('[data-sfield="name"]').innerHTML =
+        roster.map((p) => `<option value="${esc(p)}">${esc(p)}</option>`).join("") ||
+        '<option value="">(no squad yet)</option>';
+    };
+
+    // Single delegated click handler (assignment, not addEventListener,
+    // so re-renders never stack duplicate handlers).
     el.onclick = async (e) => {
       const btn = e.target.closest("[data-action]");
       if (!btn) return;
@@ -273,17 +388,18 @@ const AdminView = (() => {
         const t = team(state, box.dataset.team);
         t.teamName = box.querySelector('[data-field="teamName"]').value.trim() || t.teamName;
         t.captain = box.querySelector('[data-field="captain"]').value.trim();
-        t.players = box.querySelector('[data-field="players"]').value
-          .split("\n").map((p) => p.trim()).filter(Boolean);
+        t.players = [...box.querySelectorAll("[data-player]")]
+          .map((inp) => inp.value.trim())
+          .map((p, i) => p || `Player ${String(i + 1).padStart(2, "0")}`);
+        const gk = box.querySelector('[data-field="goalkeeper"]').value;
+        t.goalkeeper = t.players.includes(gk) ? gk : "";
         await persist(state, `${t.country} saved`);
       }
 
       if (action === "add-scorer") {
         const box = btn.closest("[data-match]");
         const m = state.matches.find((x) => x.id === box.dataset.match);
-        const wrap = box.querySelector("[data-scorers]");
-        wrap.insertAdjacentHTML("beforeend",
-          scorerRowHTML(state, m, null, wrap.children.length));
+        box.querySelector("[data-scorers]").insertAdjacentHTML("beforeend", scorerRowHTML(state, m, null));
       }
 
       if (action === "del-scorer") {
@@ -305,12 +421,10 @@ const AdminView = (() => {
           return;
         }
         m.scoreA = sA; m.scoreB = sB;
-        if (m.stage === "knockout") {
-          m.pensA = val("pensA"); m.pensB = val("pensB");
-          if (sA === sB && (m.pensA == null || m.pensB == null || m.pensA === m.pensB)) {
-            App.toast("Knockout draw — enter a penalty shootout result", true);
-            return;
-          }
+        m.pensA = val("pensA"); m.pensB = val("pensB");
+        if (sA === sB && (m.pensA == null || m.pensB == null || m.pensA === m.pensB)) {
+          App.toast("Knockout matches need a winner — enter the penalty shootout result", true);
+          return;
         }
         m.scorers = [...box.querySelectorAll(".scorer-edit-row")].map((row) => ({
           teamId: row.querySelector('[data-sfield="teamId"]').value,
@@ -330,11 +444,26 @@ const AdminView = (() => {
         await persist(state, "Result cleared");
       }
 
-      if (action === "save-awards") {
-        el.querySelectorAll("[data-award]").forEach((input) => {
-          state.awards[input.dataset.award] = input.value.trim() || null;
+      if (action === "save-schedule") {
+        el.querySelectorAll("[data-sched]").forEach((row) => {
+          const m = state.matches.find((x) => x.id === row.dataset.sched);
+          const v = row.querySelector("[data-kick]").value;
+          m.kickoff = v ? new Date(v).toISOString() : null;
         });
-        await persist(state, "Awards saved");
+        await persist(state, "Schedule saved");
+      }
+
+      if (action === "save-media") {
+        state.media = [...el.querySelectorAll("[data-media]")].map((row) => {
+          const src = row.querySelector('[data-mfield="src"]').value.trim();
+          if (!src) return null;
+          return {
+            type: row.querySelector('[data-mfield="type"]').value,
+            src,
+            caption: row.querySelector('[data-mfield="caption"]').value.trim(),
+          };
+        });
+        await persist(state, "Homepage media saved");
       }
 
       if (action === "add-news") {
@@ -350,10 +479,14 @@ const AdminView = (() => {
       }
 
       if (action === "reset-draw") {
-        if (!confirm("Reset the draw? This clears the groups and ALL fixtures and results.")) return;
-        state.draw = { completed: false, groups: { A: [], B: [], C: [], D: [], E: [], F: [], G: [], H: [] }, drawOrder: [] };
-        state.matches = [];
-        state.awards = { champion: null, runnerUp: null, thirdPlace: null, playerOfTournament: null, bestGoalkeeper: null };
+        if (!confirm("Reset the draw? This clears the bracket and ALL results (teams and kickoff times are kept).")) return;
+        state.draw = { completed: false, bracketOrder: [], drawOrder: [] };
+        for (const m of state.matches) {
+          m.teamA = m.teamB = null;
+          m.scoreA = m.scoreB = m.pensA = m.pensB = null;
+          m.scorers = [];
+          m.status = "scheduled";
+        }
         await persist(state, "Draw reset — ready for a new ceremony");
       }
     };

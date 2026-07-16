@@ -40,19 +40,48 @@ const API = (() => {
     return fetchJSON("data/default-state.json");
   }
 
+  /**
+   * Migrate any pre-knockout-era state (the old group-stage shape) to
+   * schema 2. Keeps teams, announcements and settings; resets the draw
+   * and matches to the fresh knockout skeleton. Idempotent.
+   */
+  async function normalize(state) {
+    if (state && state.schema === 2) return state;
+    const fresh = await loadDefaultState();
+    if (!state) return fresh;
+    if (Array.isArray(state.teams)) {
+      fresh.teams = fresh.teams.map((ft) => {
+        const old = state.teams.find((t) => t.id === ft.id);
+        if (!old) return ft;
+        return {
+          ...ft,
+          teamName: old.teamName || ft.teamName,
+          captain: old.captain || ft.captain,
+          goalkeeper: old.goalkeeper || "",
+          players: Array.isArray(old.players) && old.players.length
+            ? old.players.slice(0, 10)
+            : ft.players,
+        };
+      });
+    }
+    if (Array.isArray(state.announcements) && state.announcements.length) {
+      fresh.announcements = state.announcements;
+    }
+    if (state.settings) fresh.settings = { ...fresh.settings, ...state.settings };
+    return fresh;
+  }
+
   async function loadState() {
     // Try the live backend first.
     try {
       const data = await fetchJSON("/api/state");
       mode = "live";
-      if (data && data.state) return data.state;
-      // Backend reachable but KV empty — seed with defaults.
-      return await loadDefaultState();
+      return await normalize(data && data.state);
     } catch (e) {
       mode = "demo";
       const saved = localStorage.getItem(LOCAL_KEY);
       if (saved) {
-        try { return JSON.parse(saved); } catch (_) { /* corrupted — reset */ }
+        try { return await normalize(JSON.parse(saved)); } catch (_) { /* corrupted — reset */ }
       }
       return loadDefaultState();
     }
@@ -115,15 +144,33 @@ const API = (() => {
     if (mode !== "live") return null;
     try {
       const data = await fetchJSON("/api/state");
-      if (data && data.state && data.state.updatedAt !== currentUpdatedAt) {
+      if (data && data.state && data.state.schema === 2 &&
+          data.state.updatedAt !== currentUpdatedAt) {
         return data.state;
       }
     } catch (_) { /* transient network issue — keep current state */ }
     return null;
   }
 
+  /** Count one visit per browser session (fire-and-forget). */
+  function recordVisit() {
+    if (sessionStorage.getItem("tbwc26-visited")) return;
+    sessionStorage.setItem("tbwc26-visited", "1");
+    fetch("/api/visit", { method: "POST" }).catch(() => {});
+  }
+
+  /** Daily visit counts (admin only). Returns {"YYYY-MM-DD": n, ...}. */
+  async function getVisits() {
+    if (mode !== "live") return {};
+    const data = await fetchJSON("/api/visits", {
+      headers: { "Authorization": "Bearer " + getToken() },
+    });
+    return data.visits || {};
+  }
+
   return {
     loadState, saveState, login, logout, pollState, isAdmin,
+    recordVisit, getVisits,
     get mode() { return mode; },
   };
 })();

@@ -1,37 +1,38 @@
 # Taher Bagh World Cup Tournament 2026 ⚽🏆
 
 A cinematic, gold-and-black single-page web app for running a 32-team,
-World Cup style football tournament — official animated draw, live group
-standings, knockout bracket, Golden Boot race, and a password-protected
-admin panel.
+straight-knockout football tournament — official animated draw, animated
+bracket, auto-progressing schedule, awards & form guide, and a
+password-protected admin panel.
 
 Built with **HTML5 + CSS3 + vanilla JavaScript + GSAP**, hosted on a
 **Cloudflare Worker** (static assets + API) with a **Durable Object** for
 storage, so admin edits appear live for every spectator — with zero
 dashboard configuration.
 
-## Features
+## The tabs
 
-- **Official Draw** — animated ceremony: ball on a pedestal, card reveal,
-  team flies into its group, confetti finale. Fully random (crypto-strength
-  shuffle), admin-gated, with auto-play and skip modes.
-- **Groups & Points** — all 48 group fixtures are generated automatically
-  from the draw. Standings (P/W/D/L/GF/GA/GD/Pts) are computed from the
-  scores — never typed by hand. Tiebreakers: points → goal difference →
-  goals for → head-to-head.
-- **Knockout** — Round of 16 seeds itself from the final group tables
-  (1A v 2B, 1C v 2D, …), then QF → SF → Third Place → Final fill in
-  automatically as winners are decided. Penalty shootouts supported.
-- **Stats** — champion podium, Player of the Tournament, Best Goalkeeper,
-  and a live Golden Boot top-scorer table built from the entered scorers.
-- **Admin panel** — password protected. Edit team names, captains and
-  player lists; enter scores and goal scorers; set awards; post updates to
-  the LIVE ticker; reset the draw.
-- **Live updates** — spectators' phones poll the API every 15 seconds; an
-  admin edit shows up everywhere within moments.
-- **Offline/demo fallback** — opened without a backend, the site runs in
-  demo mode from `data/default-state.json` + localStorage (demo admin
-  password: `admin`).
+1. **Home** — hero header with a spinning trophy, XL sponsor banner (shown
+   on every tab) and four sponsor media slots (image/video, set in admin).
+2. **Teams** — the 32 squads: country, registered team name, captain and
+   10 players each (placeholders until confirmed).
+3. **Bracket** — animated world-cup-style knockout tree (R32 → R16 → QF →
+   SF → Third Place → Final), populated by the draw; winners advance
+   automatically, penalty shootouts supported.
+4. **Schedule** — kickoff times per round; the current round is highlighted
+   automatically and the next unlocks only when every result is in —
+   visitors can't flip between rounds.
+5. **Awards** — Golden Boot race, Golden Glove (fewest conceded, credited
+   to each team's designated goalkeeper), and a stats-driven "Favourites to
+   win" section with fun daily commentary and a dark-horse pick.
+6. **Draw** — admin-unlocked ceremony: ball → card reveal → team flies into
+   its bracket slot. Crypto-strength random, auto-play and skip modes.
+7. **Admin** — teams & squads, results with per-squad scorer dropdowns,
+   kickoff times, homepage media, ticker updates, built-in visitor
+   analytics, draw reset.
+
+Also: live updates via polling (spectator phones refresh within ~15s) and
+an offline/demo fallback (demo admin password: `admin`).
 
 ## Deployment (Worker: `taher-bagh-tournament`)
 

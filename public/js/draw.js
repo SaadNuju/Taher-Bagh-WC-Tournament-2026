@@ -1,6 +1,6 @@
 /* ============================================================
-   Official Draw — ceremony engine + GSAP animation.
-   The draw is admin-gated so only the organiser can run it.
+   Official Draw — admin-gated ceremony that fills the 32
+   bracket slots (Round of 32, Matches 1–16) one team at a time.
    ============================================================ */
 
 const DrawView = (() => {
@@ -8,14 +8,10 @@ const DrawView = (() => {
 
   let running = false;
   let auto = false;
-  let queue = [];      // shuffled team ids not yet placed
-  let placements = []; // { teamId, group, slotIndex } in draw order
-  let pickIndex = 0;
-
-  /* ---------- helpers ---------- */
+  let queue = [];   // shuffled team ids awaiting placement
+  let placed = [];  // team ids in bracket-slot order (index = slot)
 
   function shuffle(arr) {
-    // Fisher-Yates with a cryptographically strong source.
     const a = arr.slice();
     const rand = new Uint32Array(a.length);
     crypto.getRandomValues(rand);
@@ -26,35 +22,32 @@ const DrawView = (() => {
     return a;
   }
 
-  function targetFor(index) {
-    // Fill round by round: A1..H1, A2..H2, ...
-    return { group: GROUP_LETTERS[index % 8], slotIndex: Math.floor(index / 8) };
-  }
-
   /* ---------- rendering ---------- */
 
-  function groupCardHTML(state, letter, slots) {
-    const rows = [0, 1, 2, 3].map((i) => {
-      const teamId = slots[i];
-      const t = team(state, teamId);
-      if (!t) {
-        return `<div class="group-slot" data-group="${letter}" data-slot="${i}">
-          <span class="slot-placeholder"><i class="fa-solid fa-shield-halved"></i> —</span></div>`;
-      }
-      return `<div class="group-slot landed" data-group="${letter}" data-slot="${i}">
-        ${flagImg(t, "slot-flag")}
-        <span class="slot-country">${esc(t.country)}</span>
-        <span class="slot-team">${esc(t.teamName)}</span></div>`;
-    }).join("");
-    return `
-      <div class="panel group-card" id="draw-group-${letter}">
-        <div class="group-head" style="--accent: var(--group-${letter.toLowerCase()})">GROUP ${letter}</div>
-        ${rows}
-      </div>`;
+  function slotHTML(state, slotIndex, teamId) {
+    const t = team(state, teamId);
+    if (!t) {
+      return `<div class="draw-slot group-slot" data-slot="${slotIndex}">
+        <span class="slot-placeholder"><i class="fa-solid fa-shield-halved"></i> Slot ${slotIndex + 1}</span></div>`;
+    }
+    return `<div class="draw-slot group-slot landed" data-slot="${slotIndex}">
+      ${flagImg(t, "slot-flag")}
+      <span class="slot-country">${esc(t.country)}</span>
+      <span class="slot-team">${esc(t.teamName)}</span></div>`;
   }
 
-  function groupsGridHTML(state, groups) {
-    return GROUP_LETTERS.map((l) => groupCardHTML(state, l, groups[l] || [])).join("");
+  function bracketSlotsHTML(state, order) {
+    const cards = [];
+    for (let match = 0; match < 16; match++) {
+      cards.push(`
+        <div class="panel draw-match-card">
+          <div class="group-head" style="--accent: var(--group-${"abcdefgh"[match % 8]})">R32 · MATCH ${match + 1}</div>
+          ${slotHTML(state, match * 2, order[match * 2])}
+          <div class="draw-vs">VS</div>
+          ${slotHTML(state, match * 2 + 1, order[match * 2 + 1])}
+        </div>`);
+    }
+    return cards.join("");
   }
 
   function poolHTML(state, ids) {
@@ -70,19 +63,17 @@ const DrawView = (() => {
     if (state.draw.completed) {
       el.innerHTML = `
         <h2 class="section-title">Official Draw</h2>
-        <p class="section-sub">The official draw is complete — the groups are locked in. Good luck to all 32 teams!</p>
-        <div class="groups-grid">${groupsGridHTML(state, state.draw.groups)}</div>
-        <p class="center mt-20"><a class="btn-gold" href="#groups"><i class="fa-solid fa-table-list"></i> VIEW GROUP STANDINGS</a></p>`;
+        <p class="section-sub">The draw is complete — the road to the final is set. Good luck to all 32 teams!</p>
+        <div class="draw-matches-grid">${bracketSlotsHTML(state, state.draw.bracketOrder)}</div>
+        <p class="center mt-20"><a class="btn-gold" href="#bracket"><i class="fa-solid fa-sitemap"></i> VIEW THE BRACKET</a></p>`;
       return;
     }
 
-    const inProgress = running;
-    const pool = inProgress ? queue : state.teams.map((t) => t.id);
-    const liveGroups = inProgress ? currentGroups() : state.draw.groups;
+    const pool = running ? queue : state.teams.map((t) => t.id);
 
     el.innerHTML = `
       <h2 class="section-title">Official Draw</h2>
-      <p class="section-sub">The draw will distribute the 32 teams into 8 groups of 4.</p>
+      <p class="section-sub">32 teams · 16 first-round matches · pure knockout. Each drawn team takes the next open bracket slot.</p>
 
       <div class="panel draw-stage">
         <div class="stage-lights"></div>
@@ -99,7 +90,7 @@ const DrawView = (() => {
         <div class="pedestal"></div>
 
         <div style="display:flex;gap:12px;flex-wrap:wrap;justify-content:center;margin-top:24px;">
-          ${inProgress ? `
+          ${running ? `
             <button class="btn-gold" id="btn-draw-next"><i class="fa-solid fa-futbol"></i> DRAW NEXT TEAM</button>
             <button class="btn-outline" id="btn-draw-auto">${auto ? '<i class="fa-solid fa-pause"></i> PAUSE AUTO' : '<i class="fa-solid fa-play"></i> AUTO PLAY'}</button>
             <button class="btn-outline" id="btn-draw-skip"><i class="fa-solid fa-forward-fast"></i> SKIP TO END</button>
@@ -108,7 +99,7 @@ const DrawView = (() => {
           `}
         </div>
         <div class="draw-hint"><i class="fa-solid fa-circle-info"></i>
-          ${inProgress ? `${32 - queue.length} of 32 teams drawn` : "The draw is run by the tournament organiser and is final once completed."}
+          ${running ? `${placed.length} of 32 teams drawn` : "The draw is run by the tournament organiser and is final once completed."}
         </div>
         <div id="draw-login" style="display:none;max-width:320px;width:100%;margin-top:16px;">
           <div class="form-field">
@@ -119,17 +110,11 @@ const DrawView = (() => {
         </div>
       </div>
 
-      <h2 class="section-title mt-20" style="margin-top:34px">The Groups</h2>
-      <p class="section-sub">Awaiting the official draw…</p>
-      <div class="groups-grid" id="draw-groups">${groupsGridHTML(state, liveGroups)}</div>`;
+      <h2 class="section-title" style="margin-top:34px">Round of 32</h2>
+      <p class="section-sub">${running ? "The bracket is filling…" : "Awaiting the official draw…"}</p>
+      <div class="draw-matches-grid" id="draw-slots">${bracketSlotsHTML(state, placed)}</div>`;
 
     bindEvents(state);
-  }
-
-  function currentGroups() {
-    const groups = { A: [], B: [], C: [], D: [], E: [], F: [], G: [], H: [] };
-    for (const p of placements) groups[p.group][p.slotIndex] = p.teamId;
-    return groups;
   }
 
   /* ---------- ceremony ---------- */
@@ -149,9 +134,8 @@ const DrawView = (() => {
       if (auto) drawNext(state);
     });
     $("btn-draw-login")?.addEventListener("click", async () => {
-      const pwd = $("draw-password").value;
       try {
-        await API.login(pwd);
+        await API.login($("draw-password").value);
         App.toast("Draw unlocked — good luck!");
         beginDraw(state);
       } catch (e) {
@@ -168,8 +152,7 @@ const DrawView = (() => {
     }
     running = true;
     auto = false;
-    pickIndex = 0;
-    placements = [];
+    placed = [];
     queue = shuffle(state.teams.map((t) => t.id));
     Sound.play("start");
     render(state);
@@ -182,39 +165,36 @@ const DrawView = (() => {
     animating = true;
 
     const teamId = queue.shift();
-    const target = targetFor(pickIndex++);
-    placements.push({ teamId, group: target.group, slotIndex: target.slotIndex });
+    const slotIndex = placed.length;
+    placed.push(teamId);
     const t = team(state, teamId);
+    const matchNo = Math.floor(slotIndex / 2) + 1;
 
     const wrap = document.getElementById("draw-ball-wrap");
     const ball = document.getElementById("draw-ball");
     const g = window.gsap;
 
-    // 1. Ball shake / spin
     if (g && ball) {
       await g.to(ball, { rotate: 360, scale: 1.12, duration: 0.55, ease: "power2.inOut" }).then();
       g.set(ball, { rotate: 0, scale: 1 });
     }
     Sound.play("reveal");
 
-    // 2. Reveal card in place of the ball
     const card = document.createElement("div");
     card.className = "team-card reveal";
     card.innerHTML = `
       ${flagImg(t, "card-flag")}
       <div class="card-country">${esc(t.country)}</div>
       <div class="card-team">${esc(t.teamName)}</div>
-      <div class="card-group-tag">GROUP ${target.group}</div>`;
+      <div class="card-group-tag">MATCH ${matchNo}</div>`;
     ball.style.visibility = "hidden";
     wrap.appendChild(card);
 
-    // Remove from the visible pool
     document.querySelector(`[data-pool="${teamId}"]`)?.remove();
 
-    await wait(g ? 1150 : 500);
+    await wait(g ? 1150 : 450);
 
-    // 3. Fly the card into its group slot
-    const slot = document.querySelector(`.group-slot[data-group="${target.group}"][data-slot="${target.slotIndex}"]`);
+    const slot = document.querySelector(`.draw-slot[data-slot="${slotIndex}"]`);
     if (g && slot) {
       const from = card.getBoundingClientRect();
       const to = slot.getBoundingClientRect();
@@ -237,21 +217,17 @@ const DrawView = (() => {
       card.remove();
     }
 
-    // 4. Land the team in the slot
     if (slot) {
       slot.classList.add("landed");
       slot.innerHTML = `${flagImg(t, "slot-flag")}
         <span class="slot-country">${esc(t.country)}</span>
         <span class="slot-team">${esc(t.teamName)}</span>`;
-      slot.style.animation = "none";
-      void slot.offsetWidth; // restart the landing highlight
-      slot.style.animation = "";
     }
     Sound.play("land");
     ball.style.visibility = "visible";
 
     const hint = document.querySelector(".draw-hint");
-    if (hint) hint.innerHTML = `<i class="fa-solid fa-circle-info"></i> ${32 - queue.length} of 32 teams drawn`;
+    if (hint) hint.innerHTML = `<i class="fa-solid fa-circle-info"></i> ${placed.length} of 32 teams drawn`;
 
     animating = false;
 
@@ -268,8 +244,7 @@ const DrawView = (() => {
     auto = false;
     while (queue.length > 0) {
       const teamId = queue.shift();
-      const target = targetFor(pickIndex++);
-      placements.push({ teamId, group: target.group, slotIndex: target.slotIndex });
+      placed.push(teamId);
       document.querySelector(`[data-pool="${teamId}"]`)?.remove();
     }
     await completeDraw(state);
@@ -278,20 +253,16 @@ const DrawView = (() => {
   async function completeDraw(state) {
     running = false;
     state.draw.completed = true;
-    state.draw.groups = currentGroups();
-    state.draw.drawOrder = placements.map((p) => p.teamId);
-    state.matches = [
-      ...Tournament.generateGroupMatches(state.draw),
-      ...Tournament.generateKnockoutSkeleton(),
-    ];
+    state.draw.bracketOrder = placed.slice();
+    state.draw.drawOrder = placed.slice();
     state.announcements.unshift({
-      text: "The official draw is complete! Check out the groups and fixtures.",
+      text: "The official draw is complete! The Round of 32 bracket is live — check your matchup.",
       date: new Date().toISOString(),
     });
 
     try {
       await API.saveState(state);
-      App.toast("Official draw complete — groups and fixtures are live!");
+      App.toast("Official draw complete — the bracket is live!");
     } catch (e) {
       App.toast("Draw done, but saving failed: " + e.message, true);
     }
@@ -305,5 +276,5 @@ const DrawView = (() => {
     return new Promise((r) => setTimeout(r, ms));
   }
 
-  return { render, groupCardHTML, groupsGridHTML };
+  return { render };
 })();

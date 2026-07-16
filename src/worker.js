@@ -46,6 +46,18 @@ export class TournamentState {
       return json({ valid: !!token && !!sessions[token] });
     }
 
+    if (pathname === "/do/visit" && request.method === "POST") {
+      const visits = (await this.ctx.storage.get("visits")) || {};
+      const day = new Date().toISOString().slice(0, 10);
+      visits[day] = (visits[day] || 0) + 1;
+      await this.ctx.storage.put("visits", visits);
+      return json({ ok: true });
+    }
+
+    if (pathname === "/do/visits" && request.method === "POST") {
+      return json({ visits: (await this.ctx.storage.get("visits")) || {} });
+    }
+
     if (request.method === "GET") {
       const state = await this.ctx.storage.get("state");
       return json({ state: state ?? null });
@@ -140,6 +152,17 @@ export default {
     }
     if (pathname === "/api/state") {
       return handleState(request, env);
+    }
+    if (pathname === "/api/visit" && request.method === "POST") {
+      return stateStub(env).fetch(doRequest(request, "/do/visit", {}));
+    }
+    if (pathname === "/api/visits" && request.method === "GET") {
+      const auth = request.headers.get("Authorization") || "";
+      const token = auth.startsWith("Bearer ") ? auth.slice(7) : "";
+      const verdict = await (await stateStub(env)
+        .fetch(doRequest(request, "/do/verify", { token }))).json();
+      if (!verdict.valid) return json({ error: "Not authorised" }, 401);
+      return stateStub(env).fetch(doRequest(request, "/do/visits", {}));
     }
     if (pathname.startsWith("/api/")) {
       return json({ error: "Not found" }, 404);

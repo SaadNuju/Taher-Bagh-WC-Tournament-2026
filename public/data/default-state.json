@@ -1,6 +1,7 @@
 {
-  "version": 1,
-  "updatedAt": "2026-07-16T07:07:55.340Z",
+  "version": 2,
+  "schema": 2,
+  "updatedAt": "2026-07-16T17:02:36.569Z",
   "teams": [
     {
       "id": "t-br",
@@ -10,7 +11,19 @@
       "flag": "assets/flags/br.svg",
       "teamName": "Team 01",
       "captain": "TBC",
-      "players": []
+      "goalkeeper": "",
+      "players": [
+        "Player 01",
+        "Player 02",
+        "Player 03",
+        "Player 04",
+        "Player 05",
+        "Player 06",
+        "Player 07",
+        "Player 08",
+        "Player 09",
+        "Player 10"
+      ]
     },
     {
       "id": "t-ar",
@@ -20,7 +33,19 @@
       "flag": "assets/flags/ar.svg",
       "teamName": "Team 02",
       "captain": "TBC",
-      "players": []
+      "goalkeeper": "",
+      "players": [
+        "Player 01",
+        "Player 02",
+        "Player 03",
+        "Player 04",
+        "Player 05",
+        "Player 06",
+        "Player 07",
+        "Player 08",
+        "Player 09",
+        "Player 10"
+      ]
     },
     {
       "id": "t-fr",
@@ -30,7 +55,19 @@
       "flag": "assets/flags/fr.svg",
       "teamName": "Team 03",
       "captain": "TBC",
-      "players": []
+      "goalkeeper": "",
+      "players": [
+        "Player 01",
+        "Player 02",
+        "Player 03",
+        "Player 04",
+        "Player 05",
+        "Player 06",
+        "Player 07",
+        "Player 08",
+        "Player 09",
+        "Player 10"
+      ]
     },
     {
       "id": "t-es",
@@ -40,7 +77,19 @@
       "flag": "assets/flags/es.svg",
       "teamName": "Team 04",
       "captain": "TBC",
-      "players": []
+      "goalkeeper": "",
+      "players": [
+        "Player 01",
+        "Player 02",
+        "Player 03",
+        "Player 04",
+        "Player 05",
+        "Player 06",
+        "Player 07",
+        "Player 08",
+        "Player 09",
+        "Player 10"
+      ]
     },
     {
       "id": "t-gb-eng",
@@ -50,7 +99,19 @@
       "flag": "assets/flags/gb-eng.svg",
       "teamName": "Team 05",
       "captain": "TBC",
-      "players": []
+      "goalkeeper": "",
+      "players": [
+        "Player 01",
+        "Player 02",
+        "Player 03",
+        "Player 04",
+        "Player 05",
+        "Player 06",
+        "Player 07",
+        "Player 08",
+        "Player 09",
+        "Player 10"
+      ]
     },
     {
       "id": "t-de",
@@ -60,7 +121,19 @@
       "flag": "assets/flags/de.svg",
       "teamName": "Team 06",
       "captain": "TBC",
-      "players": []
+      "goalkeeper": "",
+      "players": [
+        "Player 01",
+        "Player 02",
+        "Player 03",
+        "Player 04",
+        "Player 05",
+        "Player 06",
+        "Player 07",
+        "Player 08",
+        "Player 09",
+        "Player 10"
+      ]
     },
     {
       "id": "t-pt",
@@ -70,7 +143,19 @@
       "flag": "assets/flags/pt.svg",
       "teamName": "Team 07",
       "captain": "TBC",
-      "players": []
+      "goalkeeper": "",
+      "players": [
+        "Player 01",
+        "Player 02",
+        "Player 03",
+        "Player 04",
+        "Player 05",
+        "Player 06",
+        "Player 07",
+        "Player 08",
+        "Player 09",
+        "Player 10"
+      ]
     },
     {
       "id": "t-nl",
@@ -80,7 +165,19 @@
       "flag": "assets/flags/nl.svg",
       "teamName": "Team 08",
       "captain": "TBC",
-      "players": []
+      "goalkeeper": "",
+      "players": [
+        "Player 01",
+        "Player 02",
+        "Player 03",
+        "Player 04",
+        "Player 05",
+        "Player 06",
+        "Player 07",
+        "Player 08",
+        "Player 09",
+        "Player 10"
+      ]
     },
     {
       "id": "t-be",
@@ -90,7 +187,19 @@
       "flag": "assets/flags/be.svg",
       "teamName": "Team 09",
       "captain": "TBC",
-      "players": []
+      "goalkeeper": "",
+      "players": [
+        "Player 01",
+        "Player 02",
+        "Player 03",
+        "Player 04",
+        "Player 05",
+        "Player 06",
+        "Player 07",
+        "Player 08",
+        "Player 09",
+        "Player 10"
+      ]
     },
     {
       "id": "t-jp",
@@ -100,7 +209,19 @@
       "flag": "assets/flags/jp.svg",
       "teamName": "Team 10",
       "captain": "TBC",
-      "players": []
+      "goalkeeper": "",
+      "players": [
+        "Player 01",
+        "Player 02",
+        "Player 03",
+        "Player 04",
+        "Player 05",
+        "Player 06",
+        "Player 07",
+        "Player 08",
+        "Player 09",
+        "Player 10"
+      ]
     },
     {
       "id": "t-kr",
@@ -110,7 +231,19 @@
       "flag": "assets/flags/kr.svg",
       "teamName": "Team 11",
       "captain": "TBC",
-      "players": []
+      "goalkeeper": "",
+      "players": [
+        "Player 01",
+        "Player 02",
+        "Player 03",
+        "Player 04",
+        "Player 05",
+        "Player 06",
+        "Player 07",
+        "Player 08",
+        "Player 09",
+        "Player 10"
+      ]
     },
     {
       "id": "t-mx",
@@ -120,7 +253,19 @@
       "flag": "assets/flags/mx.svg",
       "teamName": "Team 12",
       "captain": "TBC",
-      "players": []
+      "goalkeeper": "",
+      "players": [
+        "Player 01",
+        "Player 02",
+        "Player 03",
+        "Player 04",
+        "Player 05",
+        "Player 06",
+        "Player 07",
+        "Player 08",
+        "Player 09",
+        "Player 10"
+      ]
     },
     {
       "id": "t-us",
@@ -130,7 +275,19 @@
       "flag": "assets/flags/us.svg",
       "teamName": "Team 13",
       "captain": "TBC",
-      "players": []
+      "goalkeeper": "",
+      "players": [
+        "Player 01",
+        "Player 02",
+        "Player 03",
+        "Player 04",
+        "Player 05",
+        "Player 06",
+        "Player 07",
+        "Player 08",
+        "Player 09",
+        "Player 10"
+      ]
     },
     {
       "id": "t-it",
@@ -140,7 +297,19 @@
       "flag": "assets/flags/it.svg",
       "teamName": "Team 14",
       "captain": "TBC",
-      "players": []
+      "goalkeeper": "",
+      "players": [
+        "Player 01",
+        "Player 02",
+        "Player 03",
+        "Player 04",
+        "Player 05",
+        "Player 06",
+        "Player 07",
+        "Player 08",
+        "Player 09",
+        "Player 10"
+      ]
     },
     {
       "id": "t-hr",
@@ -150,7 +319,19 @@
       "flag": "assets/flags/hr.svg",
       "teamName": "Team 15",
       "captain": "TBC",
-      "players": []
+      "goalkeeper": "",
+      "players": [
+        "Player 01",
+        "Player 02",
+        "Player 03",
+        "Player 04",
+        "Player 05",
+        "Player 06",
+        "Player 07",
+        "Player 08",
+        "Player 09",
+        "Player 10"
+      ]
     },
     {
       "id": "t-uy",
@@ -160,7 +341,19 @@
       "flag": "assets/flags/uy.svg",
       "teamName": "Team 16",
       "captain": "TBC",
-      "players": []
+      "goalkeeper": "",
+      "players": [
+        "Player 01",
+        "Player 02",
+        "Player 03",
+        "Player 04",
+        "Player 05",
+        "Player 06",
+        "Player 07",
+        "Player 08",
+        "Player 09",
+        "Player 10"
+      ]
     },
     {
       "id": "t-co",
@@ -170,7 +363,19 @@
       "flag": "assets/flags/co.svg",
       "teamName": "Team 17",
       "captain": "TBC",
-      "players": []
+      "goalkeeper": "",
+      "players": [
+        "Player 01",
+        "Player 02",
+        "Player 03",
+        "Player 04",
+        "Player 05",
+        "Player 06",
+        "Player 07",
+        "Player 08",
+        "Player 09",
+        "Player 10"
+      ]
     },
     {
       "id": "t-ch",
@@ -180,7 +385,19 @@
       "flag": "assets/flags/ch.svg",
       "teamName": "Team 18",
       "captain": "TBC",
-      "players": []
+      "goalkeeper": "",
+      "players": [
+        "Player 01",
+        "Player 02",
+        "Player 03",
+        "Player 04",
+        "Player 05",
+        "Player 06",
+        "Player 07",
+        "Player 08",
+        "Player 09",
+        "Player 10"
+      ]
     },
     {
       "id": "t-dk",
@@ -190,7 +407,19 @@
       "flag": "assets/flags/dk.svg",
       "teamName": "Team 19",
       "captain": "TBC",
-      "players": []
+      "goalkeeper": "",
+      "players": [
+        "Player 01",
+        "Player 02",
+        "Player 03",
+        "Player 04",
+        "Player 05",
+        "Player 06",
+        "Player 07",
+        "Player 08",
+        "Player 09",
+        "Player 10"
+      ]
     },
     {
       "id": "t-se",
@@ -200,7 +429,19 @@
       "flag": "assets/flags/se.svg",
       "teamName": "Team 20",
       "captain": "TBC",
-      "players": []
+      "goalkeeper": "",
+      "players": [
+        "Player 01",
+        "Player 02",
+        "Player 03",
+        "Player 04",
+        "Player 05",
+        "Player 06",
+        "Player 07",
+        "Player 08",
+        "Player 09",
+        "Player 10"
+      ]
     },
     {
       "id": "t-no",
@@ -210,7 +451,19 @@
       "flag": "assets/flags/no.svg",
       "teamName": "Team 21",
       "captain": "TBC",
-      "players": []
+      "goalkeeper": "",
+      "players": [
+        "Player 01",
+        "Player 02",
+        "Player 03",
+        "Player 04",
+        "Player 05",
+        "Player 06",
+        "Player 07",
+        "Player 08",
+        "Player 09",
+        "Player 10"
+      ]
     },
     {
       "id": "t-au",
@@ -220,7 +473,19 @@
       "flag": "assets/flags/au.svg",
       "teamName": "Team 22",
       "captain": "TBC",
-      "players": []
+      "goalkeeper": "",
+      "players": [
+        "Player 01",
+        "Player 02",
+        "Player 03",
+        "Player 04",
+        "Player 05",
+        "Player 06",
+        "Player 07",
+        "Player 08",
+        "Player 09",
+        "Player 10"
+      ]
     },
     {
       "id": "t-ma",
@@ -230,7 +495,19 @@
       "flag": "assets/flags/ma.svg",
       "teamName": "Team 23",
       "captain": "TBC",
-      "players": []
+      "goalkeeper": "",
+      "players": [
+        "Player 01",
+        "Player 02",
+        "Player 03",
+        "Player 04",
+        "Player 05",
+        "Player 06",
+        "Player 07",
+        "Player 08",
+        "Player 09",
+        "Player 10"
+      ]
     },
     {
       "id": "t-sn",
@@ -240,7 +517,19 @@
       "flag": "assets/flags/sn.svg",
       "teamName": "Team 24",
       "captain": "TBC",
-      "players": []
+      "goalkeeper": "",
+      "players": [
+        "Player 01",
+        "Player 02",
+        "Player 03",
+        "Player 04",
+        "Player 05",
+        "Player 06",
+        "Player 07",
+        "Player 08",
+        "Player 09",
+        "Player 10"
+      ]
     },
     {
       "id": "t-ca",
@@ -250,7 +539,19 @@
       "flag": "assets/flags/ca.svg",
       "teamName": "Team 25",
       "captain": "TBC",
-      "players": []
+      "goalkeeper": "",
+      "players": [
+        "Player 01",
+        "Player 02",
+        "Player 03",
+        "Player 04",
+        "Player 05",
+        "Player 06",
+        "Player 07",
+        "Player 08",
+        "Player 09",
+        "Player 10"
+      ]
     },
     {
       "id": "t-pl",
@@ -260,7 +561,19 @@
       "flag": "assets/flags/pl.svg",
       "teamName": "Team 26",
       "captain": "TBC",
-      "players": []
+      "goalkeeper": "",
+      "players": [
+        "Player 01",
+        "Player 02",
+        "Player 03",
+        "Player 04",
+        "Player 05",
+        "Player 06",
+        "Player 07",
+        "Player 08",
+        "Player 09",
+        "Player 10"
+      ]
     },
     {
       "id": "t-rs",
@@ -270,7 +583,19 @@
       "flag": "assets/flags/rs.svg",
       "teamName": "Team 27",
       "captain": "TBC",
-      "players": []
+      "goalkeeper": "",
+      "players": [
+        "Player 01",
+        "Player 02",
+        "Player 03",
+        "Player 04",
+        "Player 05",
+        "Player 06",
+        "Player 07",
+        "Player 08",
+        "Player 09",
+        "Player 10"
+      ]
     },
     {
       "id": "t-gb-wls",
@@ -280,7 +605,19 @@
       "flag": "assets/flags/gb-wls.svg",
       "teamName": "Team 28",
       "captain": "TBC",
-      "players": []
+      "goalkeeper": "",
+      "players": [
+        "Player 01",
+        "Player 02",
+        "Player 03",
+        "Player 04",
+        "Player 05",
+        "Player 06",
+        "Player 07",
+        "Player 08",
+        "Player 09",
+        "Player 10"
+      ]
     },
     {
       "id": "t-ir",
@@ -290,7 +627,19 @@
       "flag": "assets/flags/ir.svg",
       "teamName": "Team 29",
       "captain": "TBC",
-      "players": []
+      "goalkeeper": "",
+      "players": [
+        "Player 01",
+        "Player 02",
+        "Player 03",
+        "Player 04",
+        "Player 05",
+        "Player 06",
+        "Player 07",
+        "Player 08",
+        "Player 09",
+        "Player 10"
+      ]
     },
     {
       "id": "t-tn",
@@ -300,7 +649,19 @@
       "flag": "assets/flags/tn.svg",
       "teamName": "Team 30",
       "captain": "TBC",
-      "players": []
+      "goalkeeper": "",
+      "players": [
+        "Player 01",
+        "Player 02",
+        "Player 03",
+        "Player 04",
+        "Player 05",
+        "Player 06",
+        "Player 07",
+        "Player 08",
+        "Player 09",
+        "Player 10"
+      ]
     },
     {
       "id": "t-cm",
@@ -310,7 +671,19 @@
       "flag": "assets/flags/cm.svg",
       "teamName": "Team 31",
       "captain": "TBC",
-      "players": []
+      "goalkeeper": "",
+      "players": [
+        "Player 01",
+        "Player 02",
+        "Player 03",
+        "Player 04",
+        "Player 05",
+        "Player 06",
+        "Player 07",
+        "Player 08",
+        "Player 09",
+        "Player 10"
+      ]
     },
     {
       "id": "t-ec",
@@ -320,35 +693,485 @@
       "flag": "assets/flags/ec.svg",
       "teamName": "Team 32",
       "captain": "TBC",
-      "players": []
+      "goalkeeper": "",
+      "players": [
+        "Player 01",
+        "Player 02",
+        "Player 03",
+        "Player 04",
+        "Player 05",
+        "Player 06",
+        "Player 07",
+        "Player 08",
+        "Player 09",
+        "Player 10"
+      ]
     }
   ],
   "draw": {
     "completed": false,
-    "groups": {
-      "A": [],
-      "B": [],
-      "C": [],
-      "D": [],
-      "E": [],
-      "F": [],
-      "G": [],
-      "H": []
-    },
+    "bracketOrder": [],
     "drawOrder": []
   },
-  "matches": [],
+  "matches": [
+    {
+      "id": "r32-1",
+      "round": "r32",
+      "slot": 1,
+      "teamA": null,
+      "teamB": null,
+      "scoreA": null,
+      "scoreB": null,
+      "pensA": null,
+      "pensB": null,
+      "scorers": [],
+      "status": "scheduled",
+      "kickoff": null
+    },
+    {
+      "id": "r32-2",
+      "round": "r32",
+      "slot": 2,
+      "teamA": null,
+      "teamB": null,
+      "scoreA": null,
+      "scoreB": null,
+      "pensA": null,
+      "pensB": null,
+      "scorers": [],
+      "status": "scheduled",
+      "kickoff": null
+    },
+    {
+      "id": "r32-3",
+      "round": "r32",
+      "slot": 3,
+      "teamA": null,
+      "teamB": null,
+      "scoreA": null,
+      "scoreB": null,
+      "pensA": null,
+      "pensB": null,
+      "scorers": [],
+      "status": "scheduled",
+      "kickoff": null
+    },
+    {
+      "id": "r32-4",
+      "round": "r32",
+      "slot": 4,
+      "teamA": null,
+      "teamB": null,
+      "scoreA": null,
+      "scoreB": null,
+      "pensA": null,
+      "pensB": null,
+      "scorers": [],
+      "status": "scheduled",
+      "kickoff": null
+    },
+    {
+      "id": "r32-5",
+      "round": "r32",
+      "slot": 5,
+      "teamA": null,
+      "teamB": null,
+      "scoreA": null,
+      "scoreB": null,
+      "pensA": null,
+      "pensB": null,
+      "scorers": [],
+      "status": "scheduled",
+      "kickoff": null
+    },
+    {
+      "id": "r32-6",
+      "round": "r32",
+      "slot": 6,
+      "teamA": null,
+      "teamB": null,
+      "scoreA": null,
+      "scoreB": null,
+      "pensA": null,
+      "pensB": null,
+      "scorers": [],
+      "status": "scheduled",
+      "kickoff": null
+    },
+    {
+      "id": "r32-7",
+      "round": "r32",
+      "slot": 7,
+      "teamA": null,
+      "teamB": null,
+      "scoreA": null,
+      "scoreB": null,
+      "pensA": null,
+      "pensB": null,
+      "scorers": [],
+      "status": "scheduled",
+      "kickoff": null
+    },
+    {
+      "id": "r32-8",
+      "round": "r32",
+      "slot": 8,
+      "teamA": null,
+      "teamB": null,
+      "scoreA": null,
+      "scoreB": null,
+      "pensA": null,
+      "pensB": null,
+      "scorers": [],
+      "status": "scheduled",
+      "kickoff": null
+    },
+    {
+      "id": "r32-9",
+      "round": "r32",
+      "slot": 9,
+      "teamA": null,
+      "teamB": null,
+      "scoreA": null,
+      "scoreB": null,
+      "pensA": null,
+      "pensB": null,
+      "scorers": [],
+      "status": "scheduled",
+      "kickoff": null
+    },
+    {
+      "id": "r32-10",
+      "round": "r32",
+      "slot": 10,
+      "teamA": null,
+      "teamB": null,
+      "scoreA": null,
+      "scoreB": null,
+      "pensA": null,
+      "pensB": null,
+      "scorers": [],
+      "status": "scheduled",
+      "kickoff": null
+    },
+    {
+      "id": "r32-11",
+      "round": "r32",
+      "slot": 11,
+      "teamA": null,
+      "teamB": null,
+      "scoreA": null,
+      "scoreB": null,
+      "pensA": null,
+      "pensB": null,
+      "scorers": [],
+      "status": "scheduled",
+      "kickoff": null
+    },
+    {
+      "id": "r32-12",
+      "round": "r32",
+      "slot": 12,
+      "teamA": null,
+      "teamB": null,
+      "scoreA": null,
+      "scoreB": null,
+      "pensA": null,
+      "pensB": null,
+      "scorers": [],
+      "status": "scheduled",
+      "kickoff": null
+    },
+    {
+      "id": "r32-13",
+      "round": "r32",
+      "slot": 13,
+      "teamA": null,
+      "teamB": null,
+      "scoreA": null,
+      "scoreB": null,
+      "pensA": null,
+      "pensB": null,
+      "scorers": [],
+      "status": "scheduled",
+      "kickoff": null
+    },
+    {
+      "id": "r32-14",
+      "round": "r32",
+      "slot": 14,
+      "teamA": null,
+      "teamB": null,
+      "scoreA": null,
+      "scoreB": null,
+      "pensA": null,
+      "pensB": null,
+      "scorers": [],
+      "status": "scheduled",
+      "kickoff": null
+    },
+    {
+      "id": "r32-15",
+      "round": "r32",
+      "slot": 15,
+      "teamA": null,
+      "teamB": null,
+      "scoreA": null,
+      "scoreB": null,
+      "pensA": null,
+      "pensB": null,
+      "scorers": [],
+      "status": "scheduled",
+      "kickoff": null
+    },
+    {
+      "id": "r32-16",
+      "round": "r32",
+      "slot": 16,
+      "teamA": null,
+      "teamB": null,
+      "scoreA": null,
+      "scoreB": null,
+      "pensA": null,
+      "pensB": null,
+      "scorers": [],
+      "status": "scheduled",
+      "kickoff": null
+    },
+    {
+      "id": "r16-1",
+      "round": "r16",
+      "slot": 1,
+      "teamA": null,
+      "teamB": null,
+      "scoreA": null,
+      "scoreB": null,
+      "pensA": null,
+      "pensB": null,
+      "scorers": [],
+      "status": "scheduled",
+      "kickoff": null
+    },
+    {
+      "id": "r16-2",
+      "round": "r16",
+      "slot": 2,
+      "teamA": null,
+      "teamB": null,
+      "scoreA": null,
+      "scoreB": null,
+      "pensA": null,
+      "pensB": null,
+      "scorers": [],
+      "status": "scheduled",
+      "kickoff": null
+    },
+    {
+      "id": "r16-3",
+      "round": "r16",
+      "slot": 3,
+      "teamA": null,
+      "teamB": null,
+      "scoreA": null,
+      "scoreB": null,
+      "pensA": null,
+      "pensB": null,
+      "scorers": [],
+      "status": "scheduled",
+      "kickoff": null
+    },
+    {
+      "id": "r16-4",
+      "round": "r16",
+      "slot": 4,
+      "teamA": null,
+      "teamB": null,
+      "scoreA": null,
+      "scoreB": null,
+      "pensA": null,
+      "pensB": null,
+      "scorers": [],
+      "status": "scheduled",
+      "kickoff": null
+    },
+    {
+      "id": "r16-5",
+      "round": "r16",
+      "slot": 5,
+      "teamA": null,
+      "teamB": null,
+      "scoreA": null,
+      "scoreB": null,
+      "pensA": null,
+      "pensB": null,
+      "scorers": [],
+      "status": "scheduled",
+      "kickoff": null
+    },
+    {
+      "id": "r16-6",
+      "round": "r16",
+      "slot": 6,
+      "teamA": null,
+      "teamB": null,
+      "scoreA": null,
+      "scoreB": null,
+      "pensA": null,
+      "pensB": null,
+      "scorers": [],
+      "status": "scheduled",
+      "kickoff": null
+    },
+    {
+      "id": "r16-7",
+      "round": "r16",
+      "slot": 7,
+      "teamA": null,
+      "teamB": null,
+      "scoreA": null,
+      "scoreB": null,
+      "pensA": null,
+      "pensB": null,
+      "scorers": [],
+      "status": "scheduled",
+      "kickoff": null
+    },
+    {
+      "id": "r16-8",
+      "round": "r16",
+      "slot": 8,
+      "teamA": null,
+      "teamB": null,
+      "scoreA": null,
+      "scoreB": null,
+      "pensA": null,
+      "pensB": null,
+      "scorers": [],
+      "status": "scheduled",
+      "kickoff": null
+    },
+    {
+      "id": "qf-1",
+      "round": "qf",
+      "slot": 1,
+      "teamA": null,
+      "teamB": null,
+      "scoreA": null,
+      "scoreB": null,
+      "pensA": null,
+      "pensB": null,
+      "scorers": [],
+      "status": "scheduled",
+      "kickoff": null
+    },
+    {
+      "id": "qf-2",
+      "round": "qf",
+      "slot": 2,
+      "teamA": null,
+      "teamB": null,
+      "scoreA": null,
+      "scoreB": null,
+      "pensA": null,
+      "pensB": null,
+      "scorers": [],
+      "status": "scheduled",
+      "kickoff": null
+    },
+    {
+      "id": "qf-3",
+      "round": "qf",
+      "slot": 3,
+      "teamA": null,
+      "teamB": null,
+      "scoreA": null,
+      "scoreB": null,
+      "pensA": null,
+      "pensB": null,
+      "scorers": [],
+      "status": "scheduled",
+      "kickoff": null
+    },
+    {
+      "id": "qf-4",
+      "round": "qf",
+      "slot": 4,
+      "teamA": null,
+      "teamB": null,
+      "scoreA": null,
+      "scoreB": null,
+      "pensA": null,
+      "pensB": null,
+      "scorers": [],
+      "status": "scheduled",
+      "kickoff": null
+    },
+    {
+      "id": "sf-1",
+      "round": "sf",
+      "slot": 1,
+      "teamA": null,
+      "teamB": null,
+      "scoreA": null,
+      "scoreB": null,
+      "pensA": null,
+      "pensB": null,
+      "scorers": [],
+      "status": "scheduled",
+      "kickoff": null
+    },
+    {
+      "id": "sf-2",
+      "round": "sf",
+      "slot": 2,
+      "teamA": null,
+      "teamB": null,
+      "scoreA": null,
+      "scoreB": null,
+      "pensA": null,
+      "pensB": null,
+      "scorers": [],
+      "status": "scheduled",
+      "kickoff": null
+    },
+    {
+      "id": "tp",
+      "round": "tp",
+      "slot": 1,
+      "teamA": null,
+      "teamB": null,
+      "scoreA": null,
+      "scoreB": null,
+      "pensA": null,
+      "pensB": null,
+      "scorers": [],
+      "status": "scheduled",
+      "kickoff": null
+    },
+    {
+      "id": "final",
+      "round": "final",
+      "slot": 1,
+      "teamA": null,
+      "teamB": null,
+      "scoreA": null,
+      "scoreB": null,
+      "pensA": null,
+      "pensB": null,
+      "scorers": [],
+      "status": "scheduled",
+      "kickoff": null
+    }
+  ],
+  "media": [],
   "awards": {
-    "champion": null,
-    "runnerUp": null,
-    "thirdPlace": null,
     "playerOfTournament": null,
     "bestGoalkeeper": null
   },
   "announcements": [
     {
       "text": "Welcome to the Taher Bagh World Cup Tournament 2026! The official draw is coming soon.",
-      "date": "2026-07-16T07:07:55.340Z"
+      "date": "2026-07-16T17:02:36.585Z"
     }
   ],
   "settings": {

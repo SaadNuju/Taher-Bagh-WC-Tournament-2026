@@ -1,6 +1,7 @@
 /* ============================================================
-   App bootstrap — router, state store, home view, ticker,
-   sponsor banner, ambience (particles, sounds, confetti).
+   App bootstrap — router, state store, home view (hero +
+   sponsor media grid), ticker, sponsor banner, ambience,
+   visit beacon, live polling.
    ============================================================ */
 
 /* ---------- Sound (WebAudio, no assets needed) ---------- */
@@ -53,84 +54,88 @@ const Sound = (() => {
 /* ---------- Home view ---------- */
 
 const HomeView = (() => {
-  const { team, esc, flagImg } = Tournament;
+  const { esc } = Tournament;
 
-  function matchCenterHTML(state) {
+  function mediaSlotHTML(slot, i) {
+    if (slot && slot.src) {
+      const media = slot.type === "video"
+        ? `<video src="${esc(slot.src)}" controls playsinline preload="metadata"></video>`
+        : `<img src="${esc(slot.src)}" alt="${esc(slot.caption || "Sponsor media")}" loading="lazy">`;
+      return `
+        <figure class="media-slot filled">
+          ${media}
+          ${slot.caption ? `<figcaption>${esc(slot.caption)}</figcaption>` : ""}
+        </figure>`;
+    }
+    return `
+      <div class="media-slot placeholder">
+        <i class="fa-solid ${i % 2 ? "fa-clapperboard" : "fa-image"}"></i>
+        <span>SPONSOR SHOWCASE</span>
+        <small>Coming soon</small>
+      </div>`;
+  }
+
+  function nextMatchesHTML(state) {
     if (!state.draw.completed) return "";
-    Tournament.resolveKnockout(state);
-    const played = state.matches.filter((m) => m.status === "played").slice(-4).reverse();
-    const upcoming = state.matches.filter((m) => m.status !== "played" && m.teamA && m.teamB).slice(0, 4);
-    if (!played.length && !upcoming.length) return "";
-    const rows = (list) => list.map((m) => GroupsView.fixtureRowHTML(state, m)).join("");
+    Tournament.resolveBracket(state);
+    const upcoming = state.matches
+      .filter((m) => m.status !== "played" && m.teamA && m.teamB)
+      .sort((a, b) => (a.kickoff || "9999") < (b.kickoff || "9999") ? -1 : 1)
+      .slice(0, 4);
+    if (!upcoming.length) return "";
+    const { team, flagImg } = Tournament;
+    const rows = upcoming.map((m) => {
+      const a = team(state, m.teamA), b = team(state, m.teamB);
+      return `
+        <div class="fixture-row">
+          <div class="fx-team">${flagImg(a)}<span>${esc(a.country)}</span></div>
+          <div class="fx-score pending">VS</div>
+          <div class="fx-team right"><span>${esc(b.country)}</span>${flagImg(b)}</div>
+        </div>`;
+    }).join("");
     return `
       <div class="panel match-center">
-        <h2 class="section-title" style="font-size:1.1rem">Match Center</h2>
-        <div class="groups-page-grid" style="margin-top:16px">
-          <div>
-            <div class="fixtures-title" style="padding-left:0">LATEST RESULTS</div>
-            ${rows(played) || '<p class="empty-note" style="padding:16px">No results yet.</p>'}
-          </div>
-          <div>
-            <div class="fixtures-title" style="padding-left:0">UP NEXT</div>
-            ${rows(upcoming) || '<p class="empty-note" style="padding:16px">All matches played!</p>'}
-          </div>
-        </div>
+        <h2 class="section-title" style="font-size:1.05rem">UP NEXT</h2>
+        <div style="margin-top:12px">${rows}</div>
+        <p class="center" style="margin-top:14px"><a class="btn-outline" href="#schedule"><i class="fa-regular fa-clock"></i> Full schedule</a></p>
       </div>`;
   }
 
   function render(state) {
     const el = document.getElementById("view-home");
-    const drawDone = state.draw.completed;
+    const media = state.media || [];
+    const slots = Array.from({ length: 4 }, (_, i) => mediaSlotHTML(media[i], i));
 
     el.innerHTML = `
-      <div class="home-top">
-        <div class="panel stat-side">
-          <div class="stat-block">
-            <div class="stat-number">32</div>
-            <div class="stat-label">TEAMS</div>
-          </div>
-          <div class="stat-divider"><i class="fa-solid fa-earth-americas"></i></div>
-          <div class="stat-block">
-            <div class="stat-number">8</div>
-            <div class="stat-label">GROUPS</div>
-          </div>
+      <div class="hero">
+        <div class="hero-trophy-bg" aria-hidden="true">
+          <div class="trophy-spinner"><i class="fa-solid fa-trophy"></i></div>
         </div>
-
-        <div class="panel draw-stage">
-          <div class="stage-lights"></div>
-          <div class="draw-ball-wrap" style="width:200px;height:200px">
-            <div class="draw-ball" style="width:170px;height:170px">
-              <div class="ball-lines"></div>
-              <i class="fa-solid fa-futbol"></i>
-            </div>
-          </div>
-          <div class="pedestal"></div>
-          <a class="btn-gold" href="#draw" style="margin-top:22px">
-            ${drawDone
-              ? '<i class="fa-solid fa-table-list"></i> VIEW THE GROUPS'
-              : '<i class="fa-solid fa-users-viewfinder"></i> START OFFICIAL DRAW <i class="fa-solid fa-chevron-right"></i>'}
-          </a>
-          <div class="draw-hint"><i class="fa-solid fa-circle-info"></i>
-            ${drawDone ? "The draw is complete — follow the groups live." : "The draw will distribute the 32 teams into 8 groups of 4"}
-          </div>
-        </div>
-
-        <div class="panel howto">
-          <h3>HOW IT WORKS</h3>
-          <div class="howto-steps">
-            <div class="howto-step"><span class="step-num">1</span><i class="fa-solid fa-hand-pointer"></i> Teams will be drawn randomly</div>
-            <div class="howto-step"><span class="step-num">2</span><i class="fa-solid fa-people-group"></i> Each team is placed in a group</div>
-            <div class="howto-step"><span class="step-num">3</span><i class="fa-solid fa-users"></i> 4 teams in each group</div>
-            <div class="howto-step"><span class="step-num">4</span><i class="fa-solid fa-trophy"></i> Top 2 teams qualify for the knockout stage</div>
+        <div class="hero-content">
+          <h2 class="hero-title">TAHER BAGH</h2>
+          <p class="hero-sub">WORLD CUP TOURNAMENT 2026</p>
+          <p class="hero-tag">32 TEAMS · PURE KNOCKOUT · ONE CHAMPION</p>
+          <div class="hero-ctas">
+            <a class="btn-gold" href="#${state.draw.completed ? "bracket" : "teams"}">
+              ${state.draw.completed
+                ? '<i class="fa-solid fa-sitemap"></i> VIEW THE BRACKET'
+                : '<i class="fa-solid fa-people-group"></i> MEET THE TEAMS'}
+            </a>
+            <a class="btn-outline" href="#schedule"><i class="fa-regular fa-clock"></i> MATCH SCHEDULE</a>
           </div>
         </div>
       </div>
 
-      ${matchCenterHTML(state)}
+      <h2 class="section-title" style="margin-top:36px">Our Sponsors</h2>
+      <p class="section-sub">Proudly supported by our partners</p>
+      <div class="media-grid">${slots.join("")}</div>
 
-      <h2 class="section-title" style="margin-top:34px">The Groups</h2>
-      <p class="section-sub">${drawDone ? "The official groups of the Taher Bagh World Cup 2026" : "Awaiting the official draw…"}</p>
-      <div class="groups-grid">${DrawView.groupsGridHTML(state, state.draw.groups)}</div>`;
+      ${nextMatchesHTML(state)}`;
+
+    if (window.gsap) {
+      gsap.from(".hero-content > *", { opacity: 0, y: 24, duration: 0.7, stagger: 0.12, ease: "power3.out" });
+      gsap.from(".media-slot", { opacity: 0, y: 18, duration: 0.5, stagger: 0.08, delay: 0.3, ease: "power2.out" });
+    }
   }
 
   return { render };
@@ -144,10 +149,11 @@ const App = (() => {
 
   const VIEWS = {
     home: () => HomeView.render(state),
+    teams: () => TeamsView.render(state),
+    bracket: () => BracketView.render(state),
+    schedule: () => ScheduleView.render(state),
+    awards: () => AwardsView.render(state),
     draw: () => DrawView.render(state),
-    groups: () => GroupsView.render(state),
-    knockout: () => KnockoutView.render(state),
-    stats: () => StatsView.render(state),
     admin: () => AdminView.render(state),
   };
 
@@ -159,7 +165,6 @@ const App = (() => {
       a.classList.toggle("active", a.dataset.route === route));
     const el = document.getElementById(`view-${route}`);
     el.hidden = false;
-    // retrigger the entry animation
     el.style.animation = "none";
     void el.offsetWidth;
     el.style.animation = "";
@@ -204,20 +209,19 @@ const App = (() => {
     }
   }
 
-  /* ----- sponsor banner ----- */
+  /* ----- sponsor banner (global, on every tab) ----- */
 
   async function loadSponsors() {
     let sponsors = [];
     try {
       sponsors = await (await fetch("data/sponsors.json")).json();
-    } catch (_) { /* keep empty — placeholders below */ }
+    } catch (_) { /* placeholders below */ }
     if (!Array.isArray(sponsors) || !sponsors.length) {
       sponsors = Array.from({ length: 8 }, (_, i) => ({ name: `YOUR SPONSOR ${i + 1}` }));
     }
     const item = (s) => s.image
       ? `<span class="sponsor-item"><img src="${Tournament.esc(s.image)}" alt="${Tournament.esc(s.name)}"></span>`
       : `<span class="sponsor-item"><i class="fa-solid fa-handshake"></i>${Tournament.esc(s.name)}</span>`;
-    // Duplicate the strip so the marquee loops seamlessly.
     const half = sponsors.map(item).join("");
     document.getElementById("sponsor-track").innerHTML = half + half;
   }
@@ -255,7 +259,7 @@ const App = (() => {
 
   function startPolling() {
     setInterval(async () => {
-      if (!state || route === "admin") return; // don't clobber edits in progress
+      if (!state || route === "admin" || route === "draw") return; // don't clobber edits/ceremony
       const fresh = await API.pollState(state.updatedAt);
       if (fresh) {
         state = fresh;
@@ -270,6 +274,7 @@ const App = (() => {
   async function init() {
     spawnParticles();
     loadSponsors();
+    API.recordVisit();
 
     const soundBtn = document.getElementById("sound-toggle");
     const soundIcon = document.getElementById("sound-icon");
