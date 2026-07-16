@@ -1,0 +1,84 @@
+/* ===== Tablets ===== */
+@media (max-width: 1024px) {
+  .groups-grid { grid-template-columns: repeat(2, 1fr); }
+  .home-top { grid-template-columns: 1fr; }
+
+  .stat-side {
+    flex-direction: row;
+    justify-content: center;
+    gap: 30px;
+    padding: 16px;
+  }
+
+  .stat-divider { display: none; }
+
+  .howto-steps {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 6px 20px;
+  }
+
+  .header-badge { display: none; }
+}
+
+/* ===== Phones ===== */
+@media (max-width: 680px) {
+  .site-header { padding: 18px 12px 10px; }
+
+  .header-trophy { font-size: 2.6rem; }
+
+  .header-inner { gap: 12px; }
+
+  .header-title { letter-spacing: 3px; }
+  .header-subtitle { letter-spacing: 2px; }
+
+  .live-text { font-size: 0.7rem; letter-spacing: 1.5px; }
+
+  .sponsor-label { padding: 0 12px; font-size: 0.62rem; }
+  .sponsor-item { min-width: 130px; padding: 10px 16px; font-size: 0.72rem; }
+
+  .nav-link { padding: 8px 12px; font-size: 0.72rem; }
+  .nav-link span { display: none; }
+  .nav-link i { font-size: 1rem; color: var(--text-dim); }
+  .nav-link.active i { color: var(--bg-0); }
+
+  #app { padding: 20px 10px 50px; }
+
+  .groups-grid { grid-template-columns: 1fr; }
+  .groups-page-grid { grid-template-columns: 1fr; }
+
+  .howto-steps { grid-template-columns: 1fr; }
+
+  .draw-ball-wrap { width: 200px; height: 200px; }
+  .draw-ball { width: 170px; height: 170px; }
+  .draw-ball i.fa-futbol { font-size: 2.6rem; }
+
+  .btn-gold { padding: 13px 26px; font-size: 0.88rem; }
+
+  .podium-grid { grid-template-columns: 1fr; }
+  .awards-grid { grid-template-columns: 1fr; }
+
+  .standings-table { font-size: 0.76rem; }
+  .standings-table th, .standings-table td { padding: 7px 3px; }
+  .standings-table td.col-team { padding-left: 8px; }
+
+  /* Drop the GF/GA columns on phones — GD and Pts carry the story */
+  .standings-table th:nth-child(7), .standings-table td:nth-child(7),
+  .standings-table th:nth-child(8), .standings-table td:nth-child(8) { display: none; }
+
+  .fixture-row { font-size: 0.78rem; padding: 8px 8px; }
+  .fixture-row .fx-score { min-width: 60px; padding: 3px 8px; }
+
+  .sound-toggle { position: static; margin-top: 18px; }
+
+  .admin-section { padding: 14px; }
+
+  .score-inputs input[type="number"] { width: 48px; }
+}
+
+/* ===== Small phones ===== */
+@media (max-width: 380px) {
+  .header-title { font-size: 1.6rem; }
+  .header-subtitle { font-size: 0.8rem; }
+  .stat-side { gap: 18px; }
+}

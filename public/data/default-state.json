@@ -1,0 +1,358 @@
+{
+  "version": 1,
+  "updatedAt": "2026-07-16T07:07:55.340Z",
+  "teams": [
+    {
+      "id": "t-br",
+      "country": "Brazil",
+      "countryCode": "br",
+      "nickname": "A Selecao",
+      "flag": "assets/flags/br.svg",
+      "teamName": "Team 01",
+      "captain": "TBC",
+      "players": []
+    },
+    {
+      "id": "t-ar",
+      "country": "Argentina",
+      "countryCode": "ar",
+      "nickname": "La Albiceleste",
+      "flag": "assets/flags/ar.svg",
+      "teamName": "Team 02",
+      "captain": "TBC",
+      "players": []
+    },
+    {
+      "id": "t-fr",
+      "country": "France",
+      "countryCode": "fr",
+      "nickname": "Les Bleus",
+      "flag": "assets/flags/fr.svg",
+      "teamName": "Team 03",
+      "captain": "TBC",
+      "players": []
+    },
+    {
+      "id": "t-es",
+      "country": "Spain",
+      "countryCode": "es",
+      "nickname": "La Roja",
+      "flag": "assets/flags/es.svg",
+      "teamName": "Team 04",
+      "captain": "TBC",
+      "players": []
+    },
+    {
+      "id": "t-gb-eng",
+      "country": "England",
+      "countryCode": "gb-eng",
+      "nickname": "The Three Lions",
+      "flag": "assets/flags/gb-eng.svg",
+      "teamName": "Team 05",
+      "captain": "TBC",
+      "players": []
+    },
+    {
+      "id": "t-de",
+      "country": "Germany",
+      "countryCode": "de",
+      "nickname": "Die Mannschaft",
+      "flag": "assets/flags/de.svg",
+      "teamName": "Team 06",
+      "captain": "TBC",
+      "players": []
+    },
+    {
+      "id": "t-pt",
+      "country": "Portugal",
+      "countryCode": "pt",
+      "nickname": "Selecao das Quinas",
+      "flag": "assets/flags/pt.svg",
+      "teamName": "Team 07",
+      "captain": "TBC",
+      "players": []
+    },
+    {
+      "id": "t-nl",
+      "country": "Netherlands",
+      "countryCode": "nl",
+      "nickname": "Oranje",
+      "flag": "assets/flags/nl.svg",
+      "teamName": "Team 08",
+      "captain": "TBC",
+      "players": []
+    },
+    {
+      "id": "t-be",
+      "country": "Belgium",
+      "countryCode": "be",
+      "nickname": "The Red Devils",
+      "flag": "assets/flags/be.svg",
+      "teamName": "Team 09",
+      "captain": "TBC",
+      "players": []
+    },
+    {
+      "id": "t-jp",
+      "country": "Japan",
+      "countryCode": "jp",
+      "nickname": "Samurai Blue",
+      "flag": "assets/flags/jp.svg",
+      "teamName": "Team 10",
+      "captain": "TBC",
+      "players": []
+    },
+    {
+      "id": "t-kr",
+      "country": "South Korea",
+      "countryCode": "kr",
+      "nickname": "Taegeuk Warriors",
+      "flag": "assets/flags/kr.svg",
+      "teamName": "Team 11",
+      "captain": "TBC",
+      "players": []
+    },
+    {
+      "id": "t-mx",
+      "country": "Mexico",
+      "countryCode": "mx",
+      "nickname": "El Tri",
+      "flag": "assets/flags/mx.svg",
+      "teamName": "Team 12",
+      "captain": "TBC",
+      "players": []
+    },
+    {
+      "id": "t-us",
+      "country": "United States",
+      "countryCode": "us",
+      "nickname": "The Stars and Stripes",
+      "flag": "assets/flags/us.svg",
+      "teamName": "Team 13",
+      "captain": "TBC",
+      "players": []
+    },
+    {
+      "id": "t-it",
+      "country": "Italy",
+      "countryCode": "it",
+      "nickname": "Gli Azzurri",
+      "flag": "assets/flags/it.svg",
+      "teamName": "Team 14",
+      "captain": "TBC",
+      "players": []
+    },
+    {
+      "id": "t-hr",
+      "country": "Croatia",
+      "countryCode": "hr",
+      "nickname": "Vatreni",
+      "flag": "assets/flags/hr.svg",
+      "teamName": "Team 15",
+      "captain": "TBC",
+      "players": []
+    },
+    {
+      "id": "t-uy",
+      "country": "Uruguay",
+      "countryCode": "uy",
+      "nickname": "La Celeste",
+      "flag": "assets/flags/uy.svg",
+      "teamName": "Team 16",
+      "captain": "TBC",
+      "players": []
+    },
+    {
+      "id": "t-co",
+      "country": "Colombia",
+      "countryCode": "co",
+      "nickname": "Los Cafeteros",
+      "flag": "assets/flags/co.svg",
+      "teamName": "Team 17",
+      "captain": "TBC",
+      "players": []
+    },
+    {
+      "id": "t-ch",
+      "country": "Switzerland",
+      "countryCode": "ch",
+      "nickname": "La Nati",
+      "flag": "assets/flags/ch.svg",
+      "teamName": "Team 18",
+      "captain": "TBC",
+      "players": []
+    },
+    {
+      "id": "t-dk",
+      "country": "Denmark",
+      "countryCode": "dk",
+      "nickname": "Danish Dynamite",
+      "flag": "assets/flags/dk.svg",
+      "teamName": "Team 19",
+      "captain": "TBC",
+      "players": []
+    },
+    {
+      "id": "t-se",
+      "country": "Sweden",
+      "countryCode": "se",
+      "nickname": "Blagult",
+      "flag": "assets/flags/se.svg",
+      "teamName": "Team 20",
+      "captain": "TBC",
+      "players": []
+    },
+    {
+      "id": "t-no",
+      "country": "Norway",
+      "countryCode": "no",
+      "nickname": "The Lions",
+      "flag": "assets/flags/no.svg",
+      "teamName": "Team 21",
+      "captain": "TBC",
+      "players": []
+    },
+    {
+      "id": "t-au",
+      "country": "Australia",
+      "countryCode": "au",
+      "nickname": "The Socceroos",
+      "flag": "assets/flags/au.svg",
+      "teamName": "Team 22",
+      "captain": "TBC",
+      "players": []
+    },
+    {
+      "id": "t-ma",
+      "country": "Morocco",
+      "countryCode": "ma",
+      "nickname": "Atlas Lions",
+      "flag": "assets/flags/ma.svg",
+      "teamName": "Team 23",
+      "captain": "TBC",
+      "players": []
+    },
+    {
+      "id": "t-sn",
+      "country": "Senegal",
+      "countryCode": "sn",
+      "nickname": "Lions of Teranga",
+      "flag": "assets/flags/sn.svg",
+      "teamName": "Team 24",
+      "captain": "TBC",
+      "players": []
+    },
+    {
+      "id": "t-ca",
+      "country": "Canada",
+      "countryCode": "ca",
+      "nickname": "Les Rouges",
+      "flag": "assets/flags/ca.svg",
+      "teamName": "Team 25",
+      "captain": "TBC",
+      "players": []
+    },
+    {
+      "id": "t-pl",
+      "country": "Poland",
+      "countryCode": "pl",
+      "nickname": "The Eagles",
+      "flag": "assets/flags/pl.svg",
+      "teamName": "Team 26",
+      "captain": "TBC",
+      "players": []
+    },
+    {
+      "id": "t-rs",
+      "country": "Serbia",
+      "countryCode": "rs",
+      "nickname": "Orlovi",
+      "flag": "assets/flags/rs.svg",
+      "teamName": "Team 27",
+      "captain": "TBC",
+      "players": []
+    },
+    {
+      "id": "t-gb-wls",
+      "country": "Wales",
+      "countryCode": "gb-wls",
+      "nickname": "The Dragons",
+      "flag": "assets/flags/gb-wls.svg",
+      "teamName": "Team 28",
+      "captain": "TBC",
+      "players": []
+    },
+    {
+      "id": "t-ir",
+      "country": "Iran",
+      "countryCode": "ir",
+      "nickname": "Team Melli",
+      "flag": "assets/flags/ir.svg",
+      "teamName": "Team 29",
+      "captain": "TBC",
+      "players": []
+    },
+    {
+      "id": "t-tn",
+      "country": "Tunisia",
+      "countryCode": "tn",
+      "nickname": "Eagles of Carthage",
+      "flag": "assets/flags/tn.svg",
+      "teamName": "Team 30",
+      "captain": "TBC",
+      "players": []
+    },
+    {
+      "id": "t-cm",
+      "country": "Cameroon",
+      "countryCode": "cm",
+      "nickname": "Indomitable Lions",
+      "flag": "assets/flags/cm.svg",
+      "teamName": "Team 31",
+      "captain": "TBC",
+      "players": []
+    },
+    {
+      "id": "t-ec",
+      "country": "Ecuador",
+      "countryCode": "ec",
+      "nickname": "La Tri",
+      "flag": "assets/flags/ec.svg",
+      "teamName": "Team 32",
+      "captain": "TBC",
+      "players": []
+    }
+  ],
+  "draw": {
+    "completed": false,
+    "groups": {
+      "A": [],
+      "B": [],
+      "C": [],
+      "D": [],
+      "E": [],
+      "F": [],
+      "G": [],
+      "H": []
+    },
+    "drawOrder": []
+  },
+  "matches": [],
+  "awards": {
+    "champion": null,
+    "runnerUp": null,
+    "thirdPlace": null,
+    "playerOfTournament": null,
+    "bestGoalkeeper": null
+  },
+  "announcements": [
+    {
+      "text": "Welcome to the Taher Bagh World Cup Tournament 2026! The official draw is coming soon.",
+      "date": "2026-07-16T07:07:55.340Z"
+    }
+  ],
+  "settings": {
+    "tournamentName": "Taher Bagh World Cup Tournament 2026",
+    "startDate": "2026-07-20"
+  }
+}

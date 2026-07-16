@@ -1,0 +1,47 @@
+:root {
+  /* Brand */
+  --gold: #d4af37;
+  --gold-bright: #f5d76e;
+  --gold-deep: #9a7b1c;
+  --gold-glow: rgba(212, 175, 55, 0.45);
+
+  --bg-0: #05070f;
+  --bg-1: #0a0e1d;
+  --bg-2: #101631;
+  --panel: rgba(16, 22, 49, 0.72);
+  --panel-solid: #101631;
+  --panel-border: rgba(212, 175, 55, 0.28);
+  --panel-border-soft: rgba(212, 175, 55, 0.14);
+
+  --text: #f4f1e6;
+  --text-dim: #b8b4a4;
+  --text-faint: #7d7a6d;
+
+  --red: #e04352;
+  --green: #35c26e;
+  --blue: #3f7fe0;
+
+  /* Group accent colours (as in the reference design) */
+  --group-a: #e04352;
+  --group-b: #3f7fe0;
+  --group-c: #35c26e;
+  --group-d: #f5a623;
+  --group-e: #2ec4b6;
+  --group-f: #9b59d0;
+  --group-g: #f0842c;
+  --group-h: #e0447f;
+
+  /* Typography */
+  --font-display: "Arial Black", "Segoe UI", Arial, sans-serif;
+  --font-body: "Segoe UI", Arial, Helvetica, sans-serif;
+
+  /* Layout */
+  --max-width: 1280px;
+  --radius: 14px;
+  --radius-sm: 9px;
+
+  /* Effects */
+  --shadow-card: 0 8px 30px rgba(0, 0, 0, 0.55);
+  --shadow-gold: 0 0 22px var(--gold-glow);
+  --transition: 0.25s ease;
+}

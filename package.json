@@ -1,0 +1,13 @@
+{
+  "name": "taher-bagh-tournament",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Taher Bagh World Cup Tournament 2026 — Cloudflare Pages site",
+  "scripts": {
+    "dev": "wrangler dev"
+  },
+  "devDependencies": {
+    "wrangler": "^4",
+    "playwright-core": "^1"
+  }
+}
