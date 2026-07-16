@@ -62,6 +62,10 @@
   .standings-table th, .standings-table td { padding: 7px 3px; }
   .standings-table td.col-team { padding-left: 8px; }
 
+  /* Drop the GF/GA columns on phones — GD and Pts carry the story */
+  .standings-table th:nth-child(7), .standings-table td:nth-child(7),
+  .standings-table th:nth-child(8), .standings-table td:nth-child(8) { display: none; }
+
   .fixture-row { font-size: 0.78rem; padding: 8px 8px; }
   .fixture-row .fx-score { min-width: 60px; padding: 3px 8px; }
 

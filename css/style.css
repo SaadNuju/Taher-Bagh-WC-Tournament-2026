@@ -109,7 +109,8 @@ p.section-sub {
   flex: 0 0 auto;
 }
 
-.header-titles { flex: 1; text-align: center; }
+/* min-width:0 stops the nowrap ticker text forcing the page wider */
+.header-titles { flex: 1; text-align: center; min-width: 0; }
 
 .header-title {
   font-family: var(--font-display);
@@ -171,6 +172,8 @@ p.section-sub {
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+  flex: 1;
+  min-width: 0;
 }
 
 .header-badge { flex: 0 0 auto; }
@@ -689,7 +692,10 @@ p.section-sub {
   gap: 20px;
 }
 
-.group-panel { padding-bottom: 6px; }
+/* min-width:0 lets panels shrink inside the grid; wide tables scroll inside */
+.groups-page-grid > * { min-width: 0; }
+
+.group-panel { padding-bottom: 6px; overflow-x: auto; }
 
 .group-panel .fixtures-title {
   font-size: 0.7rem;

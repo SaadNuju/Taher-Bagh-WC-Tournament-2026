@@ -62,17 +62,29 @@ const API = (() => {
     state.updatedAt = new Date().toISOString();
     state.version = (state.version || 0) + 1;
     if (mode === "live") {
-      await fetchJSON("/api/state", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          "Authorization": "Bearer " + getToken(),
-        },
-        body: JSON.stringify({ state }),
-      });
-    } else {
-      localStorage.setItem(LOCAL_KEY, JSON.stringify(state));
+      // Retry transient failures (KV hiccups, brief network drops at the
+      // venue) — but not auth/validation errors, which won't fix themselves.
+      let lastErr;
+      for (let attempt = 1; attempt <= 3; attempt++) {
+        try {
+          await fetchJSON("/api/state", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+              "Authorization": "Bearer " + getToken(),
+            },
+            body: JSON.stringify({ state }),
+          });
+          return state;
+        } catch (e) {
+          lastErr = e;
+          if (e.status === 401 || e.status === 400) throw e;
+          await new Promise((r) => setTimeout(r, 700 * attempt));
+        }
+      }
+      throw lastErr;
     }
+    localStorage.setItem(LOCAL_KEY, JSON.stringify(state));
     return state;
   }
 
