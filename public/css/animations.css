@@ -85,3 +85,9 @@
     transition-duration: 0.01ms !important;
   }
 }
+
+/* ===== Redesign keyframes ===== */
+@keyframes trophy-spin {
+  from { transform: rotateY(0deg); }
+  to { transform: rotateY(360deg); }
+}
