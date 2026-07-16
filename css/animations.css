@@ -1,0 +1,87 @@
+/* ===== Keyframes ===== */
+@keyframes pulse-dot {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.35; transform: scale(0.7); }
+}
+
+@keyframes sponsor-scroll {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+
+@keyframes view-in {
+  from { opacity: 0; transform: translateY(14px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes toast-in {
+  from { opacity: 0; transform: translate(-50%, 14px); }
+  to { opacity: 1; transform: translate(-50%, 0); }
+}
+
+@keyframes ball-float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-10px); }
+}
+
+@keyframes ball-glow {
+  0%, 100% { box-shadow: 0 0 44px var(--gold-glow), inset 0 0 34px rgba(212, 175, 55, 0.18); }
+  50% { box-shadow: 0 0 70px var(--gold-glow), inset 0 0 44px rgba(212, 175, 55, 0.3); }
+}
+
+@keyframes particle-fall {
+  from { transform: translateY(-6vh) rotate(0deg); opacity: 0.7; }
+  to { transform: translateY(106vh) rotate(540deg); opacity: 0; }
+}
+
+@keyframes spin-slow {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+@keyframes card-flip-in {
+  from { transform: rotateY(90deg) scale(0.8); opacity: 0; }
+  to { transform: rotateY(0deg) scale(1); opacity: 1; }
+}
+
+@keyframes slot-land {
+  0% { background: rgba(212, 175, 55, 0.35); }
+  100% { background: transparent; }
+}
+
+@keyframes trophy-shine {
+  0%, 100% { text-shadow: 0 0 32px var(--gold-glow); }
+  50% { text-shadow: 0 0 55px rgba(212, 175, 55, 0.8); }
+}
+
+/* ===== Applied animations ===== */
+.header-trophy { animation: trophy-shine 3.2s ease-in-out infinite; }
+
+.draw-ball { animation: ball-float 3.6s ease-in-out infinite, ball-glow 3.6s ease-in-out infinite; }
+
+.draw-ball .ball-lines { animation: spin-slow 26s linear infinite; }
+
+.team-card.reveal { animation: card-flip-in 0.55s cubic-bezier(0.22, 1.2, 0.36, 1) both; }
+
+.group-slot.landed { animation: slot-land 1.4s ease-out both; }
+
+.particle { animation: particle-fall linear infinite; }
+
+/* Confetti pieces created by JS during celebrations */
+.confetti-piece {
+  position: fixed;
+  width: 9px;
+  height: 14px;
+  top: -20px;
+  z-index: 150;
+  pointer-events: none;
+}
+
+/* Respect reduced-motion preferences */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}

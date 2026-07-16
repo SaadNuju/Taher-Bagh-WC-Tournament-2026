@@ -1,0 +1,12 @@
+# Cloudflare Pages configuration for the Taher Bagh World Cup site.
+# Project name matches the Cloudflare Pages project: taher-bagh-tournament
+name = "taher-bagh-tournament"
+compatibility_date = "2026-07-01"
+pages_build_output_dir = "."
+
+# KV namespace that stores the live tournament state.
+# Replace `id` with your real namespace ID after running:
+#   npx wrangler kv namespace create TOURNAMENT_KV
+[[kv_namespaces]]
+binding = "TOURNAMENT_KV"
+id = "REPLACE_WITH_YOUR_KV_NAMESPACE_ID"

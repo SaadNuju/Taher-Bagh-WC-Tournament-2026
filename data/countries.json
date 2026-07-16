@@ -1,0 +1,162 @@
+[
+  {
+    "code": "br",
+    "name": "Brazil",
+    "nickname": "A Selecao"
+  },
+  {
+    "code": "ar",
+    "name": "Argentina",
+    "nickname": "La Albiceleste"
+  },
+  {
+    "code": "fr",
+    "name": "France",
+    "nickname": "Les Bleus"
+  },
+  {
+    "code": "es",
+    "name": "Spain",
+    "nickname": "La Roja"
+  },
+  {
+    "code": "gb-eng",
+    "name": "England",
+    "nickname": "The Three Lions"
+  },
+  {
+    "code": "de",
+    "name": "Germany",
+    "nickname": "Die Mannschaft"
+  },
+  {
+    "code": "pt",
+    "name": "Portugal",
+    "nickname": "Selecao das Quinas"
+  },
+  {
+    "code": "nl",
+    "name": "Netherlands",
+    "nickname": "Oranje"
+  },
+  {
+    "code": "be",
+    "name": "Belgium",
+    "nickname": "The Red Devils"
+  },
+  {
+    "code": "jp",
+    "name": "Japan",
+    "nickname": "Samurai Blue"
+  },
+  {
+    "code": "kr",
+    "name": "South Korea",
+    "nickname": "Taegeuk Warriors"
+  },
+  {
+    "code": "mx",
+    "name": "Mexico",
+    "nickname": "El Tri"
+  },
+  {
+    "code": "us",
+    "name": "United States",
+    "nickname": "The Stars and Stripes"
+  },
+  {
+    "code": "it",
+    "name": "Italy",
+    "nickname": "Gli Azzurri"
+  },
+  {
+    "code": "hr",
+    "name": "Croatia",
+    "nickname": "Vatreni"
+  },
+  {
+    "code": "uy",
+    "name": "Uruguay",
+    "nickname": "La Celeste"
+  },
+  {
+    "code": "co",
+    "name": "Colombia",
+    "nickname": "Los Cafeteros"
+  },
+  {
+    "code": "ch",
+    "name": "Switzerland",
+    "nickname": "La Nati"
+  },
+  {
+    "code": "dk",
+    "name": "Denmark",
+    "nickname": "Danish Dynamite"
+  },
+  {
+    "code": "se",
+    "name": "Sweden",
+    "nickname": "Blagult"
+  },
+  {
+    "code": "no",
+    "name": "Norway",
+    "nickname": "The Lions"
+  },
+  {
+    "code": "au",
+    "name": "Australia",
+    "nickname": "The Socceroos"
+  },
+  {
+    "code": "ma",
+    "name": "Morocco",
+    "nickname": "Atlas Lions"
+  },
+  {
+    "code": "sn",
+    "name": "Senegal",
+    "nickname": "Lions of Teranga"
+  },
+  {
+    "code": "ca",
+    "name": "Canada",
+    "nickname": "Les Rouges"
+  },
+  {
+    "code": "pl",
+    "name": "Poland",
+    "nickname": "The Eagles"
+  },
+  {
+    "code": "rs",
+    "name": "Serbia",
+    "nickname": "Orlovi"
+  },
+  {
+    "code": "gb-wls",
+    "name": "Wales",
+    "nickname": "The Dragons"
+  },
+  {
+    "code": "ir",
+    "name": "Iran",
+    "nickname": "Team Melli"
+  },
+  {
+    "code": "tn",
+    "name": "Tunisia",
+    "nickname": "Eagles of Carthage"
+  },
+  {
+    "code": "cm",
+    "name": "Cameroon",
+    "nickname": "Indomitable Lions"
+  },
+  {
+    "code": "ec",
+    "name": "Ecuador",
+    "nickname": "La Tri"
+  }
+]
