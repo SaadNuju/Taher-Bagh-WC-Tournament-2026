@@ -1,3 +1,0 @@
-# Copy this file to `.dev.vars` for local development with `wrangler pages dev`.
-# In production, set ADMIN_PASSWORD as a secret in the Cloudflare Pages dashboard.
-ADMIN_PASSWORD=change-me

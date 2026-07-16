@@ -4,7 +4,7 @@
   "private": true,
   "description": "Taher Bagh World Cup Tournament 2026 — Cloudflare Pages site",
   "scripts": {
-    "dev": "wrangler pages dev ."
+    "dev": "wrangler dev"
   },
   "devDependencies": {
     "wrangler": "^4",

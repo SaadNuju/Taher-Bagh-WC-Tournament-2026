@@ -5,9 +5,10 @@ World Cup style football tournament — official animated draw, live group
 standings, knockout bracket, Golden Boot race, and a password-protected
 admin panel.
 
-Built with **HTML5 + CSS3 + vanilla JavaScript + GSAP**, hosted on
-**Cloudflare Pages** with **Pages Functions + Workers KV** so admin edits
-appear live for every spectator.
+Built with **HTML5 + CSS3 + vanilla JavaScript + GSAP**, hosted on a
+**Cloudflare Worker** (static assets + API) with a **Durable Object** for
+storage, so admin edits appear live for every spectator — with zero
+dashboard configuration.
 
 ## Features
 
@@ -32,43 +33,46 @@ appear live for every spectator.
   demo mode from `data/default-state.json` + localStorage (demo admin
   password: `admin`).
 
-## Deploying to Cloudflare (project: `taher-bagh-tournament`)
+## Deployment (Worker: `taher-bagh-tournament`)
 
-One-time setup, all in the Cloudflare dashboard:
+The repo is connected to a Cloudflare Worker via git integration —
+**every push to `main` deploys automatically**. There is nothing to
+configure in the dashboard:
 
-1. **Create the Pages project** — Cloudflare dashboard → *Workers & Pages*
-   → *Create* → *Pages* → *Connect to Git* → select this GitHub repo.
-   Name the project **`taher-bagh-tournament`**. Framework preset: *None*,
-   build command: *(leave empty)*, output directory: `/`.
-2. **Create the KV namespace** — *Workers & Pages* → *KV* → *Create
-   namespace* → name it `TOURNAMENT_KV`.
-3. **Bind the namespace** — in the Pages project → *Settings* →
-   *Bindings* → *Add* → *KV namespace* → variable name **`TOURNAMENT_KV`**,
-   select the namespace you created. (Or update the `id` in `wrangler.toml`.)
-4. **Set the admin password** — Pages project → *Settings* →
-   *Variables and Secrets* → add a **secret** named **`ADMIN_PASSWORD`**
-   with your chosen password.
-5. **Redeploy** (Deployments → Retry) so the bindings take effect.
+- The static site is uploaded from `public/`.
+- The API (`src/worker.js`) and the Durable Object that stores the
+  tournament state are declared in `wrangler.toml` and created on deploy.
+- Only a **SHA-256 hash** of the organiser password is stored
+  (`[vars] ADMIN_PASSWORD_HASH` in `wrangler.toml`) — the password itself
+  never appears in the repo. To change it, run
+  `printf '%s' 'new-password' | sha256sum`, paste the hash into that line,
+  and push.
 
-Every push to the repo's production branch now auto-deploys the site at
-`https://taher-bagh-tournament.pages.dev`.
+The site is served at `https://taher-bagh-tournament.<your-account>.workers.dev`
+(see the Worker's overview page for the exact URL, or add a custom domain
+under *Worker → Domains*).
+
+> Note: if a `TOURNAMENT_KV` namespace was created during earlier setup,
+> it is unused and can be deleted — storage is handled by the Durable
+> Object.
 
 ## Local development
 
 ```bash
-cp .dev.vars.example .dev.vars     # set your local admin password
-npx wrangler pages dev .           # serves the site + API with a local KV
+npm install
+npm run dev        # wrangler dev — serves the site + API with a local DO
 ```
 
+The local admin password comes from `.dev.vars` (overrides `wrangler.toml`).
 Opening `index.html` directly (or any static server) also works — the app
-detects the missing API and switches to demo mode.
+detects the missing API and switches to demo mode (password `admin`).
 
 ## Sponsors
 
 Sponsor slots scroll in the banner under the header.
 
-1. Drop logo images into `assets/sponsors/` (PNG/SVG, ~120×60 works well).
-2. Edit `data/sponsors.json`:
+1. Drop logo images into `public/assets/sponsors/` (PNG/SVG, ~120×60 works well).
+2. Edit `public/data/sponsors.json`:
 
 ```json
 [
@@ -80,19 +84,21 @@ Sponsor slots scroll in the banner under the header.
 ## Project structure
 
 ```
-├── index.html            App shell (views are rendered by JS)
-├── css/                  variables / style / animations / responsive
-├── js/
-│   ├── api.js            Cloudflare API client + demo-mode fallback
-│   ├── app.js            Router, home view, ticker, sounds, polling
-│   ├── draw.js           Draw ceremony engine (GSAP)
-│   ├── groups.js         Tournament logic + groups view
-│   ├── knockout.js       Bracket resolution + rendering
-│   ├── stats.js          Podium, awards, Golden Boot
-│   └── admin.js          Admin panel
-├── functions/api/        Pages Functions: state.js, login.js, _auth.js
-├── data/                 countries, default state, sponsors
-└── assets/flags/         32 country flag SVGs (from lipis/flag-icons, MIT)
+├── public/               The static site (served as-is)
+│   ├── index.html        App shell (views are rendered by JS)
+│   ├── css/              variables / style / animations / responsive
+│   ├── js/
+│   │   ├── api.js        API client + demo-mode fallback
+│   │   ├── app.js        Router, home view, ticker, sounds, polling
+│   │   ├── draw.js       Draw ceremony engine (GSAP)
+│   │   ├── groups.js     Tournament logic + groups view
+│   │   ├── knockout.js   Bracket resolution + rendering
+│   │   ├── stats.js      Podium, awards, Golden Boot
+│   │   └── admin.js      Admin panel
+│   ├── data/             countries, default state, sponsors
+│   └── assets/flags/     32 country flag SVGs (from lipis/flag-icons, MIT)
+├── src/                  Worker: worker.js (API + Durable Object), auth.js
+└── wrangler.toml         Worker config: assets, DO binding, admin password
 ```
 
 ## Admin quick guide (tournament day)
