@@ -161,13 +161,6 @@ const HomeView = (() => {
         <div class="sc-main">${esc(label)}</div><div class="sc-sub">${alive} teams remaining</div></div></a>`;
   }
 
-  const ZONES = [
-    ["#teams", "fa-people-group", "Teams &amp; Rosters", "32 squads, captains &amp; players"],
-    ["#bracket", "fa-sitemap", "The Bracket", "The road to the final"],
-    ["#schedule", "fa-clock", "Schedule", "Kickoff times, round by round"],
-    ["#awards", "fa-medal", "Leaderboard", "Golden Boot, Glove &amp; form"],
-  ];
-
   function startCountdown() {
     clearInterval(cdTimer);
     const els = document.querySelectorAll("[data-countdown]");
@@ -218,18 +211,6 @@ const HomeView = (() => {
         ${statusCard(state)}
       </div>
 
-      <!-- Explore zones -->
-      <div class="app-section-head"><i class="fa-solid fa-compass"></i> EXPLORE THE TOURNAMENT</div>
-      <div class="zones-grid">
-        ${ZONES.map(([href, icon, name, sub]) => `
-          <a class="zone-tile" href="${href}">
-            <div class="zone-icon"><i class="fa-solid ${icon}"></i></div>
-            <div class="zone-name">${name}</div>
-            <div class="zone-sub">${sub}</div>
-            <i class="fa-solid fa-arrow-right zone-go"></i>
-          </a>`).join("")}
-      </div>
-
       <!-- Sponsors -->
       <div class="app-section-head"><i class="fa-solid fa-handshake"></i> OUR SPONSORS</div>
       <div class="media-grid">${slots.join("")}</div>`;
@@ -239,7 +220,7 @@ const HomeView = (() => {
     if (window.gsap) {
       gsap.from(".app-hero-body > *", { opacity: 0, y: 22, duration: 0.6, stagger: 0.1, ease: "power3.out" });
       gsap.from(".stat-card", { opacity: 0, x: -18, duration: 0.45, stagger: 0.08, ease: "power2.out" });
-      gsap.from(".zone-tile", { opacity: 0, y: 16, duration: 0.4, stagger: 0.06, delay: 0.1, ease: "power2.out" });
+      gsap.from(".media-slot", { opacity: 0, y: 16, duration: 0.4, stagger: 0.06, delay: 0.1, ease: "power2.out" });
     }
   }
 
