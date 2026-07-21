@@ -40,34 +40,42 @@ const API = (() => {
     return fetchJSON("data/default-state.json");
   }
 
+  const CURRENT_SCHEMA = 3;
+
   /**
-   * Migrate any pre-knockout-era state (the old group-stage shape) to
-   * schema 2. Keeps teams, announcements and settings; resets the draw
-   * and matches to the fresh knockout skeleton. Idempotent.
+   * Bring any older stored state up to the current schema. Team edits
+   * (name/captain/players/goalkeeper) are carried over by country code
+   * for teams that still exist in the canonical roster; removed
+   * countries are dropped and new ones added as placeholders. Because
+   * the roster can change between schema versions, the draw and matches
+   * are reset to the fresh knockout skeleton (any prior draw must be
+   * redone). Announcements and homepage media are preserved. Idempotent.
    */
   async function normalize(state) {
-    if (state && state.schema === 2) return state;
+    if (state && state.schema === CURRENT_SCHEMA) return state;
     const fresh = await loadDefaultState();
     if (!state) return fresh;
     if (Array.isArray(state.teams)) {
       fresh.teams = fresh.teams.map((ft) => {
-        const old = state.teams.find((t) => t.id === ft.id);
+        const old = state.teams.find((t) => t.id === ft.id); // match by country code
         if (!old) return ft;
+        const players = Array.isArray(old.players) && old.players.length
+          ? old.players.slice(0, 10)
+          : ft.players;
         return {
           ...ft,
           teamName: old.teamName || ft.teamName,
           captain: old.captain || ft.captain,
-          goalkeeper: old.goalkeeper || "",
-          players: Array.isArray(old.players) && old.players.length
-            ? old.players.slice(0, 10)
-            : ft.players,
+          goalkeeper: players.includes(old.goalkeeper) ? old.goalkeeper : "",
+          players,
         };
       });
     }
     if (Array.isArray(state.announcements) && state.announcements.length) {
       fresh.announcements = state.announcements;
     }
-    if (state.settings) fresh.settings = { ...fresh.settings, ...state.settings };
+    if (Array.isArray(state.media)) fresh.media = state.media;
+    // settings (incl. the tournament name) stay canonical from defaults.
     return fresh;
   }
 
@@ -144,7 +152,7 @@ const API = (() => {
     if (mode !== "live") return null;
     try {
       const data = await fetchJSON("/api/state");
-      if (data && data.state && data.state.schema === 2 &&
+      if (data && data.state && data.state.schema === CURRENT_SCHEMA &&
           data.state.updatedAt !== currentUpdatedAt) {
         return data.state;
       }

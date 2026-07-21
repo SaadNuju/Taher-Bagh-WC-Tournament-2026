@@ -233,7 +233,7 @@ const AdminView = (() => {
     return `
       <div class="panel admin-section">
         <div class="form-field"><label>New update (shows in the LIVE ticker on every tab)</label>
-          <textarea id="news-text" rows="2" placeholder="e.g. Kick-off Monday 5pm at Taher Bagh main ground!"></textarea></div>
+          <textarea id="news-text" rows="2" placeholder="e.g. Kick-off Monday 5pm at the TBFOOT main ground!"></textarea></div>
         <button class="btn-gold" data-action="add-news" style="margin-bottom:18px"><i class="fa-solid fa-bullhorn"></i> POST UPDATE</button>
         ${items || '<p class="empty-note">No updates yet.</p>'}
       </div>`;
