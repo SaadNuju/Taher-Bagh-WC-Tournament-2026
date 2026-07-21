@@ -60,6 +60,36 @@ const DrawView = (() => {
   function render(state) {
     const el = document.getElementById("view-draw");
 
+    // The whole Draw section is organiser-only. Non-admins get a lock
+    // gate — the ceremony, pool and bracket slots are never exposed.
+    if (!API.isAdmin()) {
+      el.innerHTML = `
+        <div class="panel admin-login">
+          <div class="lock-icon"><i class="fa-solid fa-lock"></i></div>
+          <h2 class="section-title" style="font-size:1.1rem">Official Draw</h2>
+          <p class="section-sub" style="margin-bottom:20px">This section is for the tournament organiser only.</p>
+          <div class="form-field">
+            <label for="draw-gate-pw">Organiser password</label>
+            <input type="password" id="draw-gate-pw" autocomplete="current-password" placeholder="Enter password to unlock the draw">
+          </div>
+          <button class="btn-gold" id="btn-draw-gate" style="width:100%;justify-content:center"><i class="fa-solid fa-unlock"></i> UNLOCK DRAW</button>
+          ${API.mode === "demo" ? `<p class="draw-hint" style="justify-content:center;margin-top:14px"><i class="fa-solid fa-circle-info"></i>Demo mode — password is "admin"</p>` : ""}
+        </div>`;
+      const submit = async () => {
+        try {
+          await API.login(document.getElementById("draw-gate-pw").value);
+          App.refreshAdminNav();
+          App.toast("Draw unlocked — good luck!");
+          render(state);
+        } catch (e) {
+          App.toast(e.message || "Incorrect password", true);
+        }
+      };
+      document.getElementById("btn-draw-gate").addEventListener("click", submit);
+      document.getElementById("draw-gate-pw").addEventListener("keydown", (e) => { if (e.key === "Enter") submit(); });
+      return;
+    }
+
     if (state.draw.completed) {
       const redoBtn = API.isAdmin()
         ? `<button class="btn-outline btn-danger" id="btn-redo-draw"><i class="fa-solid fa-rotate-left"></i> REDO FULL DRAW</button>`

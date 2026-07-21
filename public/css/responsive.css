@@ -108,3 +108,78 @@
   }
   .sch-row .sch-time { grid-column: 2 / -1; justify-self: end; }
 }
+
+/* ============================================================
+   Comprehensive mobile fit pass — tighten sizes on phones
+   ============================================================ */
+@media (max-width: 680px) {
+  .section-title { font-size: 1.2rem; }
+  p.section-sub { font-size: 0.84rem; margin-bottom: 18px; }
+
+  #app { padding: 18px 10px 44px; }
+
+  /* Home hero */
+  .hero { min-height: 236px; padding: 26px 14px; }
+  .hero-title { letter-spacing: 4px; }
+  .hero-tag { font-size: 0.72rem; letter-spacing: 2px; margin-top: 10px; }
+  .hero-ctas { gap: 10px; margin-top: 20px; }
+  .trophy-spinner { width: 200px; }
+
+  /* Sponsor banner */
+  .sponsor-banner-xl .sponsor-item { min-width: 148px; padding: 13px 18px; font-size: 0.8rem; }
+  .sponsor-banner-xl .sponsor-item img { height: 32px; }
+
+  /* Bracket centre stage (the main mobile bracket view) */
+  .bk-hero { padding: 18px 12px 22px; margin-top: 14px; }
+  .bk-trophy { width: 150px; }
+  .bk-hero .bk-match.bk-final, .bk-champion, .bk-third { max-width: 100%; }
+  .bk-final-label { font-size: 0.95rem; letter-spacing: 4px; margin-bottom: 8px; }
+  .bk-champion { margin-top: 14px; padding: 13px 10px; }
+  .bk-champ-team { font-size: 1rem; }
+  .bk-hero .bk-final .bk-team { font-size: 0.84rem; }
+
+  /* Teams gallery */
+  .team-tile summary { padding: 12px 14px; gap: 11px; }
+  .tile-flag img { width: 44px; height: 33px; }
+  .tile-country { font-size: 0.9rem; }
+  .tile-captain { font-size: 0.76rem; }
+
+  /* Media + awards cards */
+  .media-slot { min-height: 150px; }
+  .fav-card { padding: 18px 16px 14px; }
+  .fav-team { font-size: 1.1rem; }
+  .fav-blurb { font-size: 0.86rem; }
+  .podium-card, .award-card { padding: 16px; }
+  .scorer-row { padding: 8px 14px; font-size: 0.82rem; }
+
+  /* Schedule */
+  .sch-head { padding: 12px 14px; }
+  .sch-head h3 { font-size: 0.86rem; letter-spacing: 2px; }
+}
+
+/* ===== Small phones ===== */
+@media (max-width: 430px) {
+  .header-title { font-size: 1.75rem; letter-spacing: 3px; }
+  .header-subtitle { font-size: 0.72rem; letter-spacing: 1.5px; }
+  .header-trophy { font-size: 2.1rem; }
+  .header-live { padding: 5px 12px; gap: 8px; margin-top: 10px; }
+  .live-pill { font-size: 0.62rem; padding: 2px 9px; }
+
+  .hero { min-height: 208px; padding: 22px 12px; }
+  .hero-title { font-size: 2.15rem; }
+  .hero-sub { font-size: 0.92rem; letter-spacing: 3px; }
+  .hero-ctas { flex-direction: column; align-items: stretch; }
+  .hero-ctas .btn-gold, .hero-ctas .btn-outline { justify-content: center; }
+
+  .sponsor-banner-xl .sponsor-item { min-width: 128px; padding: 11px 14px; font-size: 0.72rem; }
+  .sponsor-banner-xl .sponsor-item img { height: 26px; }
+  .sponsor-label { font-size: 0.58rem; padding: 0 10px; }
+
+  .bk-trophy { width: 118px; }
+  .bk-final-label { font-size: 0.85rem; letter-spacing: 3px; }
+
+  .section-title { font-size: 1.05rem; }
+  .fixture-row, .sch-row, .scorer-row { font-size: 0.74rem; }
+
+  .btn-gold { padding: 12px 22px; font-size: 0.82rem; }
+}
