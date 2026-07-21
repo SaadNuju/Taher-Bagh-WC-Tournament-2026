@@ -15,7 +15,7 @@ run_worker_first = ["/api/*"]
 #   printf '%s' 'your-new-password' | sha256sum
 # then replace the value below and push — the next deploy applies it.
 [vars]
-ADMIN_PASSWORD_HASH = "ad89f0b42ca628c58ed4abf016fe5f325c958a6c34dc8b1d8945f8c26169834f"
+ADMIN_PASSWORD_HASH = "439886900ac50cba7828e120ca74b0297957bb5a057a12336a95d248bd693dde"
 
 # Tournament state lives in a single SQLite-backed Durable Object —
 # created automatically on deploy, no dashboard setup required.
