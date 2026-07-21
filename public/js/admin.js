@@ -307,6 +307,7 @@ const AdminView = (() => {
         e.preventDefault();
         try {
           await API.login(document.getElementById("admin-password").value);
+          App.refreshAdminNav();
           App.toast("Welcome back, organiser!");
           render(state);
         } catch (err) {
@@ -359,6 +360,9 @@ const AdminView = (() => {
   function bindEvents(state, el) {
     document.getElementById("btn-logout").addEventListener("click", () => {
       API.logout();
+      App.refreshAdminNav();
+      // If the hidden Draw tab is the current view, bounce to home.
+      if ((location.hash || "#home").slice(1) === "draw") { location.hash = "#home"; }
       render(state);
     });
 

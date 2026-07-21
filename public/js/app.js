@@ -157,9 +157,18 @@ const App = (() => {
     admin: () => AdminView.render(state),
   };
 
+  // Show/hide admin-only nav links (e.g. Draw) based on login state.
+  function refreshAdminNav() {
+    const admin = API.isAdmin();
+    document.querySelectorAll(".nav-link[data-admin-only]").forEach((a) => {
+      a.hidden = !admin;
+    });
+  }
+
   function navigate() {
     const hash = (location.hash || "#home").slice(1);
     route = VIEWS[hash] ? hash : "home";
+    refreshAdminNav();
     document.querySelectorAll(".view").forEach((v) => { v.hidden = true; });
     document.querySelectorAll(".nav-link").forEach((a) =>
       a.classList.toggle("active", a.dataset.route === route));
@@ -294,7 +303,7 @@ const App = (() => {
   document.addEventListener("DOMContentLoaded", init);
 
   return {
-    toast, confetti, setState,
+    toast, confetti, setState, refreshAdminNav,
     get state() { return state; },
   };
 })();

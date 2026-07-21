@@ -1,78 +1,91 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 340" role="img" aria-label="Gold championship trophy">
   <defs>
-    <!-- rich, high-contrast polished gold -->
-    <linearGradient id="tbGold" x1="0.1" y1="0" x2="0.9" y2="1">
-      <stop offset="0" stop-color="#fff7cf"/>
-      <stop offset="0.18" stop-color="#ffe98a"/>
-      <stop offset="0.4" stop-color="#f4c542"/>
-      <stop offset="0.58" stop-color="#e0a81f"/>
-      <stop offset="0.78" stop-color="#c68a12"/>
-      <stop offset="1" stop-color="#8a5f0c"/>
+    <!-- polished metal gold: bright top rim → warm body → deep shadow -->
+    <linearGradient id="gMetal" x1="0.15" y1="0" x2="0.85" y2="1">
+      <stop offset="0" stop-color="#fffbe8"/>
+      <stop offset="0.14" stop-color="#ffe98a"/>
+      <stop offset="0.34" stop-color="#f6c945"/>
+      <stop offset="0.52" stop-color="#e3a91d"/>
+      <stop offset="0.72" stop-color="#bd8410"/>
+      <stop offset="0.88" stop-color="#8f6109"/>
+      <stop offset="1" stop-color="#5f3f05"/>
     </linearGradient>
-    <linearGradient id="tbGoldV" x1="0" y1="0" x2="0" y2="1">
-      <stop offset="0" stop-color="#fff3b0"/>
-      <stop offset="0.5" stop-color="#eeb92e"/>
-      <stop offset="1" stop-color="#9c6f12"/>
+    <linearGradient id="gMetalV" x1="0.2" y1="0" x2="0.8" y2="1">
+      <stop offset="0" stop-color="#fff4bf"/>
+      <stop offset="0.4" stop-color="#f0bd34"/>
+      <stop offset="0.7" stop-color="#c1870f"/>
+      <stop offset="1" stop-color="#6e4a06"/>
     </linearGradient>
-    <linearGradient id="tbBase" x1="0" y1="0" x2="0" y2="1">
-      <stop offset="0" stop-color="#1c5a38"/>
+    <radialGradient id="gSphere" cx="0.35" cy="0.28" r="0.85">
+      <stop offset="0" stop-color="#ffffff"/>
+      <stop offset="0.16" stop-color="#fff1b0"/>
+      <stop offset="0.45" stop-color="#f3c440"/>
+      <stop offset="0.75" stop-color="#c98d14"/>
+      <stop offset="1" stop-color="#6f4d08"/>
+    </radialGradient>
+    <linearGradient id="gBase" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#2f8a57"/>
+      <stop offset="0.5" stop-color="#186b40"/>
       <stop offset="0.5" stop-color="#0f4227"/>
-      <stop offset="1" stop-color="#08301b"/>
+      <stop offset="1" stop-color="#082a18"/>
     </linearGradient>
-    <radialGradient id="tbSphere" cx="0.36" cy="0.3" r="0.8">
-      <stop offset="0" stop-color="#fffbe6"/>
-      <stop offset="0.35" stop-color="#ffe27a"/>
-      <stop offset="0.7" stop-color="#e6a91e"/>
-      <stop offset="1" stop-color="#8f6510"/>
+    <radialGradient id="gGlow" cx="0.5" cy="0.5" r="0.5">
+      <stop offset="0" stop-color="#ffe07a" stop-opacity="0.75"/>
+      <stop offset="1" stop-color="#ffe07a" stop-opacity="0"/>
     </radialGradient>
-    <radialGradient id="tbGlow" cx="0.5" cy="0.5" r="0.5">
-      <stop offset="0" stop-color="#ffdf6e" stop-opacity="0.7"/>
-      <stop offset="1" stop-color="#ffdf6e" stop-opacity="0"/>
-    </radialGradient>
-    <linearGradient id="tbShine" x1="0" y1="0" x2="0" y2="1">
-      <stop offset="0" stop-color="#ffffff" stop-opacity="0.9"/>
+    <linearGradient id="gSheen" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#ffffff" stop-opacity="0.95"/>
+      <stop offset="0.5" stop-color="#fff4cf" stop-opacity="0.35"/>
       <stop offset="1" stop-color="#ffffff" stop-opacity="0"/>
     </linearGradient>
   </defs>
 
   <!-- ambient glow -->
-  <ellipse cx="100" cy="130" rx="98" ry="128" fill="url(#tbGlow)"/>
+  <ellipse cx="100" cy="128" rx="100" ry="132" fill="url(#gGlow)"/>
 
-  <!-- globe held aloft -->
-  <circle cx="100" cy="66" r="48" fill="url(#tbSphere)" stroke="#7c5608" stroke-width="1.5"/>
-  <g stroke="#a9781a" stroke-width="1.3" fill="none" opacity="0.65">
-    <ellipse cx="100" cy="66" rx="48" ry="18"/>
-    <ellipse cx="100" cy="66" rx="21" ry="48"/>
-    <ellipse cx="100" cy="66" rx="39" ry="48"/>
-    <line x1="52" y1="66" x2="148" y2="66"/>
+  <!-- ===== globe held aloft ===== -->
+  <circle cx="100" cy="66" r="49" fill="url(#gSphere)" stroke="#6f4d08" stroke-width="1.4"/>
+  <!-- meridians / parallels -->
+  <g stroke="#7c5608" stroke-width="1.1" fill="none" opacity="0.5">
+    <ellipse cx="100" cy="66" rx="49" ry="18"/>
+    <ellipse cx="100" cy="66" rx="22" ry="49"/>
+    <ellipse cx="100" cy="66" rx="40" ry="49"/>
+    <line x1="51" y1="66" x2="149" y2="66"/>
   </g>
-  <!-- glossy highlight on globe -->
-  <ellipse cx="82" cy="46" rx="17" ry="11" fill="#fffdf2" opacity="0.75"/>
-  <ellipse cx="118" cy="86" rx="9" ry="5" fill="#fff3c0" opacity="0.4"/>
+  <!-- inner shadow crescent for roundness -->
+  <path d="M132 40 A49 49 0 0 1 128 106 A44 44 0 0 0 132 40 Z" fill="#6f4d08" opacity="0.35"/>
+  <!-- bright specular hotspots -->
+  <ellipse cx="80" cy="44" rx="18" ry="12" fill="#fffdf4" opacity="0.85"/>
+  <circle cx="72" cy="38" r="4.5" fill="#ffffff"/>
+  <ellipse cx="116" cy="88" rx="8" ry="4.5" fill="#fff2bf" opacity="0.45"/>
 
-  <!-- twin figures spiralling up to hold the globe -->
+  <!-- ===== twin figures spiralling up to the globe ===== -->
   <path d="M100 116
-           C 68 150, 58 118, 73 92
-           C 84 73, 97 80, 100 102
-           C 103 80, 116 73, 127 92
-           C 142 118, 132 150, 100 116 Z"
-        fill="url(#tbGold)" stroke="#7c5608" stroke-width="1.5"/>
-  <path d="M100 110 C 87 132, 83 152, 100 174 C 117 152, 113 132, 100 110 Z"
-        fill="url(#tbGoldV)" stroke="#7c5608" stroke-width="1.2"/>
+           C 67 152, 56 118, 72 90
+           C 84 71, 98 79, 100 102
+           C 102 79, 116 71, 128 90
+           C 144 118, 133 152, 100 116 Z"
+        fill="url(#gMetal)" stroke="#6f4d08" stroke-width="1.4"/>
+  <!-- central spiral column -->
+  <path d="M100 110 C 86 132, 82 154, 100 178 C 118 154, 114 132, 100 110 Z"
+        fill="url(#gMetalV)" stroke="#6f4d08" stroke-width="1.1"/>
+  <!-- shaded side for depth -->
+  <path d="M100 116 C 118 118, 132 138, 122 160 C 118 140, 110 126, 100 120 Z"
+        fill="#6f4d08" opacity="0.28"/>
 
   <!-- stem -->
-  <path d="M89 174 h22 l-4 36 h-14 z" fill="url(#tbGold)" stroke="#7c5608" stroke-width="1.2"/>
+  <path d="M89 178 h22 l-4 34 h-14 z" fill="url(#gMetal)" stroke="#6f4d08" stroke-width="1.1"/>
 
-  <!-- base: green malachite tiers with bright gold rings -->
-  <ellipse cx="100" cy="214" rx="36" ry="10" fill="url(#tbGoldV)" stroke="#7c5608" stroke-width="1.2"/>
-  <path d="M64 214 q36 20 72 0 v13 q-36 20 -72 0 z" fill="url(#tbBase)" stroke="#08301b" stroke-width="1"/>
-  <ellipse cx="100" cy="227" rx="36" ry="10" fill="url(#tbGold)" stroke="#7c5608" stroke-width="1"/>
-  <path d="M58 231 q42 22 84 0 v15 q-42 22 -84 0 z" fill="url(#tbBase)" stroke="#08301b" stroke-width="1"/>
-  <ellipse cx="100" cy="246" rx="42" ry="12" fill="url(#tbGoldV)" stroke="#7c5608" stroke-width="1.4"/>
-  <ellipse cx="100" cy="246" rx="42" ry="12" fill="none" stroke="#fff3b0" stroke-width="1" opacity="0.5"/>
+  <!-- ===== green + gold base ===== -->
+  <ellipse cx="100" cy="214" rx="37" ry="10" fill="url(#gMetalV)" stroke="#6f4d08" stroke-width="1.2"/>
+  <path d="M63 214 q37 20 74 0 v13 q-37 20 -74 0 z" fill="url(#gBase)" stroke="#082a18" stroke-width="1"/>
+  <ellipse cx="100" cy="227" rx="37" ry="10" fill="url(#gMetal)" stroke="#6f4d08" stroke-width="1"/>
+  <path d="M57 231 q43 22 86 0 v15 q-43 22 -86 0 z" fill="url(#gBase)" stroke="#082a18" stroke-width="1"/>
+  <ellipse cx="100" cy="246" rx="43" ry="12" fill="url(#gMetalV)" stroke="#6f4d08" stroke-width="1.4"/>
+  <ellipse cx="100" cy="246" rx="43" ry="12" fill="none" stroke="#fff4bf" stroke-width="1" opacity="0.55"/>
 
-  <!-- bright specular shine streaks for a polished-metal look -->
-  <path d="M86 118 C 78 138, 80 156, 92 176" fill="none" stroke="url(#tbShine)" stroke-width="3.2" opacity="0.75" stroke-linecap="round"/>
-  <path d="M112 120 C 118 136, 116 150, 108 166" fill="none" stroke="#fff6d8" stroke-width="1.6" opacity="0.5" stroke-linecap="round"/>
-  <path d="M96 120 C 92 150, 94 180, 99 208" fill="none" stroke="#fff3b0" stroke-width="1.2" opacity="0.45" stroke-linecap="round"/>
+  <!-- ===== glossy sheen streaks over the whole piece ===== -->
+  <path d="M84 116 C 75 140, 78 160, 92 182" fill="none" stroke="url(#gSheen)" stroke-width="3.6" opacity="0.8" stroke-linecap="round"/>
+  <path d="M110 118 C 118 136, 116 152, 106 170" fill="none" stroke="#fff6d8" stroke-width="1.5" opacity="0.5" stroke-linecap="round"/>
+  <path d="M96 120 C 92 152, 95 184, 99 210" fill="none" stroke="#fff2b0" stroke-width="1.1" opacity="0.4" stroke-linecap="round"/>
 </svg>
