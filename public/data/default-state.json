@@ -1,7 +1,7 @@
 {
-  "version": 2,
-  "schema": 2,
-  "updatedAt": "2026-07-16T17:02:36.569Z",
+  "version": 1,
+  "schema": 3,
+  "updatedAt": "2026-07-21T11:09:47.716Z",
   "teams": [
     {
       "id": "t-br",
@@ -268,56 +268,12 @@
       ]
     },
     {
-      "id": "t-us",
-      "country": "United States",
-      "countryCode": "us",
-      "nickname": "The Stars and Stripes",
-      "flag": "assets/flags/us.svg",
-      "teamName": "Team 13",
-      "captain": "TBC",
-      "goalkeeper": "",
-      "players": [
-        "Player 01",
-        "Player 02",
-        "Player 03",
-        "Player 04",
-        "Player 05",
-        "Player 06",
-        "Player 07",
-        "Player 08",
-        "Player 09",
-        "Player 10"
-      ]
-    },
-    {
-      "id": "t-it",
-      "country": "Italy",
-      "countryCode": "it",
-      "nickname": "Gli Azzurri",
-      "flag": "assets/flags/it.svg",
-      "teamName": "Team 14",
-      "captain": "TBC",
-      "goalkeeper": "",
-      "players": [
-        "Player 01",
-        "Player 02",
-        "Player 03",
-        "Player 04",
-        "Player 05",
-        "Player 06",
-        "Player 07",
-        "Player 08",
-        "Player 09",
-        "Player 10"
-      ]
-    },
-    {
       "id": "t-hr",
       "country": "Croatia",
       "countryCode": "hr",
       "nickname": "Vatreni",
       "flag": "assets/flags/hr.svg",
-      "teamName": "Team 15",
+      "teamName": "Team 13",
       "captain": "TBC",
       "goalkeeper": "",
       "players": [
@@ -339,7 +295,7 @@
       "countryCode": "uy",
       "nickname": "La Celeste",
       "flag": "assets/flags/uy.svg",
-      "teamName": "Team 16",
+      "teamName": "Team 14",
       "captain": "TBC",
       "goalkeeper": "",
       "players": [
@@ -361,7 +317,7 @@
       "countryCode": "co",
       "nickname": "Los Cafeteros",
       "flag": "assets/flags/co.svg",
-      "teamName": "Team 17",
+      "teamName": "Team 15",
       "captain": "TBC",
       "goalkeeper": "",
       "players": [
@@ -383,29 +339,7 @@
       "countryCode": "ch",
       "nickname": "La Nati",
       "flag": "assets/flags/ch.svg",
-      "teamName": "Team 18",
-      "captain": "TBC",
-      "goalkeeper": "",
-      "players": [
-        "Player 01",
-        "Player 02",
-        "Player 03",
-        "Player 04",
-        "Player 05",
-        "Player 06",
-        "Player 07",
-        "Player 08",
-        "Player 09",
-        "Player 10"
-      ]
-    },
-    {
-      "id": "t-dk",
-      "country": "Denmark",
-      "countryCode": "dk",
-      "nickname": "Danish Dynamite",
-      "flag": "assets/flags/dk.svg",
-      "teamName": "Team 19",
+      "teamName": "Team 16",
       "captain": "TBC",
       "goalkeeper": "",
       "players": [
@@ -427,7 +361,7 @@
       "countryCode": "se",
       "nickname": "Blagult",
       "flag": "assets/flags/se.svg",
-      "teamName": "Team 20",
+      "teamName": "Team 17",
       "captain": "TBC",
       "goalkeeper": "",
       "players": [
@@ -449,29 +383,7 @@
       "countryCode": "no",
       "nickname": "The Lions",
       "flag": "assets/flags/no.svg",
-      "teamName": "Team 21",
-      "captain": "TBC",
-      "goalkeeper": "",
-      "players": [
-        "Player 01",
-        "Player 02",
-        "Player 03",
-        "Player 04",
-        "Player 05",
-        "Player 06",
-        "Player 07",
-        "Player 08",
-        "Player 09",
-        "Player 10"
-      ]
-    },
-    {
-      "id": "t-au",
-      "country": "Australia",
-      "countryCode": "au",
-      "nickname": "The Socceroos",
-      "flag": "assets/flags/au.svg",
-      "teamName": "Team 22",
+      "teamName": "Team 18",
       "captain": "TBC",
       "goalkeeper": "",
       "players": [
@@ -493,7 +405,7 @@
       "countryCode": "ma",
       "nickname": "Atlas Lions",
       "flag": "assets/flags/ma.svg",
-      "teamName": "Team 23",
+      "teamName": "Team 19",
       "captain": "TBC",
       "goalkeeper": "",
       "players": [
@@ -515,7 +427,7 @@
       "countryCode": "sn",
       "nickname": "Lions of Teranga",
       "flag": "assets/flags/sn.svg",
-      "teamName": "Team 24",
+      "teamName": "Team 20",
       "captain": "TBC",
       "goalkeeper": "",
       "players": [
@@ -537,73 +449,7 @@
       "countryCode": "ca",
       "nickname": "Les Rouges",
       "flag": "assets/flags/ca.svg",
-      "teamName": "Team 25",
-      "captain": "TBC",
-      "goalkeeper": "",
-      "players": [
-        "Player 01",
-        "Player 02",
-        "Player 03",
-        "Player 04",
-        "Player 05",
-        "Player 06",
-        "Player 07",
-        "Player 08",
-        "Player 09",
-        "Player 10"
-      ]
-    },
-    {
-      "id": "t-pl",
-      "country": "Poland",
-      "countryCode": "pl",
-      "nickname": "The Eagles",
-      "flag": "assets/flags/pl.svg",
-      "teamName": "Team 26",
-      "captain": "TBC",
-      "goalkeeper": "",
-      "players": [
-        "Player 01",
-        "Player 02",
-        "Player 03",
-        "Player 04",
-        "Player 05",
-        "Player 06",
-        "Player 07",
-        "Player 08",
-        "Player 09",
-        "Player 10"
-      ]
-    },
-    {
-      "id": "t-rs",
-      "country": "Serbia",
-      "countryCode": "rs",
-      "nickname": "Orlovi",
-      "flag": "assets/flags/rs.svg",
-      "teamName": "Team 27",
-      "captain": "TBC",
-      "goalkeeper": "",
-      "players": [
-        "Player 01",
-        "Player 02",
-        "Player 03",
-        "Player 04",
-        "Player 05",
-        "Player 06",
-        "Player 07",
-        "Player 08",
-        "Player 09",
-        "Player 10"
-      ]
-    },
-    {
-      "id": "t-gb-wls",
-      "country": "Wales",
-      "countryCode": "gb-wls",
-      "nickname": "The Dragons",
-      "flag": "assets/flags/gb-wls.svg",
-      "teamName": "Team 28",
+      "teamName": "Team 21",
       "captain": "TBC",
       "goalkeeper": "",
       "players": [
@@ -625,29 +471,7 @@
       "countryCode": "ir",
       "nickname": "Team Melli",
       "flag": "assets/flags/ir.svg",
-      "teamName": "Team 29",
-      "captain": "TBC",
-      "goalkeeper": "",
-      "players": [
-        "Player 01",
-        "Player 02",
-        "Player 03",
-        "Player 04",
-        "Player 05",
-        "Player 06",
-        "Player 07",
-        "Player 08",
-        "Player 09",
-        "Player 10"
-      ]
-    },
-    {
-      "id": "t-tn",
-      "country": "Tunisia",
-      "countryCode": "tn",
-      "nickname": "Eagles of Carthage",
-      "flag": "assets/flags/tn.svg",
-      "teamName": "Team 30",
+      "teamName": "Team 22",
       "captain": "TBC",
       "goalkeeper": "",
       "players": [
@@ -669,7 +493,7 @@
       "countryCode": "cm",
       "nickname": "Indomitable Lions",
       "flag": "assets/flags/cm.svg",
-      "teamName": "Team 31",
+      "teamName": "Team 23",
       "captain": "TBC",
       "goalkeeper": "",
       "players": [
@@ -691,6 +515,182 @@
       "countryCode": "ec",
       "nickname": "La Tri",
       "flag": "assets/flags/ec.svg",
+      "teamName": "Team 24",
+      "captain": "TBC",
+      "goalkeeper": "",
+      "players": [
+        "Player 01",
+        "Player 02",
+        "Player 03",
+        "Player 04",
+        "Player 05",
+        "Player 06",
+        "Player 07",
+        "Player 08",
+        "Player 09",
+        "Player 10"
+      ]
+    },
+    {
+      "id": "t-cv",
+      "country": "Cape Verde",
+      "countryCode": "cv",
+      "nickname": "Blue Sharks",
+      "flag": "assets/flags/cv.svg",
+      "teamName": "Team 25",
+      "captain": "TBC",
+      "goalkeeper": "",
+      "players": [
+        "Player 01",
+        "Player 02",
+        "Player 03",
+        "Player 04",
+        "Player 05",
+        "Player 06",
+        "Player 07",
+        "Player 08",
+        "Player 09",
+        "Player 10"
+      ]
+    },
+    {
+      "id": "t-tr",
+      "country": "Turkey",
+      "countryCode": "tr",
+      "nickname": "The Crescent-Stars",
+      "flag": "assets/flags/tr.svg",
+      "teamName": "Team 26",
+      "captain": "TBC",
+      "goalkeeper": "",
+      "players": [
+        "Player 01",
+        "Player 02",
+        "Player 03",
+        "Player 04",
+        "Player 05",
+        "Player 06",
+        "Player 07",
+        "Player 08",
+        "Player 09",
+        "Player 10"
+      ]
+    },
+    {
+      "id": "t-eg",
+      "country": "Egypt",
+      "countryCode": "eg",
+      "nickname": "The Pharaohs",
+      "flag": "assets/flags/eg.svg",
+      "teamName": "Team 27",
+      "captain": "TBC",
+      "goalkeeper": "",
+      "players": [
+        "Player 01",
+        "Player 02",
+        "Player 03",
+        "Player 04",
+        "Player 05",
+        "Player 06",
+        "Player 07",
+        "Player 08",
+        "Player 09",
+        "Player 10"
+      ]
+    },
+    {
+      "id": "t-ci",
+      "country": "Ivory Coast",
+      "countryCode": "ci",
+      "nickname": "The Elephants",
+      "flag": "assets/flags/ci.svg",
+      "teamName": "Team 28",
+      "captain": "TBC",
+      "goalkeeper": "",
+      "players": [
+        "Player 01",
+        "Player 02",
+        "Player 03",
+        "Player 04",
+        "Player 05",
+        "Player 06",
+        "Player 07",
+        "Player 08",
+        "Player 09",
+        "Player 10"
+      ]
+    },
+    {
+      "id": "t-gb-sct",
+      "country": "Scotland",
+      "countryCode": "gb-sct",
+      "nickname": "The Tartan Army",
+      "flag": "assets/flags/gb-sct.svg",
+      "teamName": "Team 29",
+      "captain": "TBC",
+      "goalkeeper": "",
+      "players": [
+        "Player 01",
+        "Player 02",
+        "Player 03",
+        "Player 04",
+        "Player 05",
+        "Player 06",
+        "Player 07",
+        "Player 08",
+        "Player 09",
+        "Player 10"
+      ]
+    },
+    {
+      "id": "t-qa",
+      "country": "Qatar",
+      "countryCode": "qa",
+      "nickname": "The Maroon",
+      "flag": "assets/flags/qa.svg",
+      "teamName": "Team 30",
+      "captain": "TBC",
+      "goalkeeper": "",
+      "players": [
+        "Player 01",
+        "Player 02",
+        "Player 03",
+        "Player 04",
+        "Player 05",
+        "Player 06",
+        "Player 07",
+        "Player 08",
+        "Player 09",
+        "Player 10"
+      ]
+    },
+    {
+      "id": "t-gh",
+      "country": "Ghana",
+      "countryCode": "gh",
+      "nickname": "The Black Stars",
+      "flag": "assets/flags/gh.svg",
+      "teamName": "Team 31",
+      "captain": "TBC",
+      "goalkeeper": "",
+      "players": [
+        "Player 01",
+        "Player 02",
+        "Player 03",
+        "Player 04",
+        "Player 05",
+        "Player 06",
+        "Player 07",
+        "Player 08",
+        "Player 09",
+        "Player 10"
+      ]
+    },
+    {
+      "id": "t-sa",
+      "country": "Saudi Arabia",
+      "countryCode": "sa",
+      "nickname": "The Green Falcons",
+      "flag": "assets/flags/sa.svg",
       "teamName": "Team 32",
       "captain": "TBC",
       "goalkeeper": "",
@@ -1170,12 +1170,12 @@
   },
   "announcements": [
     {
-      "text": "Welcome to the Taher Bagh World Cup Tournament 2026! The official draw is coming soon.",
-      "date": "2026-07-16T17:02:36.585Z"
+      "text": "Welcome to the TBFOOT World Cup Tournament 2026! The official draw is coming soon.",
+      "date": "2026-07-21T11:09:47.731Z"
     }
   ],
   "settings": {
-    "tournamentName": "Taher Bagh World Cup Tournament 2026",
+    "tournamentName": "TBFOOT World Cup Tournament 2026",
     "startDate": "2026-07-20"
   }
 }

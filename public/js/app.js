@@ -109,10 +109,10 @@ const HomeView = (() => {
     el.innerHTML = `
       <div class="hero">
         <div class="hero-trophy-bg" aria-hidden="true">
-          <div class="trophy-spinner"><i class="fa-solid fa-trophy"></i></div>
+          <img class="trophy-spinner" src="assets/trophy.svg" alt="">
         </div>
         <div class="hero-content">
-          <h2 class="hero-title">TAHER BAGH</h2>
+          <h2 class="hero-title">TBFOOT</h2>
           <p class="hero-sub">WORLD CUP TOURNAMENT 2026</p>
           <p class="hero-tag">32 TEAMS · PURE KNOCKOUT · ONE CHAMPION</p>
           <div class="hero-ctas">

@@ -251,44 +251,51 @@ const BracketView = (() => {
     const r = (round, from, to) => Tournament.roundMatches(state, round).slice(from, to);
     const champId = Tournament.champion(state);
     const champ = team(state, champId);
+    const final = Tournament.match(state, "final");
+    const third = Tournament.match(state, "tp");
 
     el.innerHTML = `
       <h2 class="section-title">Fixtures Bracket</h2>
       <p class="section-sub">32 teams · knockout · one match, one chance</p>
 
-      <div class="bk-round-labels">
-        <span>ROUND OF 32</span><span>ROUND OF 16</span><span>QUARTERS</span><span>SEMIS</span>
-        <span class="bk-center-label">FINAL</span>
-        <span>SEMIS</span><span>QUARTERS</span><span>ROUND OF 16</span><span>ROUND OF 32</span>
+      <!-- Centre stage: Final, Champion and the spinning trophy -->
+      <div class="bk-hero">
+        <img class="bk-trophy" src="assets/trophy.svg" alt="" aria-hidden="true">
+        <div class="bk-hero-inner">
+          <div class="bk-final-label"><i class="fa-solid fa-star"></i> FINAL <i class="fa-solid fa-star"></i></div>
+          ${matchHTML(state, labels, final, "bk-final")}
+          <div class="bk-champion ${champ ? "crowned" : ""}">
+            <div class="bk-champ-label">CHAMPION</div>
+            <div class="bk-champ-team">${champ ? `${flagImg(champ)} ${esc(champ.country)}` : '<i class="fa-solid fa-star"></i>'}</div>
+          </div>
+          <div class="bk-third">
+            <div class="bk-third-label">THIRD PLACE</div>
+            ${matchHTML(state, labels, third, "bk-third-match")}
+          </div>
+        </div>
       </div>
+
+      <p class="section-sub" style="margin-top:26px">The road to the final</p>
       <div class="bracket-scroll">
         <div class="bk-tree">
-          ${colHTML(state, labels, r("r32", 0, 8), "")}
-          ${colHTML(state, labels, r("r16", 0, 4), "")}
-          ${colHTML(state, labels, r("qf", 0, 2), "")}
-          ${colHTML(state, labels, r("sf", 0, 1), "")}
-          <div class="bk-col bk-center">
-            <div class="bk-champion ${champ ? "crowned" : ""}">
-              <i class="fa-solid fa-trophy"></i>
-              <div class="bk-champ-label">CHAMPION</div>
-              <div class="bk-champ-team">${champ ? `${flagImg(champ)} ${esc(champ.country)}` : "—"}</div>
-            </div>
-            ${matchHTML(state, labels, Tournament.match(state, "final"), "bk-final")}
-            ${matchHTML(state, labels, Tournament.match(state, "tp"), "bk-third")}
-            <div class="bk-third-label">THIRD PLACE</div>
-          </div>
-          ${colHTML(state, labels, r("sf", 1, 2), "")}
-          ${colHTML(state, labels, r("qf", 2, 4), "")}
-          ${colHTML(state, labels, r("r16", 4, 8), "")}
-          ${colHTML(state, labels, r("r32", 8, 16), "")}
+          ${colHTML(state, labels, r("r32", 0, 8), "bk-left")}
+          ${colHTML(state, labels, r("r16", 0, 4), "bk-left")}
+          ${colHTML(state, labels, r("qf", 0, 2), "bk-left")}
+          ${colHTML(state, labels, r("sf", 0, 1), "bk-left")}
+          <div class="bk-col bk-spacer"><div class="bk-spacer-line"></div></div>
+          ${colHTML(state, labels, r("sf", 1, 2), "bk-right")}
+          ${colHTML(state, labels, r("qf", 2, 4), "bk-right")}
+          ${colHTML(state, labels, r("r16", 4, 8), "bk-right")}
+          ${colHTML(state, labels, r("r32", 8, 16), "bk-right")}
         </div>
       </div>
       ${state.draw.completed ? "" : `
         <p class="center mt-20"><a class="btn-gold" href="#draw"><i class="fa-solid fa-shuffle"></i> RUN THE OFFICIAL DRAW</a></p>`}
     `;
 
-    // Entrance animation: columns cascade in from the outside.
+    // Entrance animation: hero lifts in, columns cascade from the outside.
     if (window.gsap) {
+      gsap.from(".bk-hero-inner > *", { opacity: 0, y: 16, duration: 0.5, stagger: 0.08, ease: "power2.out" });
       gsap.from(".bk-match", {
         opacity: 0, scale: 0.9, y: 12,
         duration: 0.45, ease: "power2.out",

@@ -61,11 +61,19 @@ const DrawView = (() => {
     const el = document.getElementById("view-draw");
 
     if (state.draw.completed) {
+      const redoBtn = API.isAdmin()
+        ? `<button class="btn-outline btn-danger" id="btn-redo-draw"><i class="fa-solid fa-rotate-left"></i> REDO FULL DRAW</button>`
+        : "";
       el.innerHTML = `
         <h2 class="section-title">Official Draw</h2>
         <p class="section-sub">The draw is complete — the road to the final is set. Good luck to all 32 teams!</p>
         <div class="draw-matches-grid">${bracketSlotsHTML(state, state.draw.bracketOrder)}</div>
-        <p class="center mt-20"><a class="btn-gold" href="#bracket"><i class="fa-solid fa-sitemap"></i> VIEW THE BRACKET</a></p>`;
+        <p class="center mt-20" style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap">
+          <a class="btn-gold" href="#bracket"><i class="fa-solid fa-sitemap"></i> VIEW THE BRACKET</a>
+          ${redoBtn}
+        </p>
+        ${redoBtn ? `<p class="draw-hint" style="justify-content:center"><i class="fa-solid fa-circle-info"></i> Redoing the draw clears the current bracket and all results.</p>` : ""}`;
+      document.getElementById("btn-redo-draw")?.addEventListener("click", () => redoDraw(state));
       return;
     }
 
@@ -142,6 +150,19 @@ const DrawView = (() => {
         App.toast(e.message || "Incorrect password", true);
       }
     });
+  }
+
+  function redoDraw(state) {
+    if (!API.isAdmin()) return;
+    if (!confirm("Redo the full draw? This clears the current bracket and ALL results, then starts a brand-new draw ceremony.")) return;
+    state.draw = { completed: false, bracketOrder: [], drawOrder: [] };
+    for (const m of state.matches) {
+      m.teamA = m.teamB = null;
+      m.scoreA = m.scoreB = m.pensA = m.pensB = null;
+      m.scorers = [];
+      m.status = "scheduled";
+    }
+    beginDraw(state);
   }
 
   function beginDraw(state) {

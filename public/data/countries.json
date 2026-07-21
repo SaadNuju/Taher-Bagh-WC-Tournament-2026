@@ -60,16 +60,6 @@
     "nickname": "El Tri"
   },
   {
-    "code": "us",
-    "name": "United States",
-    "nickname": "The Stars and Stripes"
-  },
-  {
-    "code": "it",
-    "name": "Italy",
-    "nickname": "Gli Azzurri"
-  },
-  {
     "code": "hr",
     "name": "Croatia",
     "nickname": "Vatreni"
@@ -90,11 +80,6 @@
     "nickname": "La Nati"
   },
   {
-    "code": "dk",
-    "name": "Denmark",
-    "nickname": "Danish Dynamite"
-  },
-  {
     "code": "se",
     "name": "Sweden",
     "nickname": "Blagult"
@@ -103,11 +88,6 @@
     "code": "no",
     "name": "Norway",
     "nickname": "The Lions"
-  },
-  {
-    "code": "au",
-    "name": "Australia",
-    "nickname": "The Socceroos"
   },
   {
     "code": "ma",
@@ -125,29 +105,9 @@
     "nickname": "Les Rouges"
   },
   {
-    "code": "pl",
-    "name": "Poland",
-    "nickname": "The Eagles"
-  },
-  {
-    "code": "rs",
-    "name": "Serbia",
-    "nickname": "Orlovi"
-  },
-  {
-    "code": "gb-wls",
-    "name": "Wales",
-    "nickname": "The Dragons"
-  },
-  {
     "code": "ir",
     "name": "Iran",
     "nickname": "Team Melli"
-  },
-  {
-    "code": "tn",
-    "name": "Tunisia",
-    "nickname": "Eagles of Carthage"
   },
   {
     "code": "cm",
@@ -158,5 +118,45 @@
     "code": "ec",
     "name": "Ecuador",
     "nickname": "La Tri"
+  },
+  {
+    "code": "cv",
+    "name": "Cape Verde",
+    "nickname": "Blue Sharks"
+  },
+  {
+    "code": "tr",
+    "name": "Turkey",
+    "nickname": "The Crescent-Stars"
+  },
+  {
+    "code": "eg",
+    "name": "Egypt",
+    "nickname": "The Pharaohs"
+  },
+  {
+    "code": "ci",
+    "name": "Ivory Coast",
+    "nickname": "The Elephants"
+  },
+  {
+    "code": "gb-sct",
+    "name": "Scotland",
+    "nickname": "The Tartan Army"
+  },
+  {
+    "code": "qa",
+    "name": "Qatar",
+    "nickname": "The Maroon"
+  },
+  {
+    "code": "gh",
+    "name": "Ghana",
+    "nickname": "The Black Stars"
+  },
+  {
+    "code": "sa",
+    "name": "Saudi Arabia",
+    "nickname": "The Green Falcons"
   }
 ]

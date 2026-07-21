@@ -34,7 +34,7 @@ const TeamsView = (() => {
     const el = document.getElementById("view-teams");
     el.innerHTML = `
       <h2 class="section-title">Teams &amp; Players</h2>
-      <p class="section-sub">The 32 squads of the Taher Bagh World Cup — tap a team to see its players.</p>
+      <p class="section-sub">The 32 squads of the TBFOOT World Cup — tap a team to see its players.</p>
       <div class="teams-grid">
         ${state.teams.map((t, i) => cardHTML(t, i)).join("")}
       </div>`;

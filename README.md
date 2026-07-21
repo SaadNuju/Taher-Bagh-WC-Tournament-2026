@@ -1,4 +1,4 @@
-# Taher Bagh World Cup Tournament 2026 ⚽🏆
+# TBFOOT World Cup Tournament 2026 ⚽🏆
 
 A cinematic, gold-and-black single-page web app for running a 32-team,
 straight-knockout football tournament — official animated draw, animated
