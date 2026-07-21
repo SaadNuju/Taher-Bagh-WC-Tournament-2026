@@ -54,7 +54,8 @@ const Sound = (() => {
 /* ---------- Home view ---------- */
 
 const HomeView = (() => {
-  const { esc } = Tournament;
+  const { esc, team, flagImg } = Tournament;
+  let cdTimer = null;
 
   function mediaSlotHTML(slot, i) {
     if (slot && slot.src) {
@@ -75,66 +76,170 @@ const HomeView = (() => {
       </div>`;
   }
 
-  function nextMatchesHTML(state) {
-    if (!state.draw.completed) return "";
+  function nextMatch(state) {
+    if (!state.draw.completed) return null;
     Tournament.resolveBracket(state);
-    const upcoming = state.matches
+    return state.matches
       .filter((m) => m.status !== "played" && m.teamA && m.teamB)
-      .sort((a, b) => (a.kickoff || "9999") < (b.kickoff || "9999") ? -1 : 1)
-      .slice(0, 4);
-    if (!upcoming.length) return "";
-    const { team, flagImg } = Tournament;
-    const rows = upcoming.map((m) => {
-      const a = team(state, m.teamA), b = team(state, m.teamB);
-      return `
-        <div class="fixture-row">
-          <div class="fx-team">${flagImg(a)}<span>${esc(a.country)}</span></div>
-          <div class="fx-score pending">VS</div>
-          <div class="fx-team right"><span>${esc(b.country)}</span>${flagImg(b)}</div>
-        </div>`;
-    }).join("");
-    return `
-      <div class="panel match-center">
-        <h2 class="section-title" style="font-size:1.05rem">UP NEXT</h2>
-        <div style="margin-top:12px">${rows}</div>
-        <p class="center" style="margin-top:14px"><a class="btn-outline" href="#schedule"><i class="fa-regular fa-clock"></i> Full schedule</a></p>
-      </div>`;
+      .sort((a, b) => (a.kickoff || "9999") < (b.kickoff || "9999") ? -1 : 1)[0] || null;
+  }
+
+  /* ---- premium stat cards (the "app" dashboard) ---- */
+
+  function nextKickoffCard(state) {
+    if (!state.draw.completed) {
+      return `<a class="stat-card sc-blue" href="#draw">
+        <div class="sc-icon"><i class="fa-solid fa-calendar-day"></i></div>
+        <div class="sc-body"><div class="sc-label">NEXT KICK-OFF</div>
+          <div class="sc-main">Awaiting the official draw</div></div></a>`;
+    }
+    const m = nextMatch(state);
+    if (!m) {
+      return `<a class="stat-card sc-blue" href="#bracket">
+        <div class="sc-icon"><i class="fa-solid fa-flag-checkered"></i></div>
+        <div class="sc-body"><div class="sc-label">NEXT KICK-OFF</div>
+          <div class="sc-main">Tournament complete</div></div></a>`;
+    }
+    const a = team(state, m.teamA), b = team(state, m.teamB);
+    const cd = m.kickoff
+      ? `<div class="sc-extra" data-countdown="${esc(m.kickoff)}">—</div>`
+      : `<div class="sc-extra sc-tbc">TBC</div>`;
+    return `<a class="stat-card sc-blue" href="#schedule">
+      <div class="sc-icon"><i class="fa-solid fa-calendar-day"></i></div>
+      <div class="sc-body">
+        <div class="sc-label">NEXT KICK-OFF</div>
+        <div class="sc-main">${flagImg(a, "sc-flag")} ${esc(a.country)} <span class="sc-v">v</span> ${esc(b.country)} ${flagImg(b, "sc-flag")}</div>
+      </div>
+      ${cd}</a>`;
+  }
+
+  function goldenBootCard(state) {
+    const s = Tournament.topScorers(state)[0];
+    const t = s ? team(state, s.teamId) : null;
+    return `<a class="stat-card sc-gold" href="#awards">
+      <div class="sc-icon"><i class="fa-solid fa-futbol"></i></div>
+      <div class="sc-body">
+        <div class="sc-label">GOLDEN BOOT</div>
+        <div class="sc-main">${s ? esc(s.name) : "No goals yet"} ${s ? `<span class="sc-num">${s.goals}</span> <small>GLS</small>` : ""}</div>
+        ${t ? `<div class="sc-sub">${esc(t.country)}</div>` : ""}
+      </div></a>`;
+  }
+
+  function goldenGloveCard(state) {
+    const g = Tournament.goldenGlove(state)[0];
+    const t = g ? team(state, g.teamId) : null;
+    return `<a class="stat-card sc-teal" href="#awards">
+      <div class="sc-icon"><i class="fa-solid fa-mitten"></i></div>
+      <div class="sc-body">
+        <div class="sc-label">GOLDEN GLOVE</div>
+        <div class="sc-main">${t ? esc(t.goalkeeper || t.country) : "To be decided"} ${g ? `<span class="sc-num">${g.ga}</span><small>/${g.played}</small>` : ""}</div>
+        ${t ? `<div class="sc-sub">${esc(t.country)} · fewest conceded</div>` : ""}
+      </div></a>`;
+  }
+
+  function statusCard(state) {
+    if (!state.draw.completed) {
+      return `<a class="stat-card sc-violet" href="#draw">
+        <div class="sc-icon"><i class="fa-solid fa-shuffle"></i></div>
+        <div class="sc-body"><div class="sc-label">TOURNAMENT STATUS</div>
+          <div class="sc-main">Draw pending</div><div class="sc-sub">32 teams ready</div></div></a>`;
+    }
+    const champId = Tournament.champion(state);
+    if (champId) {
+      const c = team(state, champId);
+      return `<a class="stat-card sc-violet crowned" href="#bracket">
+        <div class="sc-icon"><i class="fa-solid fa-trophy"></i></div>
+        <div class="sc-body"><div class="sc-label">CHAMPIONS</div>
+          <div class="sc-main">${flagImg(c, "sc-flag")} ${esc(c.country)}</div></div></a>`;
+    }
+    const cr = Tournament.currentRound(state);
+    const label = (Tournament.ROUNDS.find((r) => r.round === cr) || {}).label || "Knockouts";
+    const alive = Tournament.aliveTeams(state).length;
+    return `<a class="stat-card sc-violet" href="#bracket">
+      <div class="sc-icon"><i class="fa-solid fa-fire"></i></div>
+      <div class="sc-body"><div class="sc-label">CURRENT ROUND</div>
+        <div class="sc-main">${esc(label)}</div><div class="sc-sub">${alive} teams remaining</div></div></a>`;
+  }
+
+  const ZONES = [
+    ["#teams", "fa-people-group", "Teams &amp; Rosters", "32 squads, captains &amp; players"],
+    ["#bracket", "fa-sitemap", "The Bracket", "The road to the final"],
+    ["#schedule", "fa-clock", "Schedule", "Kickoff times, round by round"],
+    ["#awards", "fa-medal", "Leaderboard", "Golden Boot, Glove &amp; form"],
+  ];
+
+  function startCountdown() {
+    clearInterval(cdTimer);
+    const els = document.querySelectorAll("[data-countdown]");
+    if (!els.length) return;
+    const tick = () => {
+      els.forEach((el) => {
+        const t = new Date(el.dataset.countdown).getTime() - Date.now();
+        if (isNaN(t)) { el.textContent = "—"; return; }
+        if (t <= 0) { el.textContent = "LIVE"; el.classList.add("cd-live"); return; }
+        const d = Math.floor(t / 86400000);
+        const h = Math.floor(t / 3600000) % 24;
+        const m = Math.floor(t / 60000) % 60;
+        const s = Math.floor(t / 1000) % 60;
+        const p = (n) => String(n).padStart(2, "0");
+        el.textContent = d > 0 ? `${d}d ${p(h)}h` : `${p(h)}:${p(m)}:${p(s)}`;
+      });
+    };
+    tick();
+    cdTimer = setInterval(tick, 1000);
   }
 
   function render(state) {
     const el = document.getElementById("view-home");
+    const drawDone = state.draw.completed;
     const media = state.media || [];
     const slots = Array.from({ length: 4 }, (_, i) => mediaSlotHTML(media[i], i));
 
     el.innerHTML = `
-      <div class="hero">
-        <div class="hero-trophy-bg" aria-hidden="true">
-          <img class="trophy-spinner" src="assets/trophy.svg" alt="">
-        </div>
-        <div class="hero-content">
-          <h2 class="hero-title">TBFOOT</h2>
-          <p class="hero-sub">WORLD CUP TOURNAMENT 2026</p>
-          <p class="hero-tag">32 TEAMS · PURE KNOCKOUT · ONE CHAMPION</p>
-          <div class="hero-ctas">
-            <a class="btn-gold" href="#${state.draw.completed ? "bracket" : "teams"}">
-              ${state.draw.completed
-                ? '<i class="fa-solid fa-sitemap"></i> VIEW THE BRACKET'
-                : '<i class="fa-solid fa-people-group"></i> MEET THE TEAMS'}
-            </a>
-            <a class="btn-outline" href="#schedule"><i class="fa-regular fa-clock"></i> MATCH SCHEDULE</a>
-          </div>
+      <!-- Hero banner: THE ARENA -->
+      <div class="app-hero panel">
+        <div class="app-hero-bg" aria-hidden="true"><img class="trophy-spinner" src="assets/trophy.svg" alt=""></div>
+        <div class="app-hero-body">
+          <div class="app-hero-kicker"><span class="live-dot"></span> THE ARENA · ROAD TO GLORY</div>
+          <h2 class="app-hero-title">TBFOOT WORLD CUP</h2>
+          <p class="app-hero-tag">32 TEAMS · PURE KNOCKOUT · ONE CHAMPION</p>
+          <a class="btn-gold app-hero-cta" href="#${drawDone ? "bracket" : "teams"}">
+            ${drawDone ? '<i class="fa-solid fa-sitemap"></i> ENTER THE BRACKET' : '<i class="fa-solid fa-people-group"></i> MEET THE TEAMS'}
+          </a>
         </div>
       </div>
 
-      <h2 class="section-title" style="margin-top:36px">Our Sponsors</h2>
-      <p class="section-sub">Proudly supported by our partners</p>
-      <div class="media-grid">${slots.join("")}</div>
+      <!-- Tournament pulse: named stat cards -->
+      <div class="app-section-head"><i class="fa-solid fa-bolt"></i> TOURNAMENT PULSE</div>
+      <div class="stat-stack">
+        ${nextKickoffCard(state)}
+        ${goldenBootCard(state)}
+        ${goldenGloveCard(state)}
+        ${statusCard(state)}
+      </div>
 
-      ${nextMatchesHTML(state)}`;
+      <!-- Explore zones -->
+      <div class="app-section-head"><i class="fa-solid fa-compass"></i> EXPLORE THE TOURNAMENT</div>
+      <div class="zones-grid">
+        ${ZONES.map(([href, icon, name, sub]) => `
+          <a class="zone-tile" href="${href}">
+            <div class="zone-icon"><i class="fa-solid ${icon}"></i></div>
+            <div class="zone-name">${name}</div>
+            <div class="zone-sub">${sub}</div>
+            <i class="fa-solid fa-arrow-right zone-go"></i>
+          </a>`).join("")}
+      </div>
+
+      <!-- Sponsors -->
+      <div class="app-section-head"><i class="fa-solid fa-handshake"></i> OUR SPONSORS</div>
+      <div class="media-grid">${slots.join("")}</div>`;
+
+    startCountdown();
 
     if (window.gsap) {
-      gsap.from(".hero-content > *", { opacity: 0, y: 24, duration: 0.7, stagger: 0.12, ease: "power3.out" });
-      gsap.from(".media-slot", { opacity: 0, y: 18, duration: 0.5, stagger: 0.08, delay: 0.3, ease: "power2.out" });
+      gsap.from(".app-hero-body > *", { opacity: 0, y: 22, duration: 0.6, stagger: 0.1, ease: "power3.out" });
+      gsap.from(".stat-card", { opacity: 0, x: -18, duration: 0.45, stagger: 0.08, ease: "power2.out" });
+      gsap.from(".zone-tile", { opacity: 0, y: 16, duration: 0.4, stagger: 0.06, delay: 0.1, ease: "power2.out" });
     }
   }
 

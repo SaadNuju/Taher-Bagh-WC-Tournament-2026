@@ -183,3 +183,34 @@
 
   .btn-gold { padding: 12px 22px; font-size: 0.82rem; }
 }
+
+/* ============================================================
+   App mode on phones: bottom tab bar replaces the top nav
+   ============================================================ */
+@media (max-width: 680px) {
+  .main-nav { display: none; }
+  .bottom-nav { display: flex; }
+  .header-admin { display: flex; }
+  body { padding-bottom: 70px; }
+
+  .app-hero { padding: 22px 16px; }
+  .app-hero-body { max-width: 100%; }
+  .app-hero-bg .trophy-spinner { width: 150px; opacity: 0.3; }
+  .app-hero-title { font-size: 1.9rem; letter-spacing: 2px; }
+  .app-hero-tag { font-size: 0.74rem; }
+
+  .zones-grid { grid-template-columns: 1fr; }
+
+  .stat-card { padding: 12px 13px; gap: 12px; }
+  .sc-icon { width: 46px; height: 46px; flex-basis: 46px; font-size: 1.2rem; }
+  .sc-main { font-size: 0.92rem; }
+  .sc-num { font-size: 1.35rem; }
+  .sc-extra { font-size: 0.95rem; padding: 6px 10px; }
+}
+
+@media (max-width: 430px) {
+  .bn-link span { font-size: 0.54rem; }
+  .bn-link i { font-size: 1.05rem; }
+  .app-hero-title { font-size: 1.7rem; }
+  .sc-main .sc-flag { width: 18px; height: 13px; }
+}

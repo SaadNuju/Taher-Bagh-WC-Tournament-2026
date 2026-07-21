@@ -42,6 +42,7 @@
         </div>
       </div>
     </div>
+    <a href="#admin" class="header-admin" title="Organiser control panel" aria-label="Admin"><i class="fa-solid fa-lock"></i></a>
   </header>
 
   <div class="sponsor-banner sponsor-banner-xl" aria-label="Sponsors">
@@ -70,6 +71,15 @@
     <section id="view-draw" class="view" hidden></section>
     <section id="view-admin" class="view" hidden></section>
   </main>
+
+  <nav class="bottom-nav" aria-label="App navigation">
+    <a href="#home" data-route="home" class="nav-link bn-link active"><i class="fa-solid fa-house"></i><span>Home</span></a>
+    <a href="#teams" data-route="teams" class="nav-link bn-link"><i class="fa-solid fa-people-group"></i><span>Teams</span></a>
+    <a href="#bracket" data-route="bracket" class="nav-link bn-link"><i class="fa-solid fa-sitemap"></i><span>Bracket</span></a>
+    <a href="#schedule" data-route="schedule" class="nav-link bn-link"><i class="fa-regular fa-clock"></i><span>Schedule</span></a>
+    <a href="#awards" data-route="awards" class="nav-link bn-link"><i class="fa-solid fa-medal"></i><span>Leaders</span></a>
+    <a href="#draw" data-route="draw" class="nav-link bn-link" data-admin-only hidden><i class="fa-solid fa-shuffle"></i><span>Draw</span></a>
+  </nav>
 
   <footer class="site-footer">
     <p class="footer-title">TBFOOT WORLD CUP TOURNAMENT 2026</p>
