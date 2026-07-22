@@ -104,11 +104,12 @@ const HomeView = (() => {
     const cd = m.kickoff
       ? `<div class="sc-extra" data-countdown="${esc(m.kickoff)}">—</div>`
       : `<div class="sc-extra sc-tbc">TBC</div>`;
+    const side = (t) => `${flagImg(t, "sc-flag")} <span class="sc-ent"><span class="sc-ent-country">${esc(t.country)}</span><span class="sc-ent-team">${esc(t.teamName)}</span></span>`;
     return `<a class="stat-card sc-blue" href="#schedule">
       <div class="sc-icon"><i class="fa-solid fa-calendar-day"></i></div>
       <div class="sc-body">
         <div class="sc-label">NEXT KICK-OFF</div>
-        <div class="sc-main">${flagImg(a, "sc-flag")} ${esc(a.country)} <span class="sc-v">v</span> ${esc(b.country)} ${flagImg(b, "sc-flag")}</div>
+        <div class="sc-main">${side(a)} <span class="sc-v">v</span> ${side(b)}</div>
       </div>
       ${cd}</a>`;
   }
@@ -150,7 +151,7 @@ const HomeView = (() => {
       return `<a class="stat-card sc-violet crowned" href="#bracket">
         <div class="sc-icon"><i class="fa-solid fa-trophy"></i></div>
         <div class="sc-body"><div class="sc-label">CHAMPIONS</div>
-          <div class="sc-main">${flagImg(c, "sc-flag")} ${esc(c.country)}</div></div></a>`;
+          <div class="sc-main">${flagImg(c, "sc-flag")} <span class="sc-ent"><span class="sc-ent-country">${esc(c.country)}</span><span class="sc-ent-team">${esc(c.teamName)}</span></span></div></div></a>`;
     }
     const cr = Tournament.currentRound(state);
     const label = (Tournament.ROUNDS.find((r) => r.round === cr) || {}).label || "Knockouts";

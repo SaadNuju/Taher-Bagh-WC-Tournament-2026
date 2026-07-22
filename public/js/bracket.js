@@ -227,7 +227,10 @@ const BracketView = (() => {
     return `
       <div class="bk-team ${cls}">
         ${flagImg(t)}
-        <span class="bk-name" title="${esc(t.teamName)}">${esc(t.country)}</span>
+        <span class="bk-name">
+          <span class="bk-country">${esc(t.country)}</span>
+          <span class="bk-teamname">${esc(t.teamName)}</span>
+        </span>
         <span class="bk-score">${scoreTxt}</span>
       </div>`;
   }
