@@ -32,7 +32,7 @@ const AwardsView = (() => {
           <span class="rank">${i + 1}</span>
           ${t ? flagImg(t) : ""}
           <span>${esc(s.name)}</span>
-          <span class="scorer-team">${t ? esc(t.country) : ""}</span>
+          <span class="scorer-team">${t ? `${esc(t.country)}<span class="scorer-teamname">${esc(t.teamName)}</span>` : ""}</span>
           <span class="goals">${s.goals} <i class="fa-solid fa-futbol" style="font-size:.7rem"></i></span>
         </div>`;
     }).join("");
@@ -47,7 +47,7 @@ const AwardsView = (() => {
           <span class="rank">${i + 1}</span>
           ${t ? flagImg(t) : ""}
           <span>${esc(gk)}</span>
-          <span class="scorer-team">${t ? esc(t.country) : ""}</span>
+          <span class="scorer-team">${t ? `${esc(t.country)}<span class="scorer-teamname">${esc(t.teamName)}</span>` : ""}</span>
           <span class="goals" title="Goals conceded per match">${r.ga} <i class="fa-solid fa-hand" style="font-size:.7rem"></i> / ${r.played}</span>
         </div>`;
     }).join("");
@@ -109,6 +109,7 @@ const AwardsView = (() => {
         <div class="podium-icon"><i class="fa-solid fa-trophy"></i></div>
         <div class="podium-title">CHAMPIONS</div>
         <div class="podium-team">${esc(champ.country)}</div>
+        <div class="podium-teamname">${esc(champ.teamName)}</div>
         ${flagImg(champ)}
       </div>` : ""}
 

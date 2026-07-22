@@ -51,7 +51,27 @@ const API = (() => {
    * are reset to the fresh knockout skeleton (any prior draw must be
    * redone). Announcements and homepage media are preserved. Idempotent.
    */
-  async function normalize(state) {
+  /**
+   * Idempotent display-only data fixes that must apply to the CURRENT
+   * schema without triggering any migration/reset. Never touches the
+   * draw, bracketOrder or matches — only a team's display fields — so a
+   * completed draw is preserved. Runs on every load.
+   */
+  function patchData(state) {
+    if (!state || !Array.isArray(state.teams)) return state;
+    for (const t of state.teams) {
+      // Cameroon → Algeria (keep the drawn team's id & bracket slot).
+      if (t.countryCode === "cm" || t.country === "Cameroon") {
+        t.country = "Algeria";
+        t.countryCode = "dz";
+        t.flag = "assets/flags/dz.svg";
+        t.nickname = "Desert Foxes";
+      }
+    }
+    return state;
+  }
+
+  async function migrateSchema(state) {
     if (state && state.schema === CURRENT_SCHEMA) return state;
     const fresh = await loadDefaultState();
     if (!state) return fresh;
@@ -77,6 +97,10 @@ const API = (() => {
     if (Array.isArray(state.media)) fresh.media = state.media;
     // settings (incl. the tournament name) stay canonical from defaults.
     return fresh;
+  }
+
+  async function normalize(state) {
+    return patchData(await migrateSchema(state));
   }
 
   async function loadState() {

@@ -24,12 +24,15 @@ const ScheduleView = (() => {
     const played = m.status === "played";
     const pens = played && m.pensA != null && m.scoreA === m.scoreB
       ? `<div class="fx-pens"><i class="fa-solid fa-bullseye"></i> Penalties ${m.pensA} - ${m.pensB}</div>` : "";
+    const label = (t, name, right) => t
+      ? `<span class="fx-label ${right ? "right" : ""}"><span class="fx-country">${esc(name)}</span><span class="fx-teamname">${esc(t.teamName)}</span></span>`
+      : `<span>${esc(name)}</span>`;
     return `
       <div class="sch-row ${played ? "played" : ""}">
         <span class="sch-mnum">M${m.slot}</span>
-        <div class="fx-team">${a ? flagImg(a) : ""}<span>${esc(nameA)}</span></div>
+        <div class="fx-team">${a ? flagImg(a) : ""}${label(a, nameA, false)}</div>
         <div class="fx-score ${played ? "" : "pending"}">${played ? `${m.scoreA} - ${m.scoreB}` : "VS"}</div>
-        <div class="fx-team right"><span>${esc(nameB)}</span>${b ? flagImg(b) : ""}</div>
+        <div class="fx-team right">${label(b, nameB, true)}${b ? flagImg(b) : ""}</div>
         ${kickoffHTML(m)}
         ${pens}
       </div>`;
