@@ -1456,6 +1456,25 @@ details.admin-match .match-body { padding: 4px 14px 14px; border-top: 1px solid 
   padding: 1px 7px;
 }
 
+.bk-time {
+  position: absolute;
+  top: -8px;
+  right: 8px;
+  display: flex;
+  align-items: center;
+  gap: 3px;
+  font-size: 0.58rem;
+  letter-spacing: 0.5px;
+  color: var(--gold-deep);
+  background: var(--bg-1);
+  border: 1px solid var(--panel-border-soft);
+  border-radius: 999px;
+  padding: 1px 7px;
+  white-space: nowrap;
+}
+
+.bk-time i { font-size: 0.62rem; }
+
 .bk-team {
   display: flex;
   align-items: center;
@@ -1603,6 +1622,24 @@ details.admin-match .match-body { padding: 4px 14px 14px; border-top: 1px solid 
 .sch-time.tbd { color: var(--text-faint); }
 
 .sch-row .fx-pens { grid-column: 1 / -1; }
+
+.sch-row .fx-team {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  min-width: 0;
+}
+
+.sch-row .fx-team.right { justify-content: flex-end; }
+
+.sch-row .fx-team img {
+  width: 18px;
+  height: 14px;
+  object-fit: cover;
+  border-radius: 3px;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  flex: 0 0 auto;
+}
 
 /* ===== Awards / favourites ===== */
 .fav-grid {

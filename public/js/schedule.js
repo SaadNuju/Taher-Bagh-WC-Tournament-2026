@@ -51,7 +51,17 @@ const ScheduleView = (() => {
     const sections = Tournament.ROUNDS.map(({ round, label }) => {
       const idx = Tournament.PROGRESSION.indexOf(stageOf(round));
       const stateCls = idx < currentIdx ? "done" : idx === currentIdx ? "live" : "locked";
+      // Display order follows kickoff time, not match number — matches
+      // without a time yet stay at the end. Tournament.roundMatches
+      // (used by the bracket tree/results editor) is left untouched.
       const rows = Tournament.roundMatches(state, round)
+        .slice()
+        .sort((a, b) => {
+          if (!a.kickoff && !b.kickoff) return a.slot - b.slot;
+          if (!a.kickoff) return 1;
+          if (!b.kickoff) return -1;
+          return a.kickoff < b.kickoff ? -1 : a.kickoff > b.kickoff ? 1 : 0;
+        })
         .map((m) => matchRowHTML(state, labels, m)).join("");
       const badge = stateCls === "live"
         ? '<span class="sch-badge live-badge"><span class="live-dot"></span> CURRENT ROUND</span>'

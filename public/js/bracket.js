@@ -235,10 +235,19 @@ const BracketView = (() => {
       </div>`;
   }
 
+  function timeHTML(m) {
+    if (!m.kickoff) return "";
+    const d = new Date(m.kickoff);
+    const time = d.toLocaleTimeString(undefined, { hour: "2-digit", minute: "2-digit" });
+    const full = d.toLocaleString(undefined, { weekday: "short", day: "numeric", month: "short", hour: "2-digit", minute: "2-digit" });
+    return `<div class="bk-time" title="${esc(full)}"><i class="fa-regular fa-clock"></i> ${esc(time)}</div>`;
+  }
+
   function matchHTML(state, labels, m, extra) {
     return `
       <div class="bk-match ${extra || ""}" data-bk="${m.id}">
         <div class="bk-tag">M${m.slot}</div>
+        ${timeHTML(m)}
         ${sideHTML(state, labels, m, "a")}
         ${sideHTML(state, labels, m, "b")}
       </div>`;
