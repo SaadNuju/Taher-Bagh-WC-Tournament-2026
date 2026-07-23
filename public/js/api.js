@@ -122,20 +122,38 @@ const API = (() => {
     return patchData(await migrateSchema(state));
   }
 
+  // A tournament always has 32 teams and 32 matches — anything short of
+  // that in a cached copy is a stale/corrupted fragment, not real data.
+  function looksComplete(state) {
+    return !!state
+      && Array.isArray(state.teams) && state.teams.length >= 32
+      && Array.isArray(state.matches) && state.matches.length >= 32;
+  }
+
   async function loadState() {
-    // Try the live backend first.
-    try {
-      const data = await fetchJSON("/api/state");
-      mode = "live";
-      return await normalize(data && data.state);
-    } catch (e) {
-      mode = "demo";
-      const saved = localStorage.getItem(LOCAL_KEY);
-      if (saved) {
-        try { return await normalize(JSON.parse(saved)); } catch (_) { /* corrupted — reset */ }
+    // Try the live backend first, with one quick retry for a transient blip
+    // before assuming this device genuinely can't reach the server.
+    for (let attempt = 1; attempt <= 2; attempt++) {
+      try {
+        const data = await fetchJSON("/api/state");
+        mode = "live";
+        return await normalize(data && data.state);
+      } catch (e) {
+        if (attempt === 1) await new Promise((r) => setTimeout(r, 500));
       }
-      return loadDefaultState();
     }
+    mode = "demo";
+    const saved = localStorage.getItem(LOCAL_KEY);
+    if (saved) {
+      try {
+        const parsed = JSON.parse(saved);
+        if (looksComplete(parsed)) return await normalize(parsed);
+        // A short/partial cached copy (e.g. leftover from early testing) is
+        // worse than useless — fall through to the real default roster
+        // rather than showing a handful of stray teams/matches as if real.
+      } catch (_) { /* corrupted — fall through */ }
+    }
+    return loadDefaultState();
   }
 
   async function saveState(state) {

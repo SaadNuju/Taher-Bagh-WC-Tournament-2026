@@ -132,6 +132,12 @@ async function handleState(request, env) {
     if (!state || typeof state !== "object" || !Array.isArray(state.teams) || !state.draw) {
       return json({ error: "Malformed tournament state" }, 400);
     }
+    // The tournament is always exactly 32 teams / 32 matches — reject any
+    // save that would silently truncate the canonical live record (e.g. a
+    // buggy client sending a partial snapshot) rather than storing it.
+    if (state.teams.length !== 32 || !Array.isArray(state.matches) || state.matches.length !== 32) {
+      return json({ error: "Rejected: state must contain exactly 32 teams and 32 matches" }, 400);
+    }
 
     return stateStub(env).fetch(new Request(request.url, {
       method: "POST",

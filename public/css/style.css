@@ -118,6 +118,25 @@ p.section-sub {
   opacity: 0.55;
 }
 
+/* ===== Offline / stale-cache banner ===== */
+.offline-banner {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 8px;
+  padding: 10px 16px;
+  background: linear-gradient(90deg, #7a4a00, #a85f00);
+  color: #fff;
+  text-align: center;
+  font-size: 0.78rem;
+  letter-spacing: 0.3px;
+  position: relative;
+  z-index: 40;
+}
+
+.offline-banner i { color: #ffd166; }
+
 /* ===== Header ===== */
 .site-header {
   padding: 26px 18px 14px;
