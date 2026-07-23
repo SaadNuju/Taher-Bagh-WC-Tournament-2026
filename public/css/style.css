@@ -1354,7 +1354,7 @@ a.media-slot.filled:hover {
 /* ===== Teams gallery ===== */
 .teams-grid {
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
+  grid-template-columns: repeat(4, 1fr);
   gap: 14px;
 }
 
@@ -1382,9 +1382,25 @@ a.media-slot.filled:hover {
 
 .tile-names { flex: 1; min-width: 0; }
 
-.tile-country { font-family: var(--font-display); letter-spacing: 1.5px; font-size: 1rem; }
+.tile-country {
+  font-family: var(--font-display);
+  letter-spacing: 1.5px;
+  font-size: 1rem;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
 
-.tile-team { color: var(--gold); font-size: 0.74rem; letter-spacing: 2px; text-transform: uppercase; margin-top: 2px; }
+.tile-team {
+  color: var(--gold);
+  font-size: 0.74rem;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  margin-top: 2px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
 
 .tile-captain {
   display: flex;
@@ -1393,6 +1409,15 @@ a.media-slot.filled:hover {
   gap: 2px;
   font-size: 0.82rem;
   color: var(--text-dim);
+  flex: 0 0 auto;
+  max-width: 40%;
+}
+
+.tile-captain span:not(.tile-cap-label) {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 100%;
 }
 
 .tile-cap-label { font-size: 0.6rem; letter-spacing: 2px; color: var(--gold-deep); }

@@ -85,6 +85,7 @@
 
 /* ===== Redesign responsive ===== */
 @media (max-width: 1024px) {
+  .teams-grid { grid-template-columns: repeat(2, 1fr); }
   .media-grid { grid-template-columns: repeat(2, 1fr); }
   .draw-matches-grid { grid-template-columns: repeat(2, 1fr); }
 }
