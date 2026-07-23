@@ -190,7 +190,7 @@ const AdminView = (() => {
         const b = team(state, m.teamB);
         const vs = a && b ? `${a.country} v ${b.country}` : (labels[m.id] ? `${labels[m.id].a} v ${labels[m.id].b}` : "TBD");
         return `
-          <div class="admin-row" data-sched="${m.id}">
+          <div class="admin-row" data-sched="${m.id}" data-sched-label="${esc(label)} M${m.slot}">
             <span style="min-width:46px;color:var(--text-faint);font-size:.75rem">M${m.slot}</span>
             <span style="flex:1;font-size:.85rem">${esc(vs)}</span>
             <div style="display:flex;gap:6px;flex-wrap:wrap">
@@ -463,6 +463,7 @@ const AdminView = (() => {
       }
 
       if (action === "save-schedule") {
+        const skipped = [];
         el.querySelectorAll("[data-sched]").forEach((row) => {
           const m = state.matches.find((x) => x.id === row.dataset.sched);
           const dateVal = row.querySelector("[data-kick-date]").value;
@@ -472,11 +473,17 @@ const AdminView = (() => {
             if (!isNaN(d.getTime())) m.kickoff = d.toISOString();
           } else if (!dateVal && !timeVal) {
             m.kickoff = null; // both cleared — explicit intentional clear
+          } else {
+            // Only one of the two filled in: leave the saved kickoff as-is
+            // rather than blanking it from a partial/uncommitted edit —
+            // but flag it so the organiser knows it didn't change.
+            skipped.push(row.dataset.schedLabel || row.dataset.sched);
           }
-          // Only one of the two filled in: leave the saved kickoff as-is
-          // rather than blanking it from a partial/uncommitted edit.
         });
-        await persist(state, "Schedule saved");
+        const message = skipped.length
+          ? `Schedule saved — ${skipped.length} need both date & time: ${skipped.join(", ")}`
+          : "Schedule saved";
+        await persist(state, message);
       }
 
       if (action === "save-media") {
