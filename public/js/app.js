@@ -387,6 +387,15 @@ const App = (() => {
     setTimeout(() => splash.remove(), 700);
   }
 
+  function showOfflineBanner() {
+    if (document.getElementById("offline-banner")) return;
+    const bar = document.createElement("div");
+    bar.id = "offline-banner";
+    bar.className = "offline-banner";
+    bar.innerHTML = `<i class="fa-solid fa-triangle-exclamation"></i> Can't reach the live tournament server from this device — showing a cached/offline copy that may be outdated. Try refreshing or checking your connection.`;
+    document.body.prepend(bar);
+  }
+
   async function init() {
     spawnParticles();
     loadSponsors();
@@ -402,6 +411,7 @@ const App = (() => {
 
     const splashStart = Date.now();
     state = await API.loadState();
+    if (API.mode !== "live") showOfflineBanner();
     startTicker();
     window.addEventListener("hashchange", navigate);
     navigate();
