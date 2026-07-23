@@ -1163,7 +1163,20 @@
       "kickoff": null
     }
   ],
-  "media": [],
+  "media": [
+    {
+      "type": "image",
+      "src": "assets/sponsors/noise-logo.png",
+      "caption": "Noise",
+      "link": "https://endtoend.mu/collections/noise"
+    },
+    {
+      "type": "image",
+      "src": "assets/sponsors/dauhoo-promo.jpg",
+      "caption": "Pharmacie Dauhoo — open till midnight",
+      "link": "https://maps.app.goo.gl/Lae5aHcDjQJxdJS79?g_st=ic"
+    }
+  ],
   "awards": {
     "playerOfTournament": null,
     "bestGoalkeeper": null

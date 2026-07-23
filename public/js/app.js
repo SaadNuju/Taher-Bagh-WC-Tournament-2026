@@ -62,10 +62,18 @@ const HomeView = (() => {
       const media = slot.type === "video"
         ? `<video src="${esc(slot.src)}" controls playsinline preload="metadata"></video>`
         : `<img src="${esc(slot.src)}" alt="${esc(slot.caption || "Sponsor media")}" loading="lazy">`;
+      const cap = slot.caption ? `<span class="media-cap">${esc(slot.caption)}</span>` : "";
+      if (slot.link) {
+        return `
+        <a class="media-slot filled" href="${esc(slot.link)}" target="_blank" rel="noopener noreferrer">
+          ${media}
+          ${cap}
+        </a>`;
+      }
       return `
         <figure class="media-slot filled">
           ${media}
-          ${slot.caption ? `<figcaption>${esc(slot.caption)}</figcaption>` : ""}
+          ${cap}
         </figure>`;
     }
     return `
