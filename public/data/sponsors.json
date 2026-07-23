@@ -1,10 +1,4 @@
 [
-  { "name": "YOUR SPONSOR HERE", "image": null },
-  { "name": "GOLD PARTNER", "image": null },
-  { "name": "OFFICIAL PARTNER", "image": null },
-  { "name": "YOUR BRAND HERE", "image": null },
-  { "name": "MATCH SPONSOR", "image": null },
-  { "name": "COMMUNITY PARTNER", "image": null },
-  { "name": "OFFICIAL SUPPLIER", "image": null },
-  { "name": "LOCAL HERO SPONSOR", "image": null }
+  { "name": "Pharmacie Dauhoo", "image": "assets/sponsors/dauhoo-logo.png", "link": "https://maps.app.goo.gl/Lae5aHcDjQJxdJS79?g_st=ic" },
+  { "name": "Noise", "image": "assets/sponsors/noise-logo.png", "link": "https://endtoend.mu/collections/noise" }
 ]

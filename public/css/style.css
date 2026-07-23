@@ -103,10 +103,15 @@ p.section-sub {
 }
 
 .header-trophy {
-  font-size: 4.2rem;
-  color: var(--gold);
-  text-shadow: 0 0 32px var(--gold-glow);
   flex: 0 0 auto;
+  display: flex;
+  align-items: center;
+}
+
+.header-trophy img {
+  height: 4.6rem;
+  width: auto;
+  filter: drop-shadow(0 0 20px var(--gold-glow));
 }
 
 /* min-width:0 stops the nowrap ticker text forcing the page wider */

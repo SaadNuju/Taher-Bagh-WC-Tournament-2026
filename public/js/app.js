@@ -315,9 +315,14 @@ const App = (() => {
     if (!Array.isArray(sponsors) || !sponsors.length) {
       sponsors = Array.from({ length: 8 }, (_, i) => ({ name: `YOUR SPONSOR ${i + 1}` }));
     }
-    const item = (s) => s.image
-      ? `<span class="sponsor-item"><img src="${Tournament.esc(s.image)}" alt="${Tournament.esc(s.name)}"></span>`
-      : `<span class="sponsor-item"><i class="fa-solid fa-handshake"></i>${Tournament.esc(s.name)}</span>`;
+    const item = (s) => {
+      const inner = s.image
+        ? `<img src="${Tournament.esc(s.image)}" alt="${Tournament.esc(s.name)}">`
+        : `<i class="fa-solid fa-handshake"></i>${Tournament.esc(s.name)}`;
+      return s.link
+        ? `<a class="sponsor-item" href="${Tournament.esc(s.link)}" target="_blank" rel="noopener noreferrer" title="${Tournament.esc(s.name)}">${inner}</a>`
+        : `<span class="sponsor-item">${inner}</span>`;
+    };
     const half = sponsors.map(item).join("");
     document.getElementById("sponsor-track").innerHTML = half + half;
   }
