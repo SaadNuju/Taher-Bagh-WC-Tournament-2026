@@ -153,12 +153,17 @@ const Tournament = (() => {
     return Object.values(rec);
   }
 
-  /** Golden Glove table: fewest conceded per match, then most wins. */
+  /**
+   * Golden Glove table: fewest goals conceded first; ties broken by
+   * whoever has played the most matches (rewards a defence that's stayed
+   * tight deep into the tournament, not just over a small sample), then
+   * by most wins.
+   */
   function goldenGlove(state) {
     return teamRecords(state)
       .filter((r) => r.played > 0)
       .map((r) => ({ ...r, concededPerMatch: r.ga / r.played }))
-      .sort((x, y) => x.concededPerMatch - y.concededPerMatch || y.wins - x.wins || y.gf - x.gf);
+      .sort((x, y) => x.ga - y.ga || y.played - x.played || y.wins - x.wins);
   }
 
   /** Teams still alive in the bracket. */

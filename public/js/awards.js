@@ -48,7 +48,7 @@ const AwardsView = (() => {
           ${t ? flagImg(t) : ""}
           <span>${esc(gk)}</span>
           <span class="scorer-team">${t ? `${esc(t.country)}<span class="scorer-teamname">${esc(t.teamName)}</span>` : ""}</span>
-          <span class="goals" title="Goals conceded per match">${r.ga} <i class="fa-solid fa-hand" style="font-size:.7rem"></i> / ${r.played}</span>
+          <span class="goals" title="Goals conceded / matches played">${r.ga} <i class="fa-solid fa-hand" style="font-size:.7rem"></i> / ${r.played}</span>
         </div>`;
     }).join("");
   }
