@@ -168,12 +168,22 @@ const AdminView = (() => {
 
   function scheduleTabHTML(state) {
     const labels = Tournament.resolveBracket(state);
-    const toLocal = (iso) => {
+    // Split into separate date + time inputs — far more reliably supported
+    // across mobile browsers (notably iOS Safari) than a combined
+    // datetime-local picker, which can silently fail to commit its value.
+    const toLocalDate = (iso) => {
       if (!iso) return "";
       const d = new Date(iso);
       const pad = (n) => String(n).padStart(2, "0");
-      return `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())}T${pad(d.getHours())}:${pad(d.getMinutes())}`;
+      return `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())}`;
     };
+    const toLocalTime = (iso) => {
+      if (!iso) return "";
+      const d = new Date(iso);
+      const pad = (n) => String(n).padStart(2, "0");
+      return `${pad(d.getHours())}:${pad(d.getMinutes())}`;
+    };
+    const inputStyle = "padding:9px;border-radius:9px;border:1px solid var(--panel-border-soft);background:rgba(5,7,15,.6);color:var(--text)";
     const sections = Tournament.ROUNDS.map(({ round, label }) => {
       const rows = Tournament.roundMatches(state, round).map((m) => {
         const a = team(state, m.teamA);
@@ -183,7 +193,10 @@ const AdminView = (() => {
           <div class="admin-row" data-sched="${m.id}">
             <span style="min-width:46px;color:var(--text-faint);font-size:.75rem">M${m.slot}</span>
             <span style="flex:1;font-size:.85rem">${esc(vs)}</span>
-            <input type="datetime-local" data-kick value="${toLocal(m.kickoff)}">
+            <div style="display:flex;gap:6px;flex-wrap:wrap">
+              <input type="date" data-kick-date value="${toLocalDate(m.kickoff)}" style="${inputStyle}">
+              <input type="time" data-kick-time value="${toLocalTime(m.kickoff)}" style="${inputStyle}">
+            </div>
           </div>`;
       }).join("");
       return `<h4 style="margin:18px 0 8px;color:var(--gold);letter-spacing:2px;font-size:.85rem">${label.toUpperCase()}</h4>${rows}`;
@@ -451,8 +464,16 @@ const AdminView = (() => {
       if (action === "save-schedule") {
         el.querySelectorAll("[data-sched]").forEach((row) => {
           const m = state.matches.find((x) => x.id === row.dataset.sched);
-          const v = row.querySelector("[data-kick]").value;
-          m.kickoff = v ? new Date(v).toISOString() : null;
+          const dateVal = row.querySelector("[data-kick-date]").value;
+          const timeVal = row.querySelector("[data-kick-time]").value;
+          if (dateVal && timeVal) {
+            const d = new Date(`${dateVal}T${timeVal}`);
+            if (!isNaN(d.getTime())) m.kickoff = d.toISOString();
+          } else if (!dateVal && !timeVal) {
+            m.kickoff = null; // both cleared — explicit intentional clear
+          }
+          // Only one of the two filled in: leave the saved kickoff as-is
+          // rather than blanking it from a partial/uncommitted edit.
         });
         await persist(state, "Schedule saved");
       }
