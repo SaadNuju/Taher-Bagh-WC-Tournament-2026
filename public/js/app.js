@@ -380,6 +380,13 @@ const App = (() => {
 
   /* ----- boot ----- */
 
+  function hideSplash() {
+    const splash = document.getElementById("splash-screen");
+    if (!splash) return;
+    splash.classList.add("splash-hide");
+    setTimeout(() => splash.remove(), 700);
+  }
+
   async function init() {
     spawnParticles();
     loadSponsors();
@@ -393,14 +400,22 @@ const App = (() => {
     syncSoundIcon();
     soundBtn.addEventListener("click", () => { Sound.toggle(); syncSoundIcon(); });
 
+    const splashStart = Date.now();
     state = await API.loadState();
     startTicker();
     window.addEventListener("hashchange", navigate);
     navigate();
     startPolling();
+
+    // Keep the splash on-screen just long enough for its pop-in to land.
+    const remaining = Math.max(0, 900 - (Date.now() - splashStart));
+    setTimeout(hideSplash, remaining);
   }
 
-  document.addEventListener("DOMContentLoaded", init);
+  document.addEventListener("DOMContentLoaded", () => {
+    setTimeout(hideSplash, 4000); // safety net if init() ever throws
+    init();
+  });
 
   return {
     toast, confetti, setState, refreshAdminNav,
