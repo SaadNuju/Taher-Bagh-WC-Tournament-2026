@@ -57,6 +57,21 @@ const API = (() => {
    * draw, bracketOrder or matches — only a team's display fields — so a
    * completed draw is preserved. Runs on every load.
    */
+  const DEFAULT_MEDIA = [
+    {
+      type: "image",
+      src: "assets/sponsors/noise-logo.png",
+      caption: "Noise",
+      link: "https://endtoend.mu/collections/noise",
+    },
+    {
+      type: "image",
+      src: "assets/sponsors/dauhoo-promo.jpg",
+      caption: "Pharmacie Dauhoo — open till midnight",
+      link: "https://maps.app.goo.gl/Lae5aHcDjQJxdJS79?g_st=ic",
+    },
+  ];
+
   function patchData(state) {
     if (!state || !Array.isArray(state.teams)) return state;
     for (const t of state.teams) {
@@ -67,6 +82,10 @@ const API = (() => {
         t.flag = "assets/flags/dz.svg";
         t.nickname = "Desert Foxes";
       }
+    }
+    // Seed the homepage sponsor showcase once, if it's still empty.
+    if (!Array.isArray(state.media) || !state.media.length) {
+      state.media = DEFAULT_MEDIA.slice();
     }
     return state;
   }
@@ -178,7 +197,7 @@ const API = (() => {
       const data = await fetchJSON("/api/state");
       if (data && data.state && data.state.schema === CURRENT_SCHEMA &&
           data.state.updatedAt !== currentUpdatedAt) {
-        return data.state;
+        return patchData(data.state);
       }
     } catch (_) { /* transient network issue — keep current state */ }
     return null;

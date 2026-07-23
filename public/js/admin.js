@@ -224,6 +224,7 @@ const AdminView = (() => {
             </select>
             <input data-mfield="src" placeholder="Image/video URL (or assets/sponsors/file.jpg once uploaded)" value="${esc(s.src || "")}" style="flex:2;min-width:200px;padding:9px;border-radius:9px;border:1px solid var(--panel-border-soft);background:rgba(5,7,15,.6);color:var(--text)">
             <input data-mfield="caption" placeholder="Caption (optional)" value="${esc(s.caption || "")}" style="flex:1;min-width:140px;padding:9px;border-radius:9px;border:1px solid var(--panel-border-soft);background:rgba(5,7,15,.6);color:var(--text)">
+            <input data-mfield="link" placeholder="Link when clicked (optional)" value="${esc(s.link || "")}" style="flex:2;min-width:200px;padding:9px;border-radius:9px;border:1px solid var(--panel-border-soft);background:rgba(5,7,15,.6);color:var(--text)">
           </div>
         </div>`;
     }).join("");
@@ -486,6 +487,7 @@ const AdminView = (() => {
             type: row.querySelector('[data-mfield="type"]').value,
             src,
             caption: row.querySelector('[data-mfield="caption"]').value.trim(),
+            link: row.querySelector('[data-mfield="link"]').value.trim(),
           };
         });
         await persist(state, "Homepage media saved");
